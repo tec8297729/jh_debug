@@ -8,6 +8,10 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 > * 可自定义组件内调试窗口内按钮事件，更好扩展业务功能，例如：切换不同开发环境接口
 > * 内置全局浮动按钮组件
 
+![debug调试器—演示图1](https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true)
+
+![debug调试器—演示图1](https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true)
+
 ## 快速入门
 1、在main.dart入口处添加如下代码
 
