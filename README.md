@@ -26,7 +26,7 @@ void main() {
 
 <br>
 
-2、在MaterialApp的home中的页面设置初始化参数
+2、在MaterialApp的home页面设置init初始化参数
 ```dart
 // 建议在initState阶段执行一次即可
 jhDebug.init(
@@ -36,7 +36,7 @@ jhDebug.init(
   btnTap1: () {}, // 定义按钮触发事件
 );
 
-init参数介绍
+init参数相关介绍
 [btnTap1, btnTap2, btnTap3] 定义底部按钮点击事件
 
 [btnTitle1, btnTitle2, btnTitle3] 定义底部按钮的标题
