@@ -1,7 +1,6 @@
 name: jh_debug
 description: APP端日志console调试插件，更友好的在真机上调试debug
-version: 0.0.6
-author: tec
+version: 0.2.6
 homepage: https://github.com/tec8297729/jh_debug
 
 environment:

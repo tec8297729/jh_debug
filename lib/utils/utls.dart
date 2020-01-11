@@ -1,5 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../jh_debug.dart';
+
 /// tosat提示
 toastTips(String text) {
   Fluttertoast.showToast(
@@ -8,4 +10,14 @@ toastTips(String text) {
     // gravity: ToastGravity.CENTER, // 提示位置
     fontSize: 18, // 提示文字大小
   );
+}
+
+/// 获取当前调试日志信息str
+getItemDebugLogStr(Map<D_Name, String> itemData) {
+  String logData = itemData[D_Name.log];
+  String logStackData = itemData[D_Name.stack];
+  if (jhDebug.debugModeFull && logStackData != 'null') {
+    logData += '\n$logStackData';
+  }
+  return logData;
 }

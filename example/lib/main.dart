@@ -2,11 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jh_debug_example/TestPage.dart';
+
+import 'DetailsPage.dart';
 
 void main() {
   jhDebugMain(
     appChild: MyApp(),
-    debugMode: DebugMode.self,
+    debugMode: DebugMode.inConsole,
   );
 }
 
@@ -15,23 +18,21 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  TabController _tabController;
-
+class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    jhDebug.init(
-      hideCustomTab: true,
-      btnTap1: () {
-        print('点击第一个按钮');
-      },
-    );
+    // jhDebug.init(
+    //   hideCustomTab: true,
+    //   btnTap1: () {
+    //     print('点击第一个按钮');
+    //   },
+    //   btnTitle1: '测试按钮22',
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
-    print('构建成功');
     return MaterialApp(
       locale: Locale('zh', 'CH'),
       navigatorKey: jhDebug.getNavigatorKey,
@@ -42,34 +43,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       supportedLocales: [
         const Locale('zh', 'CH'),
       ],
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Column(
-          children: <Widget>[
-            // Center(
-            //   child: Text('Running on: $_platformVersion\n'),
-            // ),
-            RaisedButton(
-              child: Text('按钮'),
-              onPressed: () {
-                print('点击一次');
-
-                jhDebug.showLog();
-              },
-            ),
-            RaisedButton(
-              child: Text('error'),
-              onPressed: () {
-                // _tabController = TabController(length: 1, vsync: this);
-                throw "Sample for exception";
-                // Future.error("error自定义错误");
-              },
-            ),
-          ],
-        ),
-      ),
+      // home: TestPage(),
+      routes: {
+        '/': (BuildContext context) => TestPage(),
+        '/detailsPage': (BuildContext context) => DetailsPage(),
+      },
     );
   }
 }

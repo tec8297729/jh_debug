@@ -7,26 +7,33 @@ class BottomWrap extends StatelessWidget {
     @required this.btnTap1,
     @required this.btnTap2,
     @required this.btnTap3,
+    @required this.btnTitle1,
+    @required this.btnTitle2,
+    @required this.btnTitle3,
     @required this.initTabsWidget,
   });
   final Widget customBottomWidge;
   final VoidCallback btnTap1;
   final VoidCallback btnTap2;
   final VoidCallback btnTap3;
+  final String btnTitle1;
+  final String btnTitle2;
+  final String btnTitle3;
   final Function initTabsWidget;
 
   @override
   Widget build(BuildContext context) {
     if (customBottomWidge != null) return customBottomWidge;
     return Container(
-      height: 60,
+      padding: EdgeInsets.only(top: 5, bottom: 5),
+      width: double.infinity,
       color: Colors.black12,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Wrap(
+        alignment: WrapAlignment.spaceEvenly,
         children: <Widget>[
-          _btnWrap(title: '开发', onPressed: btnTap1),
-          _btnWrap(title: '调试', onPressed: btnTap2),
-          _btnWrap(title: '生产', onPressed: btnTap3),
+          _btnWrap(title: '${btnTitle1 ?? '开发'}', onPressed: btnTap1),
+          _btnWrap(title: '${btnTitle2 ?? '调试'}', onPressed: btnTap2),
+          _btnWrap(title: '${btnTitle3 ?? '生产'}', onPressed: btnTap3),
         ],
       ),
     );
@@ -35,7 +42,6 @@ class BottomWrap extends StatelessWidget {
   // 按钮基础组件
   _btnWrap({@required String title, @required VoidCallback onPressed}) {
     return Container(
-      width: 70,
       child: RaisedButton(
         color: Colors.white,
         child: Text(title),

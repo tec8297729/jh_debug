@@ -58,11 +58,17 @@ jhDebugMain({
           debugLog: obj.toString(),
           debugStack: stack.toString(),
         );
-        return FlutterErrorDetails(exception: obj, stack: stack);
+        return FlutterErrorDetails(
+          exception: obj,
+          stack: stack,
+          library: 'Flutter JH_DEBUG',
+        );
       }(obj, stack);
 
-      if (debugMode == DebugMode.inConsole)
+      // print('错误层>>>');
+      if (debugMode == DebugMode.inConsole) {
         FlutterError.dumpErrorToConsole(details);
+      }
 
       // 自定义上报错误
       if (errorCallback != null) errorCallback(details);
