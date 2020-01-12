@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'package:jh_debug_example/TestPage.dart';
+import 'TestPage.dart';
 
 import 'DetailsPage.dart';
 
