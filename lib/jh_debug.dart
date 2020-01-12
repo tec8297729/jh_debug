@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:jh_debug/constants/index_constants.dart';
+import 'constants/index_constants.dart';
 import './index.dart';
 import 'interface/main_interface.dart';
 

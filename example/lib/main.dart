@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jh_debug_example/TestPage.dart';
 
 import 'DetailsPage.dart';
@@ -34,15 +32,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: Locale('zh', 'CH'),
-      navigatorKey: jhDebug.getNavigatorKey,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('zh', 'CH'),
-      ],
       // home: TestPage(),
       routes: {
         '/': (BuildContext context) => TestPage(),

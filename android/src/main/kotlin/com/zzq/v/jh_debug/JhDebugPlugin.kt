@@ -1,4 +1,4 @@
-package com.zzq.v.jh_debug
+package com.example.jh_debug
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin

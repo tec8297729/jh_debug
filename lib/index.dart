@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jh_debug/components/StackPosBtn.dart';
+import './components/StackPosBtn.dart';
 import 'components/TabsWrap.dart';
 import 'constants/index_constants.dart';
 import 'interface/main_interface.dart';
@@ -122,7 +122,7 @@ class JhDebug {
   // 初始化init方法判断
   bool _judegInit() {
     if (initFlag) return true;
-    toastTips('未初始化jeDebug.init方法');
+    JhUtils.toastTips('未初始化jeDebug.init方法');
     return false;
   }
 
@@ -155,7 +155,7 @@ class JhDebug {
   }) {
     if (!_judegInit()) return;
     if (Overlay.of(_context) == null) {
-      toastTips('错误：不支持添加，请不要在MaterialApp组件中直接使用');
+      JhUtils.toastTips('错误：不支持添加，请不要在MaterialApp组件中直接使用');
       return;
     }
     if (overlayCode != null) return;
@@ -180,7 +180,7 @@ class JhDebug {
     if (overlayCode != null) {
       overlayEntry.remove();
       overlayCode = null;
-      toastTips('已隐藏调试按钮');
+      JhUtils.toastTips('已隐藏调试按钮');
     }
   }
 }

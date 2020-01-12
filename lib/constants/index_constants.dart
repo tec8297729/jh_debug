@@ -1,4 +1,4 @@
-import 'package:jh_debug/interface/main_interface.dart';
+import '../interface/main_interface.dart';
 
 class JhConfig {
   /// print日志数量

@@ -49,7 +49,7 @@ class BottomWrap extends StatelessWidget {
           if (onPressed != null) {
             onPressed();
           } else {
-            toastTips('请自定义你的按钮事件');
+            JhUtils.toastTips('请自定义你的按钮事件');
           }
           initTabsWidget();
         },

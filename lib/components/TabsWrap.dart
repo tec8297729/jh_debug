@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jh_debug/components/LogContextWidget.dart';
+import '../components/LogContextWidget.dart';
 import '../jh_debug.dart';
 import 'BottomWrap.dart';
 

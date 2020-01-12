@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jh_debug/utils/utls.dart';
+import '../utils/utls.dart';
 
 import '../jh_debug.dart';
 
@@ -39,7 +39,7 @@ class _LogContextWidgetState extends State<LogContextWidget> {
     List<Widget> allWidget = [];
 
     for (var i = debugLogList.length; i > 0; i--) {
-      String logData = getItemDebugLogStr(debugLogList[i - 1]);
+      String logData = JhUtils.getItemDebugLogStr(debugLogList[i - 1]);
 
       allWidget.add(
         _logContext(
@@ -70,7 +70,7 @@ class _LogContextWidgetState extends State<LogContextWidget> {
       case 1:
         // debug日志
         List<Map<D_Name, String>> debugLogList = jhDebug.getDebugLogAll;
-        copyFn(getItemDebugLogStr(debugLogList[dataIndex]));
+        copyFn(JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
         break;
       default:
     }
@@ -79,9 +79,9 @@ class _LogContextWidgetState extends State<LogContextWidget> {
   /// 复制到系统剪切板
   copyFn(String textData) async {
     await Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
-      toastTips('复制失败');
+      JhUtils.toastTips('复制失败');
     });
-    toastTips('已复制');
+    JhUtils.toastTips('已复制');
   }
 
   @override
@@ -214,13 +214,13 @@ class _LogContextWidgetState extends State<LogContextWidget> {
         switch (widget.getTabContrIdx()) {
           case 0:
             jhDebug.clearPrintLog();
-            toastTips('已清空print日志');
+            JhUtils.toastTips('已清空print日志');
             tapPrintLogIndex = null;
             widget.initTabsWidget();
             break;
           case 1:
             jhDebug.clearDebugLog();
-            toastTips('已清空debug调试日志');
+            JhUtils.toastTips('已清空debug调试日志');
             tapPrintLogIndex = null;
             widget.initTabsWidget();
             break;

@@ -1,4 +1,4 @@
-group 'com.zzq.v.jh_debug'
+group 'com.example.jh_debug'
 version '1.0-SNAPSHOT'
 
 buildscript {
