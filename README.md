@@ -42,7 +42,10 @@ jhDebug.init(
 );
 ```
 <br>
+
 ### jhDebug.init参数介绍
+<br>
+
 |              参数               |   类型   |                               说明                                |
 | :-----------------------------: | :------: | :---------------------------------------------------------------: |
 |    btnTap1, btnTap2, btnTap3    | Function |                       弹层底部按钮点击事件                        |
@@ -57,7 +60,9 @@ jhDebug.init(
 |           debugRecord           |   int    |                  调试日志最多记录多少条,默认30条                  |
 
 <br>
+
 3、调用调试工具，在你需要使用到的页面
+
 ```dart
 jhDebug.showLog(); // 弹出jhDebug调试窗口，可自己指定义绑定到某个按钮事件上
 jhDebug.hideLog(); // 隐藏jhDebug调试窗口
@@ -66,7 +71,8 @@ jhDebug.showDebugBtn(); // 显示全局按钮，此按钮已内置 点击显示�
 jhDebug.removeDebugBtn(); // 隐藏全局按钮
 ```
 
-其它相关API
+其它相关API<br>
+
 ```dart
 // 手动添加一条print日志
 jhDebug.setPrintLog('错误'); 
