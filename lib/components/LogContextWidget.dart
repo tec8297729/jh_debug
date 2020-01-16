@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../utils/utls.dart';
-
+import '../config/jh_config.dart' show jhConfig;
 import '../jh_debug.dart';
 
 enum LogType { debug, print }
@@ -35,7 +35,7 @@ class _LogContextWidgetState extends State<LogContextWidget> {
 
   /// 处理debug日志结构
   handelDebugWidge() {
-    List<Map<D_Name, String>> debugLogList = jhDebug.getDebugLogAll;
+    List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
     List<Widget> allWidget = [];
 
     for (var i = debugLogList.length; i > 0; i--) {
@@ -69,7 +69,7 @@ class _LogContextWidgetState extends State<LogContextWidget> {
         break;
       case 1:
         // debug日志
-        List<Map<D_Name, String>> debugLogList = jhDebug.getDebugLogAll;
+        List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
         copyFn(JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
         break;
       default:
@@ -160,9 +160,9 @@ class _LogContextWidgetState extends State<LogContextWidget> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           baseBtnWrap(
-            text: jhDebug.debugModeFull ? '详细模式' : '精简模式',
+            text: jhConfig.debugModeFull ? '详细模式' : '精简模式',
             onPressed: () {
-              jhDebug.debugModeFull = !jhDebug.debugModeFull;
+              jhConfig.debugModeFull = !jhConfig.debugModeFull;
               widget.initTabsWidget();
             },
           ),

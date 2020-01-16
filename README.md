@@ -8,9 +8,10 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 > * 可自定义组件内调试窗口内按钮事件，更好扩展业务功能，例如：切换不同开发环境接口
 > * 内置全局浮动按钮组件
 
-![debug调试器—演示图1](https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true)
-
-![debug调试器—演示图1](https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true)
+<div style="display:flex; justify-content: space-evenly;">
+<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true" width="340px">
+<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true" width="340px">
+</div>
 
 ## 快速入门
 1、在main.dart入口处添加如下代码
@@ -20,49 +21,42 @@ import 'package:jh_debug/jh_debug.dart';
 void main() {
   jhDebugMain(
     appChild: MyApp(),
-    // 你的各项捕获参数配置
-    debugMode: DebugMode.inConsole,
+    debugMode: DebugMode.inConsole, // 错误映射到插件中，纯真机模式可设置成none模式
     errorCallback: (error){}, // 错误回调函数
   );
 }
 
 ```
-
 <br>
 
 2、在MaterialApp的home页面设置init初始化参数
 ```dart
-// 建议在initState阶段执行一次即可
+import 'package:jh_debug/jh_debug.dart';
+
+// 初始化，建议在initState阶段执行一次即可
 jhDebug.init(
   context: context,
   // 指定默认调试窗口内的一些参数配置
   btnTitle1: '按钮1', // 定义按钮名称
   btnTap1: () {}, // 定义按钮触发事件
 );
-
-init参数相关介绍
-[btnTap1, btnTap2, btnTap3] 定义底部按钮点击事件
-
-[btnTitle1, btnTitle2, btnTitle3] 定义底部按钮的标题
-
-[tabsInitIndex] 弹出窗口时,指定显示tabs页面, 默认每次弹出显示第0个tabs
-
-[hideCustomTab] 是否隐藏自定义tabs栏,默认true隐藏
-
-[customTabTitle] 自定义区域tabs的标题
-
-[customTabWidget] 自定义区域tabs显示的组件
-
-[hideBottom] 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效
-
-[customBottomWidge] 底部区域组件,如果定义此参数默认定义的底部组件不显示
-
-[printRecord] print日志最多记录多少条,默认50条
-
-[debugRecord] 调试日志最多记录多少条,默认30条
 ```
 <br>
+### jhDebug.init参数介绍
+|              参数               |   类型   |                               说明                                |
+| :-----------------------------: | :------: | :---------------------------------------------------------------: |
+|    btnTap1, btnTap2, btnTap3    | Function |                       弹层底部按钮点击事件                        |
+| btnTitle1, btnTitle2, btnTitle3 |  String  |                         弹层底部按钮标题                          |
+|          tabsInitIndex          |   int    |      弹出窗口时,指定显示tabs页面, 默认每次弹出显示第0个tabs       |
+|          hideCustomTab          |   bool   |                 是否隐藏自定义tabs栏,默认true隐藏                 |
+|         customTabTitle          |  String  |                       自定义区域tabs的标题                        |
+|         customTabWidget         |  Widget  |                     自定义区域tabs显示的组件                      |
+|           hideBottom            |   bool   | 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效 |
+|        customBottomWidge        |  Widget  |        底部区域组件,如果定义此参数默认定义的底部组件不显示        |
+|           printRecord           |   int    |                 print日志最多记录多少条,默认50条                  |
+|           debugRecord           |   int    |                  调试日志最多记录多少条,默认30条                  |
 
+<br>
 3、调用调试工具，在你需要使用到的页面
 ```dart
 jhDebug.showLog(); // 弹出jhDebug调试窗口，可自己指定义绑定到某个按钮事件上

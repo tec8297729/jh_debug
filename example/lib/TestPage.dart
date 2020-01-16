@@ -131,6 +131,15 @@ class _TestPageState extends State<TestPage> {
               },
             ),
           ),
+          Center(
+            child: RaisedButton(
+              child: Text('清空缓存'),
+              onPressed: () {
+                jhDebug.clearDebugLog();
+                jhDebug.clearPrintLog();
+              },
+            ),
+          ),
         ],
       ),
     );

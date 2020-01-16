@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import './components/StackPosBtn.dart';
 import 'components/TabsWrap.dart';
-import 'constants/index_constants.dart';
-import 'interface/main_interface.dart';
+import 'constants/jh_constants.dart';
 import './utils/utls.dart';
+import 'config/jh_config.dart' show jhConfig;
 
 class JhDebug {
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  Widget showWidget = TabsWrap(); // log弹层组件
+  // static GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+  Widget _showWidget = TabsWrap(); // log弹层组件
   List<String> _printLogAll = []; // 所有print日志
+
   /// 调试日志
-  List<Map<D_Name, String>> _debugLogAll = [];
-  int printRecord = JhConfig.PRINT_RECORD;
-  int debugRecord = JhConfig.DEBUG_RECORD;
-  bool debugModeFull = JhConfig.DEBUG_MODEFULL;
-  OverlayEntry overlayEntry; // 叠加层组件
-  int overlayCode; // overlay_id
-  bool initFlag = false; // 初始化
+  List<Map<String, String>> _debugLogAll = [];
+  int _printRecord = JhConstants.PRINT_RECORD;
+  int _debugRecord = JhConstants.DEBUG_RECORD;
+  // bool debugModeFull = JhConstants.DEBUG_MODEFULL;
+  OverlayEntry _overlayEntry; // 叠加层组件
+  int _overlayCode; // overlay_id
+  bool _initFlag = false; // 初始化
   BuildContext _context;
 
   /// 初始化组件参数
@@ -42,7 +43,7 @@ class JhDebug {
   /// [debugRecord] 调试日志最多记录多少条,默认30条
   ///
   /// [debugModeFull] 调试日志中-是否显示详细日志, 默认flase精简日志, true详细日志
-  init({
+  void init({
     @required BuildContext context,
     bool hideCustomTab = true,
     Widget customTabWidget,
@@ -55,12 +56,12 @@ class JhDebug {
     String btnTitle1,
     String btnTitle2,
     String btnTitle3,
-    int printRecord = JhConfig.PRINT_RECORD,
-    int debugRecord = JhConfig.DEBUG_RECORD,
-    int tabsInitIndex = JhConfig.TABS_INIT_INDEX,
-    bool debugModeFull = JhConfig.DEBUG_MODEFULL,
-  }) {
-    showWidget = TabsWrap(
+    int printRecord = JhConstants.PRINT_RECORD,
+    int debugRecord = JhConstants.DEBUG_RECORD,
+    int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
+    bool debugModeFull = JhConstants.DEBUG_MODEFULL,
+  }) async {
+    _showWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
       customTabWidget: customTabWidget,
       hideBottom: hideBottom,
@@ -76,30 +77,30 @@ class JhDebug {
 
     printRecord = printRecord;
     debugRecord = debugRecord;
-    debugModeFull = debugModeFull;
-    initFlag = true;
+    jhConfig.debugModeFull = debugModeFull;
+    _initFlag = true;
     _context = context;
   }
 
   /// main入口MaterialApp中的key值
-  GlobalKey<NavigatorState> get getNavigatorKey => navigatorKey;
+  // GlobalKey<NavigatorState> get getNavigatorKey => _navigatorKey;
 
   /// 获取调试栏log日志信息
-  List<Map<D_Name, String>> get getDebugLogAll => _debugLogAll;
+  List<Map<String, String>> get getDebugLogAll => _debugLogAll;
 
   /// 设置调试log日志内容, 输出flutter错误日志,构建错误等
   setDebugLog({@required String debugLog, @required String debugStack}) {
-    if (_debugLogAll.length > debugRecord) {
+    if (_debugLogAll.length > _debugRecord) {
       _debugLogAll.removeAt(0); // 清除多余日志
     }
 
     _debugLogAll.add({
-      D_Name.log: debugLog,
-      D_Name.stack: debugStack,
+      'debugLog': debugLog,
+      'debugStack': debugStack,
     });
   }
 
-  /// 清空所有调试debug日志
+  /// 清空调试debug所有日志
   void clearDebugLog() => _debugLogAll.clear();
 
   /// 获取print栏 最新的一条log日志信息
@@ -110,18 +111,24 @@ class JhDebug {
 
   /// 设置print栏日志内容
   void setPrintLog(String text) {
-    if (_printLogAll.length > printRecord) {
+    if (_printLogAll.length > _printRecord) {
       _printLogAll.removeAt(0); // 清除多余日志
     }
     _printLogAll.add(text);
   }
 
-  /// 清空所有print日志
+  /// 清空print所有日志
   void clearPrintLog() => _printLogAll = [];
+
+  /// 清空所有类型日志
+  void clearAllLog() {
+    clearDebugLog();
+    clearPrintLog();
+  }
 
   // 初始化init方法判断
   bool _judegInit() {
-    if (initFlag) return true;
+    if (_initFlag) return true;
     JhUtils.toastTips('未初始化jeDebug.init方法');
     return false;
   }
@@ -133,34 +140,27 @@ class JhDebug {
 
     showDialog(
       context: _context,
-      builder: (BuildContext context) => Dialog(child: showWidget),
+      builder: (BuildContext context) => Dialog(child: _showWidget),
     );
   }
 
-  /// 隐藏jhDebug窗口
+  /// 隐藏jhDebug弹层窗口
   hideLog() {
     if (!_judegInit()) return;
     // final BuildContext _diglogCtx = navigatorKey.currentState.overlay.context;
     Navigator.pop(_context);
   }
 
-  /// 显示全局调试按钮，双击隐藏按钮
-  ///
-  /// 可自定义按钮显示的位置
-  showDebugBtn({
-    double top,
-    double bottom,
-    double left,
-    double rigth,
-  }) {
+  /// 显示全局调试按钮，双击隐藏按钮，可自定义按钮显示的位置
+  showDebugBtn({double top, double bottom, double left, double rigth}) {
     if (!_judegInit()) return;
     if (Overlay.of(_context) == null) {
       JhUtils.toastTips('错误：不支持添加，请不要在MaterialApp组件中直接使用');
       return;
     }
-    if (overlayCode != null) return;
+    if (_overlayCode != null) return;
 
-    overlayEntry = new OverlayEntry(
+    _overlayEntry = new OverlayEntry(
       builder: (context) {
         return StackPosBtn(
           top: top,
@@ -171,15 +171,15 @@ class JhDebug {
       },
     );
 
-    Overlay.of(_context).insert(overlayEntry);
-    overlayCode = overlayEntry.hashCode;
+    Overlay.of(_context).insert(_overlayEntry);
+    _overlayCode = _overlayEntry.hashCode;
   }
 
   /// 隐藏全局调试按钮
   removeDebugBtn() {
-    if (overlayCode != null) {
-      overlayEntry.remove();
-      overlayCode = null;
+    if (_overlayCode != null) {
+      _overlayEntry.remove();
+      _overlayCode = null;
       JhUtils.toastTips('已隐藏调试按钮');
     }
   }

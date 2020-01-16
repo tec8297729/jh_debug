@@ -1,4 +1,4 @@
-enum D_Name { log, stack }
+// enum D_Name { log, stack }
 
 class DebugLogType {
   String debugLog;

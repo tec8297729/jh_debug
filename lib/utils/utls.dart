@@ -1,6 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../jh_debug.dart';
+import '../config/jh_config.dart' show jhConfig;
 
 class JhUtils {
   /// tosat提示
@@ -14,10 +13,10 @@ class JhUtils {
   }
 
   /// 获取当前调试日志信息str
-  static getItemDebugLogStr(Map<D_Name, String> itemData) {
-    String logData = itemData[D_Name.log];
-    String logStackData = itemData[D_Name.stack];
-    if (jhDebug.debugModeFull && logStackData != 'null') {
+  static getItemDebugLogStr(Map<String, String> itemData) {
+    String logData = itemData['debugLog'];
+    String logStackData = itemData['debugStack'];
+    if (jhConfig.debugModeFull && logStackData != 'null') {
       logData += '\n$logStackData';
     }
     return logData;

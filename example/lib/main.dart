@@ -20,13 +20,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // jhDebug.init(
-    //   hideCustomTab: true,
-    //   btnTap1: () {
-    //     print('点击第一个按钮');
-    //   },
-    //   btnTitle1: '测试按钮22',
-    // );
   }
 
   @override
