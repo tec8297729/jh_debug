@@ -14,6 +14,8 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 </div>
 
 ## 快速入门
+
+### 第一步：
 1、在main.dart入口处添加如下代码
 
 ```dart
@@ -29,6 +31,8 @@ void main() {
 ```
 <br>
 
+### 第二步：
+
 2、在MaterialApp的home页面设置init初始化参数
 ```dart
 import 'package:jh_debug/jh_debug.dart';
@@ -43,7 +47,7 @@ jhDebug.init(
 ```
 <br>
 
-### jhDebug.init参数介绍
+jhDebug.init参数介绍
 <br>
 
 |              参数               |   类型   |                               说明                                |
@@ -61,13 +65,15 @@ jhDebug.init(
 
 <br>
 
+### 第三步：
+
 3、调用调试工具，在你需要使用到的页面
 
 ```dart
 jhDebug.showLog(); // 弹出jhDebug调试窗口，可自己指定义绑定到某个按钮事件上
 jhDebug.hideLog(); // 隐藏jhDebug调试窗口
 
-jhDebug.showDebugBtn(); // 显示全局按钮，此按钮已内置 点击显示出jeDebug调试弹层
+jhDebug.showDebugBtn(); // 显示全局浮动按钮，此按钮已内置点击显示出jeDebug调试弹层, 双击隐藏自身按钮, 长按拖动按钮位置
 jhDebug.removeDebugBtn(); // 隐藏全局按钮
 ```
 

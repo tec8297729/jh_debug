@@ -7,7 +7,8 @@ import 'config/jh_config.dart' show jhConfig;
 
 class JhDebug {
   // static GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-  Widget _showWidget = TabsWrap(); // log弹层组件
+  bool _layerFlag = false;
+  Widget _layerWidget = TabsWrap(); // log弹层组件
   List<String> _printLogAll = []; // 所有print日志
 
   /// 调试日志
@@ -61,7 +62,7 @@ class JhDebug {
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
     bool debugModeFull = JhConstants.DEBUG_MODEFULL,
   }) async {
-    _showWidget = TabsWrap(
+    _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
       customTabWidget: customTabWidget,
       hideBottom: hideBottom,
@@ -135,24 +136,43 @@ class JhDebug {
 
   /// 显示JhDebug弹层窗口
   showLog() {
-    if (!_judegInit()) return;
+    if (!_judegInit() || _layerFlag) return;
     // final BuildContext _diglogCtx = navigatorKey.currentState.overlay.context;
-
+    _layerFlag = true;
     showDialog(
       context: _context,
-      builder: (BuildContext context) => Dialog(child: _showWidget),
-    );
+      builder: (BuildContext context) => Dialog(child: _layerWidget),
+    ).then((v) {
+      _layerFlag = false;
+    });
   }
 
   /// 隐藏jhDebug弹层窗口
   hideLog() {
     if (!_judegInit()) return;
     // final BuildContext _diglogCtx = navigatorKey.currentState.overlay.context;
-    Navigator.pop(_context);
+    try {
+      Navigator.pop(_context);
+    } catch (e) {
+      _layerFlag = false;
+    }
   }
 
-  /// 显示全局调试按钮，双击隐藏按钮，可自定义按钮显示的位置
-  showDebugBtn({double top, double bottom, double left, double rigth}) {
+  /// 显示全局调试按钮，双击隐藏按钮
+  ///
+  /// [left, top, bottom, rigth] 可自定义按钮浮动显示的位置
+  ///
+  /// [width] 定义按钮的高度
+  ///
+  /// [height] 定义按钮的宽度
+  showDebugBtn({
+    double top,
+    double bottom,
+    double left,
+    double rigth,
+    double width,
+    double height,
+  }) {
     if (!_judegInit()) return;
     if (Overlay.of(_context) == null) {
       JhUtils.toastTips('错误：不支持添加，请不要在MaterialApp组件中直接使用');
@@ -163,6 +183,8 @@ class JhDebug {
     _overlayEntry = new OverlayEntry(
       builder: (context) {
         return StackPosBtn(
+          width: width,
+          height: height,
           top: top,
           bottom: bottom,
           left: left,

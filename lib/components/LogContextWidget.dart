@@ -48,14 +48,6 @@ class _LogContextWidgetState extends State<LogContextWidget> {
         ),
       );
     }
-
-    // if (allWidget.length <= 0) {
-    //   allWidget.add(Center(
-    //     heightFactor: 10,
-    //     child: Text('真机调试状态下error捕获内容'),
-    //   ));
-    // }
-
     return allWidget;
   }
 

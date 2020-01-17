@@ -13,9 +13,10 @@ class _TestPageState extends State<TestPage> {
     jhDebug.init(
       context: context,
       hideCustomTab: true,
-      // btnTap1: () {
-      //   print('点击第一个按钮');
-      // },
+      btnTap1: () {
+        print('点击第一个按钮');
+        jhDebug.hideLog();
+      },
       // btnTitle1: '测试按钮',
     );
   }
@@ -131,15 +132,15 @@ class _TestPageState extends State<TestPage> {
               },
             ),
           ),
-          Center(
-            child: RaisedButton(
-              child: Text('清空缓存'),
-              onPressed: () {
-                jhDebug.clearDebugLog();
-                jhDebug.clearPrintLog();
-              },
-            ),
-          ),
+          // Center(
+          //   child: RaisedButton(
+          //     child: Text('清空缓存'),
+          //     onPressed: () {
+          //       jhDebug.clearDebugLog();
+          //       jhDebug.clearPrintLog();
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
