@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+init.bat
 
 # IntelliJ related
 *.iml
