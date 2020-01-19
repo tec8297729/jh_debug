@@ -6,7 +6,7 @@ import './utils/utls.dart';
 import 'config/jh_config.dart' show jhConfig;
 
 class JhDebug {
-  // static GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+  static GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
   bool _layerFlag = false;
   Widget _layerWidget = TabsWrap(); // log弹层组件
   List<String> _printLogAll = []; // 所有print日志
@@ -84,7 +84,7 @@ class JhDebug {
   }
 
   /// main入口MaterialApp中的key值
-  // GlobalKey<NavigatorState> get getNavigatorKey => _navigatorKey;
+  GlobalKey<NavigatorState> get getNavigatorKey => _navigatorKey;
 
   /// 获取调试栏log日志信息
   List<Map<String, String>> get getDebugLogAll => _debugLogAll;
@@ -137,10 +137,10 @@ class JhDebug {
   /// 显示JhDebug弹层窗口
   showLog() {
     if (!_judegInit() || _layerFlag) return;
-    // final BuildContext _diglogCtx = navigatorKey.currentState.overlay.context;
+    final BuildContext _diglogCtx = _navigatorKey.currentState.overlay.context;
     _layerFlag = true;
     showDialog(
-      context: _context,
+      context: _diglogCtx,
       builder: (BuildContext context) => Dialog(child: _layerWidget),
     ).then((v) {
       _layerFlag = false;
@@ -150,9 +150,9 @@ class JhDebug {
   /// 隐藏jhDebug弹层窗口
   hideLog() {
     if (!_judegInit()) return;
-    // final BuildContext _diglogCtx = navigatorKey.currentState.overlay.context;
+    final BuildContext _diglogCtx = _navigatorKey.currentState.overlay.context;
     try {
-      Navigator.pop(_context);
+      Navigator.pop(_diglogCtx);
     } catch (e) {
       _layerFlag = false;
     }

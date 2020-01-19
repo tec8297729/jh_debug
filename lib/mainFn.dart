@@ -13,8 +13,6 @@ JhDebug jhDebug = JhDebug();
 ///
 /// [debugMode] 错误日志输出模式，self原生模式（部份错误日志不会被打印到插件中）,inConsole将错误日志映射到插件中（开启IDE情况下，ide控制台及插件同时有错误日志）, none不映射日志（真机上依然可以捕获）
 ///
-/// [cacheDiskLog] 是否把日志缓存在磁盘中
-///
 /// [errorCallback] 错误回调函数,返回错误相关信息,自定义上报错误等信息
 ///
 /// [beforeAppChildFn] 构建appChild之前钩子函数
