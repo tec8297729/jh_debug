@@ -9,8 +9,8 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 > * 内置全局浮动按钮组件
 
 <div style="display:flex; justify-content: space-evenly;">
-<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true" width="340px">
-<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true" width="340px">
+<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true" width="45%">
+<img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true" width="45%">
 </div>
 
 ## 快速入门
@@ -98,6 +98,12 @@ jhDebug.setDebugLog(
   debugLog: 'debugError错误',
   debugStack: 'stack信息',
 );
+
+// 自定义全局key
+jhDebug.setGlobalKey = GlobalKey<NavigatorState>();
+
+// 获取全局context
+jhDebug.getGlobalContext;
 ```
 
 个人博客 www.jonhuu.com
