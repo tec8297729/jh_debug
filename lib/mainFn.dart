@@ -15,6 +15,8 @@ JhDebug jhDebug = JhDebug();
 ///
 /// [errorCallback] 错误回调函数,返回错误相关信息,自定义上报错误等信息
 ///
+/// [errorWidgetFn] 自定义错误显示页面，默认使用flutter内置错误页面。
+///
 /// [beforeAppChildFn] 构建appChild之前钩子函数
 /// ```
 jhDebugMain({
@@ -22,34 +24,36 @@ jhDebugMain({
   Function(FlutterErrorDetails) errorCallback,
   VoidCallback beforeAppChildFn,
   DebugMode debugMode = JhConstants.ISIN_DEBUGMODE,
+  Function<Widget>(String message, Object error) errorWidgetFn,
 }) {
   if (debugMode != DebugMode.self) {
     FlutterError.onError = (FlutterErrorDetails details) {
       Zone.current.handleUncaughtError(details.exception, details.stack);
     };
 
-    // ErrorWidget.builder = (FlutterErrorDetails details) {
-    //   Zone.current.handleUncaughtError(details.exception, details.stack);
-    //   String message = '';
-    //   assert(() {
-    //     String _stringify(Object exception) {
-    //       try {
-    //         return exception.toString();
-    //       } catch (e) {
-    //         // intentionally left empty.
-    //       }
-    //       return 'Error';
-    //     }
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      Zone.current.handleUncaughtError(details.exception, details.stack);
+      String message = '';
+      assert(() {
+        String _stringify(Object exception) {
+          try {
+            return exception.toString();
+          } catch (e) {
+            // intentionally left empty.
+          }
+          return 'Error';
+        }
 
-    //     message = _stringify(details.exception) +
-    //         '\nSee also: https://flutter.dev/docs/testing/errors';
-    //     return true;
-    //   }());
-    //   final Object exception = details.exception;
-    //   return ErrorWidget.withDetails(
-    //       message: message,
-    //       error: exception is FlutterError ? exception : null);
-    // };
+        message = _stringify(details.exception) +
+            '\nSee also: https://flutter.dev/docs/testing/errors';
+        return true;
+      }());
+      final Object exception = details.exception;
+      if (errorWidgetFn != null) return errorWidgetFn(message, exception);
+      return ErrorWidget.withDetails(
+          message: message,
+          error: exception is FlutterError ? exception : null);
+    };
   }
 
   /// zone错误回调函数

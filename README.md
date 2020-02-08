@@ -83,6 +83,8 @@ jhDebug.hideLog(); // 隐藏jhDebug调试窗口
 
 jhDebug.showDebugBtn(); // 显示全局浮动按钮，此按钮已内置点击显示出jeDebug调试弹层, 双击隐藏自身按钮, 长按拖动按钮位置
 jhDebug.removeDebugBtn(); // 隐藏全局按钮
+
+jhDebug.getGlobalContext(); // 获取全局context
 ```
 
 其它相关API<br>
