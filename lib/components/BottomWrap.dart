@@ -27,7 +27,7 @@ class BottomWrap extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 5, bottom: 5),
       width: double.infinity,
-      color: Colors.black12,
+      color: Colors.white,
       child: Wrap(
         alignment: WrapAlignment.spaceEvenly,
         children: <Widget>[
@@ -44,7 +44,10 @@ class BottomWrap extends StatelessWidget {
     return Container(
       child: RaisedButton(
         color: Colors.white,
-        child: Text(title),
+        child: Text(
+          title,
+          style: TextStyle(color: Colors.black),
+        ),
         onPressed: () async {
           if (onPressed != null) {
             onPressed();

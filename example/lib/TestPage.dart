@@ -15,7 +15,6 @@ class _TestPageState extends State<TestPage> {
       hideCustomTab: true,
       btnTap1: () {
         print('点击第一个按钮');
-        jhDebug.hideLog();
       },
       // btnTitle1: '测试按钮',
     );

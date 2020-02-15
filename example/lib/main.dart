@@ -24,8 +24,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print('main');
     return MaterialApp(
       // home: TestPage(),
+      theme: ThemeData.dark(),
+      navigatorKey: jhDebug.getNavigatorKey,
       routes: {
         '/': (BuildContext context) => TestPage(),
         '/detailsPage': (BuildContext context) => DetailsPage(),

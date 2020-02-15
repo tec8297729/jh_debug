@@ -10,6 +10,7 @@ class JhDebug {
   bool _layerFlag = false;
   Widget _layerWidget = TabsWrap(); // log弹层组件
   List<String> _printLogAll = []; // 所有print日志
+  bool _isCacheLog = false;
 
   /// 调试日志
   List<Map<String, String>> _debugLogAll = [];
@@ -94,7 +95,7 @@ class JhDebug {
   BuildContext get getGlobalContext =>
       _navigatorKey?.currentState?.overlay?.context;
 
-  /// 获取调试栏log日志信息
+  /// 获取调试栏所有log日志信息
   List<Map<String, String>> get getDebugLogAll => _debugLogAll;
 
   /// 设置调试log日志内容, 输出flutter错误日志,构建错误等
@@ -110,13 +111,23 @@ class JhDebug {
   }
 
   /// 清空调试debug所有日志
-  void clearDebugLog() => _debugLogAll.clear();
+  void clearDebugLog() {
+    _debugLogAll.clear();
+    if (_isCacheLog) {
+      // SpUtil.setListData(JhConstants.PrintLogKey, _debugLogAll);
+    }
+  }
 
   /// 获取print栏 最新的一条log日志信息
   String get getPrintLog => _printLogAll[_printLogAll.length - 1];
 
   /// 获取所有print栏 log日志信息
-  List<String> get getPrintLogAll => _printLogAll;
+  List<String> get getPrintLogAll {
+    if (_isCacheLog) {
+      // return SpUtil.getList<String>(JhConstants.PrintLogKey) ?? [];
+    }
+    return _printLogAll;
+  }
 
   /// 设置print栏日志内容
   void setPrintLog(String text) {
@@ -124,10 +135,16 @@ class JhDebug {
       _printLogAll.removeAt(0); // 清除多余日志
     }
     _printLogAll.add(text);
+    // SpUtil.setListData(JhConstants.PrintLogKey, _printLogAll);
   }
 
   /// 清空print所有日志
-  void clearPrintLog() => _printLogAll = [];
+  void clearPrintLog() {
+    _printLogAll = [];
+    if (_isCacheLog) {
+      // SpUtil.setListData(JhConstants.PrintLogKey, _printLogAll);
+    }
+  }
 
   /// 清空所有类型日志
   void clearAllLog() {

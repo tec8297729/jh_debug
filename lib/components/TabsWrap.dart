@@ -72,8 +72,8 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _tabController.removeListener(tabListener);
-    _tabController.dispose();
+    _tabController?.removeListener(tabListener);
+    _tabController?.dispose();
     super.dispose();
   }
 
@@ -133,8 +133,10 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
           // tab选项卡
           Container(
             height: 40,
+            color: Colors.white,
             child: TabBar(
               controller: _tabController,
+              indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
               tabs: <Widget>[
                 _tabTitle('print'),
                 _tabTitle('调试日志'),

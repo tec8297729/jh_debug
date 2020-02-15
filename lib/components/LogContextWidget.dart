@@ -32,6 +32,8 @@ class LogContextWidget extends StatefulWidget {
 class _LogContextWidgetState extends State<LogContextWidget> {
   /// 当前print日志点击索引
   int tapPrintLogIndex;
+  Color _textColor = Colors.black;
+  Color _bgColor = Colors.white;
 
   /// 处理debug日志结构
   handelDebugWidge() {
@@ -100,18 +102,21 @@ class _LogContextWidgetState extends State<LogContextWidget> {
 
   /// 基础log布局层
   _logWrap({@required List<Widget> child, Widget headerChild}) {
-    return Stack(
-      children: <Widget>[
-        SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(5, 43, 5, 5),
-            child: Column(children: <Widget>[...child]),
+    return Container(
+      color: _bgColor,
+      child: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(5, 43, 5, 5),
+              child: Column(children: <Widget>[...child]),
+            ),
           ),
-        ),
-        // 头部组件
-        if (headerChild != null)
-          headerChild,
-      ],
+          // 头部组件
+          if (headerChild != null)
+            headerChild,
+        ],
+      ),
     );
   }
 
@@ -135,7 +140,12 @@ class _LogContextWidgetState extends State<LogContextWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(child: Text('点击行: ${tips ?? ''}')),
+          Container(
+            child: Text(
+              '点击行: ${tips ?? ''}',
+              style: TextStyle(color: _textColor),
+            ),
+          ),
           clearBtnWidget(),
         ],
       ),
@@ -179,7 +189,10 @@ class _LogContextWidgetState extends State<LogContextWidget> {
           // 左侧
           ConstrainedBox(
             constraints: BoxConstraints(minWidth: 20, maxWidth: 54),
-            child: Text('$index：'),
+            child: Text(
+              '$index：',
+              style: TextStyle(color: _textColor),
+            ),
           ),
           // 右侧 错误日志内容区
           Expanded(
@@ -190,7 +203,10 @@ class _LogContextWidgetState extends State<LogContextWidget> {
                 tapPrintLogIndex = index;
                 widget.initTabsWidget();
               },
-              child: Text(logData.toString()),
+              child: Text(
+                logData.toString(),
+                style: TextStyle(color: _textColor),
+              ),
             ),
           )
         ],
