@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import './components/StackPosBtn.dart';
-import 'components/TabsWrap.dart';
+import 'package:jh_debug/utils/logData_utls.dart';
+import 'components/StackPosBtn.dart';
+import 'page/TabsWrap.dart';
 import 'constants/jh_constants.dart';
-import './utils/utls.dart';
+import 'utils/utls.dart';
 import 'config/jh_config.dart' show jhConfig;
 
 class JhDebug {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   bool _layerFlag = false;
   Widget _layerWidget = TabsWrap(); // log弹层组件
-  List<String> _printLogAll = []; // 所有print日志
   bool _isCacheLog = false;
 
-  /// 调试日志
-  List<Map<String, String>> _debugLogAll = [];
-  int _printRecord = JhConstants.PRINT_RECORD;
-  int _debugRecord = JhConstants.DEBUG_RECORD;
-  // bool debugModeFull = JhConstants.DEBUG_MODEFULL;
   OverlayEntry _overlayEntry; // 叠加层组件
   int _overlayCode; // overlay_id
   bool _initFlag = false; // 初始化
@@ -63,6 +58,7 @@ class JhDebug {
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
     bool debugModeFull = JhConstants.DEBUG_MODEFULL,
   }) async {
+    // 初始化弹层日志组件
     _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
       customTabWidget: customTabWidget,
@@ -77,8 +73,8 @@ class JhDebug {
       tabsInitIndex: tabsInitIndex,
     );
 
-    printRecord = printRecord;
-    debugRecord = debugRecord;
+    jhConfig.printRecord = printRecord;
+    jhConfig.debugRecord = debugRecord;
     jhConfig.debugModeFull = debugModeFull;
     _initFlag = true;
     _context = context;
@@ -96,55 +92,27 @@ class JhDebug {
       _navigatorKey?.currentState?.overlay?.context;
 
   /// 获取调试栏所有log日志信息
-  List<Map<String, String>> get getDebugLogAll => _debugLogAll;
+  List<Map<String, String>> get getDebugLogAll => logDataUtls.getDebugLogAll;
 
   /// 设置调试log日志内容, 输出flutter错误日志,构建错误等
   setDebugLog({@required String debugLog, @required String debugStack}) {
-    if (_debugLogAll.length > _debugRecord) {
-      _debugLogAll.removeAt(0); // 清除多余日志
-    }
-
-    _debugLogAll.add({
-      'debugLog': debugLog,
-      'debugStack': debugStack,
-    });
+    logDataUtls.addDebugLog(debugLog, debugStack);
   }
 
   /// 清空调试debug所有日志
-  void clearDebugLog() {
-    _debugLogAll.clear();
-    if (_isCacheLog) {
-      // SpUtil.setListData(JhConstants.PrintLogKey, _debugLogAll);
-    }
-  }
+  void clearDebugLog() => logDataUtls.clearDebug();
 
   /// 获取print栏 最新的一条log日志信息
-  String get getPrintLog => _printLogAll[_printLogAll.length - 1];
+  String get getPrintLog => logDataUtls.getPrintLog;
 
   /// 获取所有print栏 log日志信息
-  List<String> get getPrintLogAll {
-    if (_isCacheLog) {
-      // return SpUtil.getList<String>(JhConstants.PrintLogKey) ?? [];
-    }
-    return _printLogAll;
-  }
+  List<String> get getPrintLogAll => logDataUtls.getPrintLogAll;
 
   /// 设置print栏日志内容
-  void setPrintLog(String text) {
-    if (_printLogAll.length > _printRecord) {
-      _printLogAll.removeAt(0); // 清除多余日志
-    }
-    _printLogAll.add(text);
-    // SpUtil.setListData(JhConstants.PrintLogKey, _printLogAll);
-  }
+  void setPrintLog(String text) => logDataUtls.addPringLog(text);
 
   /// 清空print所有日志
-  void clearPrintLog() {
-    _printLogAll = [];
-    if (_isCacheLog) {
-      // SpUtil.setListData(JhConstants.PrintLogKey, _printLogAll);
-    }
-  }
+  void clearPrintLog() => logDataUtls.clearPrint();
 
   /// 清空所有类型日志
   void clearAllLog() {

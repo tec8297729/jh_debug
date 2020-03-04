@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '../components/LogContextWidget.dart';
+import 'package:jh_debug/components/LogContextWidget/LogContextWidget.dart';
+import 'package:jh_debug/utils/logData_utls.dart';
+import '../components/BottomWrap.dart';
 import '../jh_debug.dart';
-import 'BottomWrap.dart';
 
+/// 弹层组件
 class TabsWrap extends StatefulWidget {
   TabsWrap({
     this.customBottomWidge,
@@ -80,48 +82,37 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
   /// 更新tabs组件页面
   _initTabsWidget({int initialIndex}) {
     _tabController?.removeListener(tabListener);
-    setState(() {
-      // print数据源
-      List<String> printLogList = jhDebug.getPrintLogAll;
-      // print('dhyw>>>45${printLogList}');
-
-      tabViewChild = [
-        LogContextWidget(
-          logType: LogType.print,
-          dataList: printLogList,
-          getTabContrIdx: getTabContrIdx,
-          initTabsWidget: _initTabsWidget,
+    // logDataUtls.flushPrint();
+    tabViewChild = [
+      _printList(), // print日志
+      _debugList(), // debug日志
+      if (!widget.hideCustomTab)
+        Center(
+          child: Text('自定义你显示的内容'),
         ),
-        // 调试日志
-        LogContextWidget(
-          logType: LogType.debug,
-          dataList: printLogList,
-          getTabContrIdx: getTabContrIdx,
-          initTabsWidget: _initTabsWidget,
-        ),
-        if (!widget.hideCustomTab)
-          Center(
-            child: Text('自定义你显示的内容'),
-          ),
-      ];
+    ];
 
-      int tabsLen = tabViewChild.length; // tabs总长度
-      if (initialIndex != null && initialIndex >= tabsLen) {
-        initialIndex = tabsLen - 1;
-      }
-      _tabController = TabController(
-        length: tabsLen,
-        initialIndex: initialIndex ?? tabsIndex,
-        vsync: this,
-      );
+    int tabsLen = tabViewChild.length; // tabs总长度
+    if (initialIndex != null && initialIndex >= tabsLen) {
+      initialIndex = tabsLen - 1;
+    }
+    _tabController = TabController(
+      length: tabsLen,
+      initialIndex: initialIndex ?? tabsIndex,
+      vsync: this,
+    );
 
-      _tabController.addListener(tabListener);
-    });
+    _tabController.addListener(tabListener);
+    // setState(() {
+    // });
   }
 
   // 监听滑动事件
-  tabListener() => tabsIndex = _tabController.index;
+  tabListener() {
+    tabsIndex = _tabController.index;
+  }
 
+  /// 获取tab索引
   int getTabContrIdx() => _tabController.index;
 
   @override
@@ -147,8 +138,10 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
           // tab显示内容区域
           Expanded(
             flex: 1,
-            child:
-                TabBarView(controller: _tabController, children: tabViewChild),
+            child: TabBarView(
+              controller: _tabController,
+              children: tabViewChild,
+            ),
           ),
 
           // 底部区域
@@ -173,6 +166,40 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
     return Text(
       title,
       style: TextStyle(color: Colors.black),
+    );
+  }
+
+  /// print日志组件
+  Widget _printList() {
+    return StreamBuilder(
+      stream: () {
+        return logDataUtls.subPrint();
+      }(),
+      builder: (context, snap) {
+        return LogContextWidget(
+          logType: LogType.print,
+          dataList: jhDebug.getPrintLogAll ?? [],
+          getTabContrIdx: getTabContrIdx,
+          initTabsWidget: _initTabsWidget,
+        );
+      },
+    );
+  }
+
+  /// debug日志组件
+  Widget _debugList() {
+    return StreamBuilder(
+      stream: () {
+        return logDataUtls.subDebug();
+      }(),
+      builder: (context, snap) {
+        return LogContextWidget(
+          logType: LogType.debug,
+          dataList: jhDebug.getDebugLogAll ?? [],
+          getTabContrIdx: getTabContrIdx,
+          initTabsWidget: _initTabsWidget,
+        );
+      },
     );
   }
 }

@@ -7,6 +7,8 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
+  Stream<int> streamPrint;
+
   @override
   void initState() {
     super.initState();
@@ -76,9 +78,15 @@ class _TestPageState extends State<TestPage> {
           ),
           Center(
             child: RaisedButton(
-              child: Text('打印一次'),
-              onPressed: () {
-                print('测试打印${DateTime.now()}');
+              child: Text('打印几次'),
+              onPressed: () async {
+                Duration interval = Duration(seconds: 1);
+                streamPrint = Stream.periodic(interval, (data) => data);
+                streamPrint = streamPrint.take(10);
+                await for (int i in streamPrint) {
+                  print('测试打印${DateTime.now()}');
+                  // print('测试打印${i}');
+                }
               },
             ),
           ),
@@ -95,12 +103,17 @@ class _TestPageState extends State<TestPage> {
           Center(
             child: RaisedButton(
               child: Text('手动添加error错误'),
-              onPressed: () {
-                jhDebug.setDebugLog(
-                  debugLog:
-                      'RangeError (index): Invalid value: Not in range 0..3, inclusive: 4, D_',
-                  debugStack:
-                      '''List.[] (dart:core-patch/growable_array.dart:149:60)
+              onPressed: () async {
+                Duration interval = Duration(seconds: 1);
+                streamPrint = Stream.periodic(interval, (data) => data);
+                streamPrint = streamPrint.take(10);
+                await for (int i in streamPrint) {
+                  // print('测试打印${i}');
+                  jhDebug.setDebugLog(
+                    debugLog:
+                        'RangeError (index$i): Invalid value: Not in range 0..3, inclusive: 4, D_',
+                    debugStack:
+                        '''List.[] (dart:core-patch/growable_array.dart:149:60)
 #1      _TabsWrapState.copyClickItemData (package:jh_debug/components/TabsWrap.dart:170:28)
 #2      _TabsWrapState._logContext.<anonymous closure> (package:jh_debug/components/TabsWrap.dart:356:17)
 #3      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:182:24)
@@ -119,7 +132,8 @@ class _TestPageState extends State<TestPage> {
 #16     _invoke1 (dart:ui/hooks.dart:273:10)
 #17     _dispatchPointerDataPacket (dart:ui/hooks.dart:182:5)
 ''',
-                );
+                  );
+                }
               },
             ),
           ),
