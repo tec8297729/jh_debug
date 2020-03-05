@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:jh_debug/config/jh_config.dart';
+import 'package:jh_debug/utils/utls.dart';
 
 List<String> _printLogAll = []; // 所有print日志
 List<Map<String, String>> _debugLogAll = []; // 所有的debug调试日志
@@ -9,15 +10,19 @@ LogDataUtls logDataUtls = LogDataUtls()..init();
 /// 数据源方法
 class LogDataUtls {
   StreamController<List<String>> _printCtr = StreamController();
-  Stream<List<String>> _printStream; // 数据流
+  Stream<List<String>> _printStream; // print数据流
   StreamController<List<Map<String, String>>> _debugCtr = StreamController();
-  Stream<List<Map<String, String>>> _debugStream; // 数据流
+  Stream<List<Map<String, String>>> _debugStream; // debug数据流
 
   /// 初始化实例
   init() {
     _printStream = _printCtr.stream.asBroadcastStream();
     _debugStream = _debugCtr.stream.asBroadcastStream();
-    _printStream.listen((data) => _printLogAll);
+    _printStream.listen((data) {
+      // Future.delayed(Duration(seconds: 1));
+      // sqlUtil.insertDbPrint(data);
+      return _printLogAll;
+    });
   }
 
   /// 订阅print日志
@@ -31,18 +36,22 @@ class LogDataUtls {
 
   /// 添加一条print日志
   void addPringLog(String data) {
-    if (_printLogAll.length > jhConfig.printRecord) {
-      _printLogAll.removeAt(0); // 清除多余日志
+    if (_printLogAll.length >= jhConfig.printRecord) {
+      // 清除多余日志
+      _printLogAll.removeRange(
+          0, _printLogAll.length - jhConfig.printRecord + 1);
     }
     _printLogAll.add(data);
     _printCtr.sink.add(_printLogAll);
   }
 
-  /// print单日志
+  /// print 获取单日志
   String get getPrintLog => _printLogAll[_printLogAll.length - 1];
 
-  /// print全部日志
-  List<String> get getPrintLogAll => _printLogAll;
+  /// print 获取全部日志
+  List<String> get getPrintLogAll {
+    return _printLogAll;
+  }
 
   /// 清空print日志数据
   clearPrint() {
@@ -62,8 +71,10 @@ class LogDataUtls {
 
   /// debug 添加一条日志
   void addDebugLog(String debugLog, String debugStack) {
-    if (_debugLogAll.length > jhConfig.debugRecord) {
-      _debugLogAll.removeAt(0); // 清除多余日志
+    if (_debugLogAll.length >= jhConfig.debugRecord) {
+      // 清除多余日志
+      _debugLogAll.removeRange(
+          0, _debugLogAll.length - jhConfig.debugRecord + 1);
     }
     _debugLogAll.add({
       'debugLog': debugLog,

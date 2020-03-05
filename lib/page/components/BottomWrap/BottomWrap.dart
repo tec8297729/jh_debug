@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/utls.dart';
+import 'package:jh_debug/utils/utls.dart';
 
 class BottomWrap extends StatelessWidget {
   BottomWrap({

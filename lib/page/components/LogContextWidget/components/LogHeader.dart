@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/jh_debug.dart';
 import 'package:jh_debug/utils/utls.dart';
-
 import '../LogContextWidget.dart';
 
+/// 日志内容区头部组件
 class LogHeader extends StatefulWidget {
   LogHeader({
     @required this.type,
@@ -121,9 +121,10 @@ class _LogHeaderState extends State<LogHeader> {
   Widget baseBtnWrap(
       {@required String text, @required VoidCallback onPressed}) {
     return Container(
-      width: 90,
+      // width: 90,
       child: RaisedButton(
         onPressed: onPressed,
+        textColor: Colors.white,
         child: Text(text, style: TextStyle(fontSize: 14)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

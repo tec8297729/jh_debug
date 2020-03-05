@@ -10,8 +10,6 @@ class JhDebug {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   bool _layerFlag = false;
   Widget _layerWidget = TabsWrap(); // log弹层组件
-  bool _isCacheLog = false;
-
   OverlayEntry _overlayEntry; // 叠加层组件
   int _overlayCode; // overlay_id
   bool _initFlag = false; // 初始化
@@ -62,6 +60,8 @@ class JhDebug {
     _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
       customTabWidget: customTabWidget,
+      customTabTitle: customTabTitle,
+      tabsInitIndex: tabsInitIndex,
       hideBottom: hideBottom,
       customBottomWidge: customBottomWidge,
       btnTap1: btnTap1,
@@ -70,7 +70,6 @@ class JhDebug {
       btnTitle1: btnTitle1,
       btnTitle2: btnTitle2,
       btnTitle3: btnTitle3,
-      tabsInitIndex: tabsInitIndex,
     );
 
     jhConfig.printRecord = printRecord;
@@ -131,11 +130,28 @@ class JhDebug {
   showLog() {
     if (!_judegInit() || _layerFlag) return;
     _layerFlag = true;
-    showDialog(
-        context: getGlobalContext,
-        builder: (context) {
-          return Dialog(child: _layerWidget);
-        }).then((v) {
+    showGeneralDialog(
+      context: getGlobalContext,
+      barrierLabel: "jhDialog",
+      barrierDismissible: true, // 是否点击其他区域消失
+      barrierColor: Colors.black54, // 遮罩层背景色
+      transitionDuration: Duration(milliseconds: 150), // 弹出的过渡时长
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Dialog(child: _layerWidget);
+      },
+      transitionBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
+        // 显示的动画组件
+        return ScaleTransition(
+          scale: Tween<double>(begin: 0, end: 1).animate(animation),
+          child: child,
+        );
+      },
+    ).then((v) {
       _layerFlag = false;
     });
   }

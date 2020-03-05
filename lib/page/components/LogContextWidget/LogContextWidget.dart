@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import './components/LogHeader.dart';
 import 'package:jh_debug/jh_debug.dart';
 import 'package:jh_debug/utils/utls.dart';
@@ -52,47 +51,21 @@ class _LogContextWidgetState extends State<LogContextWidget>
     super.dispose();
   }
 
-  /// 处理debug日志结构
-  handelDebugWidge() {
-    List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
-    List<Widget> allWidget = [];
-
-    for (var i = debugLogList.length; i > 0; i--) {
-      String logData = JhUtils.getItemDebugLogStr(debugLogList[i - 1]);
-
-      allWidget.add(
-        _logContext(
-          index: i, // 倒序索引
-          logData: logData,
-        ),
-      );
-    }
-    return allWidget;
-  }
-
   /// 复制当前点击元素文本内容
   copyClickItemData(int dataIndex) {
     switch (widget.getTabContrIdx()) {
       case 0:
         // print日志
         List<String> printLogList = jhDebug.getPrintLogAll;
-        copyFn(printLogList[dataIndex]);
+        JhUtils.copyText(printLogList[dataIndex]);
         break;
       case 1:
         // debug日志
         List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
-        copyFn(JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
+        JhUtils.copyText(JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
         break;
       default:
     }
-  }
-
-  /// 复制到系统剪切板
-  copyFn(String textData) async {
-    await Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
-      JhUtils.toastTips('复制失败');
-    });
-    JhUtils.toastTips('已复制');
   }
 
   /// 设置tap点击索引
@@ -107,7 +80,6 @@ class _LogContextWidgetState extends State<LogContextWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     if (widget.logType == LogType.print) {
       return _logWrap(
         headerChild: LogHeader(
@@ -126,7 +98,7 @@ class _LogContextWidgetState extends State<LogContextWidget>
       );
     }
 
-    // 调试日志
+    // 调试日志内容
     return _logWrap(
       headerChild: LogHeader(
         type: LogType.debug,
@@ -157,6 +129,24 @@ class _LogContextWidgetState extends State<LogContextWidget>
         ],
       ),
     );
+  }
+
+  /// 处理debug日志结构
+  List<Widget> handelDebugWidge() {
+    List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
+    List<Widget> allWidget = [];
+
+    for (var i = debugLogList.length; i > 0; i--) {
+      String logData = JhUtils.getItemDebugLogStr(debugLogList[i - 1]);
+
+      allWidget.add(
+        _logContext(
+          index: i, // 倒序索引
+          logData: logData,
+        ),
+      );
+    }
+    return allWidget;
   }
 
   /// 日志输出布局item

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jh_debug/components/LogContextWidget/LogContextWidget.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
-import '../components/BottomWrap.dart';
+import 'components/LogContextWidget/LogContextWidget.dart';
+import 'components/BottomWrap/BottomWrap.dart';
 import '../jh_debug.dart';
 
 /// 弹层组件
@@ -14,8 +14,8 @@ class TabsWrap extends StatefulWidget {
     this.btnTitle2,
     this.btnTap3,
     this.btnTitle3,
-    this.hideBottom = false,
-    this.hideCustomTab = true,
+    this.hideBottom,
+    this.hideCustomTab,
     this.customTabWidget,
     this.customTabTitle,
     this.tabsInitIndex,
@@ -81,30 +81,27 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
 
   /// 更新tabs组件页面
   _initTabsWidget({int initialIndex}) {
-    _tabController?.removeListener(tabListener);
-    // logDataUtls.flushPrint();
-    tabViewChild = [
-      _printList(), // print日志
-      _debugList(), // debug日志
-      if (!widget.hideCustomTab)
-        Center(
-          child: Text('自定义你显示的内容'),
-        ),
-    ];
+    setState(() {
+      _tabController?.removeListener(tabListener);
+      tabViewChild = [
+        _printList(), // print日志
+        _debugList(), // debug日志
+        if (!widget.hideCustomTab)
+          _customTabList(),
+      ];
 
-    int tabsLen = tabViewChild.length; // tabs总长度
-    if (initialIndex != null && initialIndex >= tabsLen) {
-      initialIndex = tabsLen - 1;
-    }
-    _tabController = TabController(
-      length: tabsLen,
-      initialIndex: initialIndex ?? tabsIndex,
-      vsync: this,
-    );
+      int tabsLen = tabViewChild.length; // tabs总长度
+      if (initialIndex != null && initialIndex >= tabsLen) {
+        initialIndex = tabsLen - 1;
+      }
+      _tabController = TabController(
+        length: tabsLen,
+        initialIndex: initialIndex ?? tabsIndex,
+        vsync: this,
+      );
 
-    _tabController.addListener(tabListener);
-    // setState(() {
-    // });
+      _tabController.addListener(tabListener);
+    });
   }
 
   // 监听滑动事件
@@ -131,7 +128,8 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
               tabs: <Widget>[
                 _tabTitle('print'),
                 _tabTitle('调试日志'),
-                if (!widget.hideCustomTab) _tabTitle('自定义'),
+                if (!widget.hideCustomTab)
+                  _tabTitle(widget.customTabTitle ?? '自定义'),
               ],
             ),
           ),
@@ -154,7 +152,7 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
               btnTitle2: widget.btnTitle2,
               btnTitle3: widget.btnTitle3,
               initTabsWidget: _initTabsWidget,
-              customBottomWidge: widget.customTabWidget,
+              customBottomWidge: widget.customBottomWidge,
             ),
         ],
       ),
@@ -165,8 +163,18 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
   _tabTitle(String title) {
     return Text(
       title,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.black, fontSize: 15),
+      overflow: TextOverflow.ellipsis,
     );
+  }
+
+  /// 自定义tab内容组件
+  Widget _customTabList() {
+    if (widget.customTabWidget == null)
+      return Center(
+        child: Text('自定义你显示的内容'),
+      );
+    return widget.customTabWidget;
   }
 
   /// print日志组件

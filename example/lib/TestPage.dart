@@ -14,11 +14,20 @@ class _TestPageState extends State<TestPage> {
     super.initState();
     jhDebug.init(
       context: context,
-      hideCustomTab: true,
+      hideCustomTab: false,
       btnTap1: () {
         print('点击第一个按钮');
       },
-      // btnTitle1: '测试按钮',
+      btnTap2: () {
+        print('${jhDebug.getPrintLogAll}');
+      },
+      customTabTitle: '自定义tab专栏',
+      customTabWidget: Container(
+        child: Text('data'),
+      ),
+      // customBottomWidge: Container(
+      //   child: Text('自定义按钮区域'),
+      // ),
     );
   }
 
@@ -80,9 +89,9 @@ class _TestPageState extends State<TestPage> {
             child: RaisedButton(
               child: Text('打印几次'),
               onPressed: () async {
-                Duration interval = Duration(seconds: 1);
+                Duration interval = Duration(milliseconds: 10);
                 streamPrint = Stream.periodic(interval, (data) => data);
-                streamPrint = streamPrint.take(10);
+                streamPrint = streamPrint.take(1000);
                 await for (int i in streamPrint) {
                   print('测试打印${DateTime.now()}');
                   // print('测试打印${i}');
