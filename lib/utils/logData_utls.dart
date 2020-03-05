@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:jh_debug/config/jh_config.dart';
-import 'package:jh_debug/utils/utls.dart';
 
 List<String> _printLogAll = []; // 所有print日志
 List<Map<String, String>> _debugLogAll = []; // 所有的debug调试日志

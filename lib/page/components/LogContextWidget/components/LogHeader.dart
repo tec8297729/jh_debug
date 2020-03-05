@@ -125,10 +125,11 @@ class _LogHeaderState extends State<LogHeader> {
       child: RaisedButton(
         onPressed: onPressed,
         textColor: Colors.white,
-        child: Text(text, style: TextStyle(fontSize: 14)),
+        color: Color(0xFF1C88E5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        child: Text(text, style: TextStyle(fontSize: 14)),
       ),
     );
   }
