@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/jh_debug.dart';
+import 'package:jh_debug/utils/logData_utls.dart';
 import 'package:jh_debug/utils/utls.dart';
 import '../LogContextWidget.dart';
 
@@ -41,7 +42,7 @@ class _LogHeaderState extends State<LogHeader> {
   /// print日志头部组件
   Widget _headerPrintLog() {
     String tips = '';
-    if (widget.tapLogIndex != null)
+    if (widget.tapLogIndex != null) {
       switch (widget.getTabContrIdx()) {
         case 0:
           tips = 'print-${widget.tapLogIndex}';
@@ -51,6 +52,8 @@ class _LogHeaderState extends State<LogHeader> {
           break;
         default:
       }
+    }
+
     return Container(
       padding: EdgeInsets.fromLTRB(10, 8, 10, 3),
       height: 36,
@@ -84,6 +87,7 @@ class _LogHeaderState extends State<LogHeader> {
             onPressed: () {
               setState(() {
                 jhConfig.debugModeFull = !jhConfig.debugModeFull;
+                logDataUtls.flushDebug();
               });
             },
           ),

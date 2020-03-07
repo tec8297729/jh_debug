@@ -119,7 +119,7 @@ class _LogContextWidgetState extends State<LogContextWidget>
           SingleChildScrollView(
             controller: scrollController,
             child: Container(
-              margin: EdgeInsets.fromLTRB(5, 43, 5, 5),
+              margin: EdgeInsets.fromLTRB(10, 43, 10, 5),
               child: Column(children: child),
             ),
           ),
@@ -158,8 +158,15 @@ class _LogContextWidgetState extends State<LogContextWidget>
       margin: EdgeInsets.only(top: 7),
       padding: EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
+        // 分割线
         border: Border(
-          bottom: BorderSide(width: 1, color: Colors.black12),
+          bottom: BorderSide(
+            width: 1,
+            color: (index != 1)
+                ? Colors.primaries[(index + 3) % Colors.primaries.length]
+                    .withOpacity(0.4)
+                : Colors.transparent,
+          ),
         ),
       ),
       child: Row(

@@ -3,7 +3,6 @@ import 'package:jh_debug/utils/logData_utls.dart';
 import 'components/StackPosBtn.dart';
 import 'page/TabsWrap.dart';
 import 'constants/jh_constants.dart';
-import 'utils/utls.dart';
 import 'config/jh_config.dart' show jhConfig;
 
 class JhDebug {
@@ -56,6 +55,9 @@ class JhDebug {
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
     bool debugModeFull = JhConstants.DEBUG_MODEFULL,
   }) async {
+    assert(context != null);
+    assert(hideCustomTab != null);
+    assert(hideBottom != null);
     // 初始化弹层日志组件
     _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
@@ -122,8 +124,8 @@ class JhDebug {
   // 初始化init方法判断
   bool _judegInit() {
     if (_initFlag) return true;
-    JhUtils.toastTips('未初始化jeDebug.init方法');
-    return false;
+    throw Exception('未初始化jeDebug.init方法');
+    // return false;
   }
 
   /// 显示JhDebug弹层窗口
@@ -183,8 +185,8 @@ class JhDebug {
   }) {
     if (!_judegInit()) return;
     if (Overlay.of(_context) == null) {
-      JhUtils.toastTips('错误：不支持添加，请不要在MaterialApp组件中直接使用');
-      return;
+      throw Exception(
+          'jhDebug错误：init方法中的context参数非法，请不要在MaterialApp组件中init初始化');
     }
     if (_overlayCode != null) return;
 
@@ -210,7 +212,6 @@ class JhDebug {
     if (_overlayCode != null) {
       _overlayEntry.remove();
       _overlayCode = null;
-      JhUtils.toastTips('已隐藏调试按钮');
     }
   }
 }

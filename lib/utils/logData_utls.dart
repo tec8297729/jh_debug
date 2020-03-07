@@ -3,7 +3,6 @@ import 'package:jh_debug/config/jh_config.dart';
 
 List<String> _printLogAll = []; // 所有print日志
 List<Map<String, String>> _debugLogAll = []; // 所有的debug调试日志
-
 LogDataUtls logDataUtls = LogDataUtls()..init();
 
 /// 数据源方法

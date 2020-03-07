@@ -17,9 +17,9 @@ class JhUtils {
   /// 复制到系统剪切板
   static copyText(String textData) async {
     await Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
-      JhUtils.toastTips('复制失败');
+      JhUtils.toastTips( '复制失败');
     });
-    JhUtils.toastTips('已复制');
+    JhUtils.toastTips( '已复制');
   }
 
   /// 获取当前调试日志信息str

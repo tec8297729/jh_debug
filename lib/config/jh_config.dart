@@ -9,6 +9,9 @@ class JhConfig {
 
   /// debug日志上限
   int debugRecord = JhConstants.DEBUG_RECORD;
+
+  /// 测试输出
+  bool trace = true;
 }
 
 JhConfig jhConfig = JhConfig();
