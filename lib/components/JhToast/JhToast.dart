@@ -54,7 +54,7 @@ class JhToast {
     //显示的文字大小
     double textSize = 14.0,
     //显示的位置
-    ToastPostion position = ToastPostion.center,
+    ToastPostion position = ToastPostion.bottom,
     //文字水平方向的内边距
     double pdHorizontal = 20.0,
     //文字垂直方向的内边距
@@ -97,7 +97,6 @@ class JhToast {
         ),
       );
 
-      print(context.widget);
       //插入到整个布局的最上层
       overlayState.insert(_overlayEntry);
     } else {
@@ -106,15 +105,15 @@ class JhToast {
     }
 
     /// 等待时间
-    // await Future.delayed(Duration(milliseconds: _showTime));
-    // //2秒后 到底消失不消失
-    // if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
-    //   _showing = false;
-    //   _overlayEntry.markNeedsBuild();
-    //   await Future.delayed(Duration(milliseconds: 400));
-    //   _overlayEntry.remove();
-    //   _overlayEntry = null;
-    // }
+    await Future.delayed(Duration(milliseconds: _showTime));
+    //2秒后 到底消失不消失
+    if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
+      _showing = false;
+      _overlayEntry.markNeedsBuild();
+      await Future.delayed(Duration(milliseconds: 400));
+      _overlayEntry.remove();
+      _overlayEntry = null;
+    }
   }
 
   //toast绘制

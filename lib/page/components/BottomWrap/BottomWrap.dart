@@ -31,16 +31,17 @@ class BottomWrap extends StatelessWidget {
       child: Wrap(
         alignment: WrapAlignment.spaceEvenly,
         children: <Widget>[
-          _btnWrap(title: '${btnTitle1 ?? '开发'}', onPressed: btnTap1),
-          _btnWrap(title: '${btnTitle2 ?? '调试'}', onPressed: btnTap2),
-          _btnWrap(title: '${btnTitle3 ?? '生产'}', onPressed: btnTap3),
+          _btnWrap(context, title: '${btnTitle1 ?? '开发'}', onPressed: btnTap1),
+          _btnWrap(context, title: '${btnTitle2 ?? '调试'}', onPressed: btnTap2),
+          _btnWrap(context, title: '${btnTitle3 ?? '生产'}', onPressed: btnTap3),
         ],
       ),
     );
   }
 
   // 按钮基础组件
-  _btnWrap({@required String title, @required VoidCallback onPressed}) {
+  _btnWrap(BuildContext context,
+      {@required String title, @required VoidCallback onPressed}) {
     return Container(
       child: RaisedButton(
         color: Colors.white,
@@ -52,7 +53,7 @@ class BottomWrap extends StatelessWidget {
           if (onPressed != null) {
             onPressed();
           } else {
-            JhUtils.toastTips('请自定义你的按钮事件');
+            JhUtils.toastTips(context, '请自定义你的按钮事件');
           }
           initTabsWidget();
         },

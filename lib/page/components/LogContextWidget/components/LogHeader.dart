@@ -106,12 +106,12 @@ class _LogHeaderState extends State<LogHeader> {
         switch (widget.getTabContrIdx()) {
           case 0:
             jhDebug.clearPrintLog();
-            JhUtils.toastTips('已清空print日志');
+            JhUtils.toastTips(context, '已清空print日志');
             widget.setTapIndex();
             break;
           case 1:
             jhDebug.clearDebugLog();
-            JhUtils.toastTips('已清空debug调试日志');
+            JhUtils.toastTips(context, '已清空debug调试日志');
             widget.setTapIndex();
             break;
           default:

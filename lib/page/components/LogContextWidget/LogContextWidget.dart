@@ -57,12 +57,13 @@ class _LogContextWidgetState extends State<LogContextWidget>
       case 0:
         // print日志
         List<String> printLogList = jhDebug.getPrintLogAll;
-        JhUtils.copyText(printLogList[dataIndex]);
+        JhUtils.copyText(context, printLogList[dataIndex]);
         break;
       case 1:
         // debug日志
         List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
-        JhUtils.copyText(JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
+        JhUtils.copyText(
+            context, JhUtils.getItemDebugLogStr(debugLogList[dataIndex]));
         break;
       default:
     }
