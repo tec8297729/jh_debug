@@ -77,23 +77,27 @@ class JhToast {
       //OverlayEntry负责构建布局
       //通过OverlayEntry将构建的布局插入到整个布局的最上层
       _overlayEntry = OverlayEntry(
-          builder: (BuildContext context) => Positioned(
-                //top值，可以改变这个值来改变toast在屏幕中的位置
-                top: buildToastPosition(context),
-                child: Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40.0),
-                      child: AnimatedOpacity(
-                        opacity: _showing ? 0.7 : 0.0, //目标透明度
-                        duration: _showing
-                            ? Duration(milliseconds: 100)
-                            : Duration(milliseconds: 400),
-                        child: _buildToastWidget(),
-                      ),
-                    )),
-              ));
+        builder: (BuildContext context) => Positioned(
+          //top值，可以改变这个值来改变toast在屏幕中的位置
+          top: buildToastPosition(context),
+          child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40.0),
+              child: AnimatedOpacity(
+                opacity: _showing ? 0.7 : 0.0, //目标透明度
+                duration: _showing
+                    ? Duration(milliseconds: 100)
+                    : Duration(milliseconds: 400),
+                child: _buildToastWidget(),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      print(context.widget);
       //插入到整个布局的最上层
       overlayState.insert(_overlayEntry);
     } else {
@@ -102,15 +106,15 @@ class JhToast {
     }
 
     /// 等待时间
-    await Future.delayed(Duration(milliseconds: _showTime));
-    //2秒后 到底消失不消失
-    if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
-      _showing = false;
-      _overlayEntry.markNeedsBuild();
-      await Future.delayed(Duration(milliseconds: 400));
-      _overlayEntry.remove();
-      _overlayEntry = null;
-    }
+    // await Future.delayed(Duration(milliseconds: _showTime));
+    // //2秒后 到底消失不消失
+    // if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
+    //   _showing = false;
+    //   _overlayEntry.markNeedsBuild();
+    //   await Future.delayed(Duration(milliseconds: 400));
+    //   _overlayEntry.remove();
+    //   _overlayEntry = null;
+    // }
   }
 
   //toast绘制

@@ -16,7 +16,7 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 ## 快速入门
 
 ### 第一步：
-1、在main.dart入口处添加如下代码
+1、安装插件，然后在main.dart入口处添加如下代码
 
 ```dart
 import 'package:jh_debug/jh_debug.dart';
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
 
 ### 第二步：
 
-2、在MaterialApp的home页面设置init初始化参数
+2、在MaterialApp的home页面中设置init初始化参数
+
 ```dart
 import 'package:jh_debug/jh_debug.dart';
 
@@ -51,6 +52,9 @@ jhDebug.init(
   // 指定默认调试窗口内的一些参数配置
   btnTitle1: '按钮1', // 定义按钮名称
   btnTap1: () {}, // 定义按钮触发事件
+  // 自定义独立的tab页面
+  customTabTitle: 'tab标题',
+  customTabWidget: Container(), // 自定义tab页面的内容
 );
 ```
 <br>
