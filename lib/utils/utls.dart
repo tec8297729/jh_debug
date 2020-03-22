@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jh_debug/jh_debug.dart';
 import '../config/jh_config.dart' show jhConfig;
 import '../components/JhToast/JhToast.dart';
 // export 'sql_util.dart' show sqlUtil;
@@ -8,12 +7,6 @@ import '../components/JhToast/JhToast.dart';
 class JhUtils {
   /// tosat提示
   static toastTips(BuildContext context, String text) {
-    // Fluttertoast.showToast(
-    //   msg: text,
-    //   toastLength: Toast.LENGTH_SHORT,
-    //   // gravity: ToastGravity.CENTER, // 提示位置
-    //   fontSize: 18, // 提示文字大小
-    // );
     JhToast.showToast(context, msg: text);
   }
 
