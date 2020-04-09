@@ -91,10 +91,9 @@ class _TestPageState extends State<TestPage> {
               onPressed: () async {
                 Duration interval = Duration(milliseconds: 10);
                 streamPrint = Stream.periodic(interval, (data) => data);
-                streamPrint = streamPrint.take(1000);
+                streamPrint = streamPrint.take(100);
                 await for (int i in streamPrint) {
-                  print('测试打印${DateTime.now()}');
-                  // print('测试打印${i}');
+                  print('test log>>> ${DateTime.now().microsecondsSinceEpoch}');
                 }
               },
             ),

@@ -80,17 +80,20 @@ class JhToast {
         builder: (BuildContext context) => Positioned(
           //top值，可以改变这个值来改变toast在屏幕中的位置
           top: buildToastPosition(context),
-          child: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: AnimatedOpacity(
-                opacity: _showing ? 0.7 : 0.0, //目标透明度
-                duration: _showing
-                    ? Duration(milliseconds: 100)
-                    : Duration(milliseconds: 400),
-                child: _buildToastWidget(),
+          child: Semantics(
+            label: 'jhdebug_JhToast',
+            child: Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child: AnimatedOpacity(
+                  opacity: _showing ? 0.7 : 0.0, //目标透明度
+                  duration: _showing
+                      ? Duration(milliseconds: 100)
+                      : Duration(milliseconds: 400),
+                  child: _buildToastWidget(),
+                ),
               ),
             ),
           ),

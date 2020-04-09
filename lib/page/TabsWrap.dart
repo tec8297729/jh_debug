@@ -114,47 +114,50 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 400,
-      child: Column(
-        children: <Widget>[
-          // tab选项卡
-          Container(
-            height: 40,
-            color: Colors.white,
-            child: TabBar(
-              controller: _tabController,
-              indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
-              tabs: <Widget>[
-                _tabTitle('print'),
-                _tabTitle('调试日志'),
-                if (!widget.hideCustomTab)
-                  _tabTitle(widget.customTabTitle ?? '自定义'),
-              ],
+    return Semantics(
+      label: 'jhdebug_TabsWrap',
+      child: Container(
+        height: 400,
+        child: Column(
+          children: <Widget>[
+            // tab选项卡
+            Container(
+              height: 40,
+              color: Colors.white,
+              child: TabBar(
+                controller: _tabController,
+                indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
+                tabs: <Widget>[
+                  _tabTitle('print'),
+                  _tabTitle('调试日志'),
+                  if (!widget.hideCustomTab)
+                    _tabTitle(widget.customTabTitle ?? '自定义'),
+                ],
+              ),
             ),
-          ),
-          // tab显示内容区域
-          Expanded(
-            flex: 1,
-            child: TabBarView(
-              controller: _tabController,
-              children: tabViewChild,
+            // tab显示内容区域
+            Expanded(
+              flex: 1,
+              child: TabBarView(
+                controller: _tabController,
+                children: tabViewChild,
+              ),
             ),
-          ),
 
-          // 底部区域
-          if (!widget.hideBottom)
-            BottomWrap(
-              btnTap1: widget.btnTap1,
-              btnTap2: widget.btnTap2,
-              btnTap3: widget.btnTap3,
-              btnTitle1: widget.btnTitle1,
-              btnTitle2: widget.btnTitle2,
-              btnTitle3: widget.btnTitle3,
-              initTabsWidget: _initTabsWidget,
-              customBottomWidge: widget.customBottomWidge,
-            ),
-        ],
+            // 底部区域
+            if (!widget.hideBottom)
+              BottomWrap(
+                btnTap1: widget.btnTap1,
+                btnTap2: widget.btnTap2,
+                btnTap3: widget.btnTap3,
+                btnTitle1: widget.btnTitle1,
+                btnTitle2: widget.btnTitle2,
+                btnTitle3: widget.btnTitle3,
+                initTabsWidget: _initTabsWidget,
+                customBottomWidge: widget.customBottomWidge,
+              ),
+          ],
+        ),
       ),
     );
   }

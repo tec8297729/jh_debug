@@ -1,5 +1,3 @@
-// enum D_Name { log, stack }
-
 class DebugLogType {
   String debugLog;
   String debugStack;

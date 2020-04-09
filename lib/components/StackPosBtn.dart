@@ -29,16 +29,15 @@ class _StackPosBtnState extends State<StackPosBtn> {
       right: widget.rigth ?? null,
       left: moveOffset?.dx ?? widget.left ?? null,
       bottom: widget.bottom ?? null,
-      child: GestureDetector(
-        onDoubleTap: () {
-          jhDebug.removeDebugBtn();
-        },
-        onTap: () {
-          jhDebug.showLog();
-        },
-        child: Opacity(
-          opacity: 0.6,
-          child: dragWidge(),
+      child: Semantics(
+        label: 'jhdebug_StackPosBtn',
+        child: GestureDetector(
+          onDoubleTap: () => jhDebug.removeDebugBtn(),
+          onTap: () => jhDebug.showLog(),
+          child: Opacity(
+            opacity: 0.6,
+            child: dragWidge(),
+          ),
         ),
       ),
     );
