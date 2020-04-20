@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../config/jh_config.dart' show jhConfig;
 import '../components/JhToast/JhToast.dart';
-// export 'sql_util.dart' show sqlUtil;
 
 class JhUtils {
   /// tosat提示

@@ -82,6 +82,8 @@ jhDebug.init参数介绍
 3、调用调试工具，在你需要使用到的页面
 
 ```dart
+import 'package:jh_debug/jh_debug.dart' show jhDebug;
+
 jhDebug.showLog(); // 弹出jhDebug调试窗口，可自己指定义绑定到某个按钮事件上
 jhDebug.hideLog(); // 隐藏jhDebug调试窗口
 
@@ -93,6 +95,7 @@ jhDebug.removeDebugBtn(); // 隐藏全局按钮
 其它相关API<br>
 
 ```dart
+import 'package:jh_debug/jh_debug.dart' show jhDebug;
 // 手动添加一条print日志
 jhDebug.setPrintLog('错误'); 
 
