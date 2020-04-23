@@ -12,6 +12,17 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 <img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_1.png?raw=true" width="45%">
 <img src="https://github.com/tec8297729/jh_debug/blob/master/images/demo_2.png?raw=true" width="45%">
 </div>
+<br><br>
+
+## 安装插件
+
+在flutter项目中的pubspec.yaml，添加以下依赖项：<br>
+
+```
+dependencies:
+  ...
+  jh_debug: ^x.x.x // 指定插件版本
+```
 
 ## 快速入门
 
