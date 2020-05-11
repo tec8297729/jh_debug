@@ -71,11 +71,9 @@ class _LogHeaderState extends State<LogHeader> {
                   style: TextStyle(color: _textColor),
                 ),
               ),
-              searchBtnWidget(),
               clearBtnWidget(),
             ],
           ),
-          searchBtnWidget(),
         ],
       ),
     );
@@ -106,29 +104,16 @@ class _LogHeaderState extends State<LogHeader> {
               clearBtnWidget(),
             ],
           ),
-          // searchBtnWidget(),
         ],
       ),
     );
   }
 
+  // 暂定
   Widget searchBtnWidget() {
     return baseBtnWrap(
-      text: '清空',
+      text: '搜索',
       onPressed: () {
-        switch (widget.getTabContrIdx()) {
-          case 0:
-            jhDebug.clearPrintLog();
-            JhUtils.toastTips(context, '已清空print日志');
-            widget.setTapIndex();
-            break;
-          case 1:
-            jhDebug.clearDebugLog();
-            JhUtils.toastTips(context, '已清空debug调试日志');
-            widget.setTapIndex();
-            break;
-          default:
-        }
         setState(() {});
       },
     );
