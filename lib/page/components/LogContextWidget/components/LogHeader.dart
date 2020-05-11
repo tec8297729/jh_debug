@@ -51,6 +51,7 @@ class _LogHeaderState extends State<LogHeader> {
           tips = 'debug-${widget.tapLogIndex}';
           break;
         default:
+          break;
       }
     }
 
@@ -58,16 +59,23 @@ class _LogHeaderState extends State<LogHeader> {
       padding: EdgeInsets.fromLTRB(10, 8, 10, 3),
       height: 36,
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: IndexedStack(
+        index: 0,
         children: <Widget>[
-          Container(
-            child: Text(
-              '点击行: ${tips ?? ''}',
-              style: TextStyle(color: _textColor),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  '点击行: ${tips ?? ''}',
+                  style: TextStyle(color: _textColor),
+                ),
+              ),
+              searchBtnWidget(),
+              clearBtnWidget(),
+            ],
           ),
-          clearBtnWidget(),
+          searchBtnWidget(),
         ],
       ),
     );
@@ -79,22 +87,50 @@ class _LogHeaderState extends State<LogHeader> {
       padding: EdgeInsets.fromLTRB(10, 8, 10, 3),
       height: 36,
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      child: IndexedStack(
+        index: 0,
         children: <Widget>[
-          baseBtnWrap(
-            text: jhConfig.debugModeFull ? '详细模式' : '精简模式',
-            onPressed: () {
-              setState(() {
-                jhConfig.debugModeFull = !jhConfig.debugModeFull;
-                logDataUtls.flushDebug();
-              });
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              baseBtnWrap(
+                text: jhConfig.debugModeFull ? '详细模式' : '精简模式',
+                onPressed: () {
+                  setState(() {
+                    jhConfig.debugModeFull = !jhConfig.debugModeFull;
+                    logDataUtls.flushDebug();
+                  });
+                },
+              ),
+              SizedBox(width: 10),
+              clearBtnWidget(),
+            ],
           ),
-          SizedBox(width: 10),
-          clearBtnWidget(),
+          // searchBtnWidget(),
         ],
       ),
+    );
+  }
+
+  Widget searchBtnWidget() {
+    return baseBtnWrap(
+      text: '清空',
+      onPressed: () {
+        switch (widget.getTabContrIdx()) {
+          case 0:
+            jhDebug.clearPrintLog();
+            JhUtils.toastTips(context, '已清空print日志');
+            widget.setTapIndex();
+            break;
+          case 1:
+            jhDebug.clearDebugLog();
+            JhUtils.toastTips(context, '已清空debug调试日志');
+            widget.setTapIndex();
+            break;
+          default:
+        }
+        setState(() {});
+      },
     );
   }
 

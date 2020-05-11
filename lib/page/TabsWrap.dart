@@ -104,7 +104,7 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
     });
   }
 
-  // 监听滑动事件
+  /// 监听滑动事件
   tabListener() {
     tabsIndex = _tabController.index;
   }
