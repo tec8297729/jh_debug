@@ -6,9 +6,9 @@ homepage: https://github.com/tec8297729/jh_debug
 environment:
   sdk: '>=2.2.2 <3.0.0'
 
-# dependencies:
-#   flutter:
-#     sdk: flutter
+dependencies:
+  flutter:
+    sdk: flutter
 # sqflite: ^1.2.1
 
 dev_dependencies:
