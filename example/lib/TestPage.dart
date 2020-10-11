@@ -89,11 +89,12 @@ class _TestPageState extends State<TestPage> {
             child: RaisedButton(
               child: Text('打印几次'),
               onPressed: () async {
-                Duration interval = Duration(milliseconds: 10);
+                Duration interval = Duration(milliseconds: 30);
                 streamPrint = Stream.periodic(interval, (data) => data);
-                streamPrint = streamPrint.take(100);
+                streamPrint = streamPrint.take(200);
                 await for (int i in streamPrint) {
-                  print('test log>>> ${DateTime.now().microsecondsSinceEpoch}');
+                  print(
+                      'test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
                 }
               },
             ),

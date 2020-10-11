@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jh_debug/page/components/DebugTab/DebugTab.dart';
+import 'package:jh_debug/page/components/PrintTab/PrintTab.dart';
+import 'package:jh_debug/page/types/index.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
-import 'components/LogContextWidget/LogContextWidget.dart';
 import 'components/BottomWrap/BottomWrap.dart';
-import '../jh_debug.dart';
 
 /// 弹层组件
 class TabsWrap extends StatefulWidget {
@@ -84,10 +85,9 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
     setState(() {
       _tabController?.removeListener(tabListener);
       tabViewChild = [
-        _printList(), // print日志
-        _debugList(), // debug日志
-        if (!widget.hideCustomTab)
-          _customTabList(),
+        _logListStream(LogType.print), // print日志
+        _logListStream(LogType.debug), // debug日志
+        if (!widget.hideCustomTab) _customTabList(),
       ];
 
       int tabsLen = tabViewChild.length; // tabs总长度
@@ -129,7 +129,7 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
                 indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
                 tabs: <Widget>[
                   _tabTitle('print'),
-                  _tabTitle('调试日志'),
+                  _tabTitle('debug'),
                   if (!widget.hideCustomTab)
                     _tabTitle(widget.customTabTitle ?? '自定义'),
                 ],
@@ -180,37 +180,12 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
     return widget.customTabWidget;
   }
 
-  /// print日志组件
-  Widget _printList() {
+  /// 日志组件
+  Widget _logListStream(LogType type) {
+    bool isPrintW = type == LogType.print;
     return StreamBuilder(
-      stream: () {
-        return logDataUtls.subPrint();
-      }(),
-      builder: (context, snap) {
-        return LogContextWidget(
-          logType: LogType.print,
-          dataList: jhDebug.getPrintLogAll ?? [],
-          getTabContrIdx: getTabContrIdx,
-          initTabsWidget: _initTabsWidget,
-        );
-      },
-    );
-  }
-
-  /// debug日志组件
-  Widget _debugList() {
-    return StreamBuilder(
-      stream: () {
-        return logDataUtls.subDebug();
-      }(),
-      builder: (context, snap) {
-        return LogContextWidget(
-          logType: LogType.debug,
-          dataList: jhDebug.getDebugLogAll ?? [],
-          getTabContrIdx: getTabContrIdx,
-          initTabsWidget: _initTabsWidget,
-        );
-      },
+      stream: isPrintW ? logDataUtls.subPrint() : logDataUtls.subDebug(),
+      builder: (context, snap) => isPrintW ? PrintTab() : DebugTab(),
     );
   }
 }

@@ -5,16 +5,16 @@ import '../components/JhToast/JhToast.dart';
 
 class JhUtils {
   /// tosat提示
-  static toastTips(BuildContext context, String text) {
-    JhToast.showToast(context, msg: text);
+  static toastTips(String text, {BuildContext context}) {
+    JhToast.showToast(jhConfig.context, msg: text);
   }
 
   /// 复制到系统剪切板
-  static copyText(BuildContext context, String textData) async {
+  static copyText(String textData, {BuildContext context}) async {
     await Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
-      JhUtils.toastTips(context, '复制失败');
+      JhUtils.toastTips('复制失败');
     });
-    JhUtils.toastTips(context, '已复制');
+    JhUtils.toastTips('已复制');
   }
 
   /// 获取当前调试日志信息str

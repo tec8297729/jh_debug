@@ -70,15 +70,15 @@ class JhToast {
     _toastPosition = position;
     _pdHorizontal = pdHorizontal;
     _pdVertical = pdVertical;
-    //获取OverlayState
+    // 获取OverlayState
     OverlayState overlayState = Overlay.of(context);
     _showing = true;
     if (_overlayEntry == null) {
-      //OverlayEntry负责构建布局
-      //通过OverlayEntry将构建的布局插入到整个布局的最上层
+      // OverlayEntry负责构建布局
+      // 通过OverlayEntry将构建的布局插入到整个布局的最上层
       _overlayEntry = OverlayEntry(
         builder: (BuildContext context) => Positioned(
-          //top值，可以改变这个值来改变toast在屏幕中的位置
+          // top值，可以改变这个值来改变toast在屏幕中的位置
           top: buildToastPosition(context),
           child: Semantics(
             label: 'jhdebug_JhToast',
@@ -88,7 +88,7 @@ class JhToast {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: AnimatedOpacity(
-                  opacity: _showing ? 0.7 : 0.0, //目标透明度
+                  opacity: _showing ? 0.7 : 0.0, // 目标透明度
                   duration: _showing
                       ? Duration(milliseconds: 100)
                       : Duration(milliseconds: 400),
@@ -100,16 +100,16 @@ class JhToast {
         ),
       );
 
-      //插入到整个布局的最上层
+      // 插入到整个布局的最上层
       overlayState.insert(_overlayEntry);
     } else {
-      //重新绘制UI，类似setState
+      // 重新绘制UI，类似setState
       _overlayEntry.markNeedsBuild();
     }
 
     /// 等待时间
     await Future.delayed(Duration(milliseconds: _showTime));
-    //2秒后 到底消失不消失
+    // 2秒后 到底消失不消失
     if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
       _showing = false;
       _overlayEntry.markNeedsBuild();
@@ -119,7 +119,7 @@ class JhToast {
     }
   }
 
-  //toast绘制
+  // toast绘制
   static _buildToastWidget() {
     return Center(
       child: Card(
@@ -138,7 +138,7 @@ class JhToast {
     );
   }
 
-  ///  设置toast位置
+  /// 设置toast位置
   static buildToastPosition(context) {
     var backResult;
     if (_toastPosition == ToastPostion.top) {

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../constants/jh_constants.dart';
 
 class JhConfig {
@@ -12,6 +14,8 @@ class JhConfig {
 
   /// 测试输出
   bool trace = true;
+
+  BuildContext context;
 }
 
 JhConfig jhConfig = JhConfig();

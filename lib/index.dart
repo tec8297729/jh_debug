@@ -77,6 +77,7 @@ class JhDebug {
     jhConfig.printRecord = printRecord;
     jhConfig.debugRecord = debugRecord;
     jhConfig.debugModeFull = debugModeFull;
+    jhConfig.context = context;
     _initFlag = true;
     _context = context;
   }
