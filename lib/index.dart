@@ -125,12 +125,12 @@ class JhDebug {
   // 初始化init方法判断
   bool _judegInit() {
     if (_initFlag) return true;
-    throw Exception('未初始化jeDebug.init方法');
+    throw Exception('${JhConstants.ERROR_TIPS_PREFIX}未初始化jeDebug.init方法');
     // return false;
   }
 
   /// 显示JhDebug弹层窗口
-  showLog() {
+  void showLog() {
     if (!_judegInit() || _layerFlag) return;
     _layerFlag = true;
     showGeneralDialog(
@@ -176,7 +176,7 @@ class JhDebug {
   /// [width] 定义按钮的高度
   ///
   /// [height] 定义按钮的宽度
-  showDebugBtn({
+  void showDebugBtn({
     double top,
     double bottom,
     double left,
@@ -184,28 +184,33 @@ class JhDebug {
     double width,
     double height,
   }) {
-    if (!_judegInit()) return;
-    if (Overlay.of(_context) == null) {
+    try {
+      if (!_judegInit()) return;
+      if (Overlay.of(_context) == null) {
+        throw Exception(
+            '${JhConstants.ERROR_TIPS_PREFIX}init方法中的context参数非法，请不要在MaterialApp组件中init初始化');
+      }
+      if (_overlayCode != null) return;
+
+      _overlayEntry = new OverlayEntry(
+        builder: (context) {
+          return StackPosBtn(
+            width: width,
+            height: height,
+            top: top,
+            bottom: bottom,
+            left: left,
+            rigth: rigth,
+          );
+        },
+      );
+
+      Overlay.of(_context).insert(_overlayEntry);
+      _overlayCode = _overlayEntry.hashCode;
+    } catch (e) {
       throw Exception(
-          'jhDebug错误：init方法中的context参数非法，请不要在MaterialApp组件中init初始化');
+          '${JhConstants.ERROR_TIPS_PREFIX}只能在调用init方法页面中，调用showDebugBtn方法');
     }
-    if (_overlayCode != null) return;
-
-    _overlayEntry = new OverlayEntry(
-      builder: (context) {
-        return StackPosBtn(
-          width: width,
-          height: height,
-          top: top,
-          bottom: bottom,
-          left: left,
-          rigth: rigth,
-        );
-      },
-    );
-
-    Overlay.of(_context).insert(_overlayEntry);
-    _overlayCode = _overlayEntry.hashCode;
   }
 
   /// 隐藏全局调试按钮

@@ -15,7 +15,7 @@ class _PrintTabState extends State<PrintTab> {
   // 复制当前点击元素文本内容
   void copyClickItemData(int dataIndex) async {
     List<String> printLogList = jhDebug.getPrintLogAll;
-    await JhUtils.copyText(printLogList[dataIndex - 1]);
+    await JhUtils.copyText(printLogList[dataIndex - 1], context: context);
     setState(() {
       currentIdx = dataIndex;
     });

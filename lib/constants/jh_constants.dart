@@ -3,6 +3,7 @@ import '../interface/main_interface.dart';
 class JhConstants {
   static const PrintLogKey = 'jhPrintLogKey';
   static const DebugLogKey = 'jhDebugLogKey';
+  static const ERROR_TIPS_PREFIX = 'jh_debug错误：';
 
   /// print日志数量
   static const int PRINT_RECORD = 50;

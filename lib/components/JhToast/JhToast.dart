@@ -41,7 +41,7 @@ class JhToast {
 
   /// 上下边距
   static double _pdVertical;
-  static void showToast(
+  static Future<bool> showToast(
     BuildContext context, {
     //显示的文本
     String msg,
@@ -109,7 +109,7 @@ class JhToast {
 
     /// 等待时间
     await Future.delayed(Duration(milliseconds: _showTime));
-    // 2秒后 到底消失不消失
+    // 2秒后消失
     if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
       _showing = false;
       _overlayEntry.markNeedsBuild();
@@ -117,6 +117,7 @@ class JhToast {
       _overlayEntry.remove();
       _overlayEntry = null;
     }
+    return true;
   }
 
   // toast绘制

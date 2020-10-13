@@ -9,28 +9,6 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   Stream<int> streamPrint;
 
-  @override
-  void initState() {
-    super.initState();
-    jhDebug.init(
-      context: context,
-      hideCustomTab: false,
-      btnTap1: () {
-        print('点击第一个按钮');
-      },
-      btnTap2: () {
-        print('${jhDebug.getPrintLogAll}');
-      },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
-    );
-  }
-
   showDebugBtn() {
     //创建一个OverlayEntry对象
     OverlayEntry overlayEntry = new OverlayEntry(builder: (context) {
