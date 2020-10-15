@@ -17,6 +17,9 @@ class JhConstants {
   /// 是否完整输出调试日志
   static const bool DEBUG_MODEFULL = true;
 
+  /// 弹窗内容区是否可以左右滑动
+  static const bool SCROLL_FLAG = false;
+
   /// 是否错误输出在控制台
   static const DebugMode ISIN_DEBUGMODE = DebugMode.inConsole;
 }

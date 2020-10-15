@@ -12,6 +12,8 @@ class JhConfig {
   /// debug日志上限
   int debugRecord = JhConstants.DEBUG_RECORD;
 
+  bool scrollFlag = JhConstants.SCROLL_FLAG;
+
   /// 测试输出
   bool trace = true;
 

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
+import 'package:jh_debug_example/services/api.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -8,6 +11,28 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
   Stream<int> streamPrint;
+
+  @override
+  void initState() {
+    super.initState();
+    jhDebug.init(
+      context: context,
+      hideCustomTab: false,
+      btnTap1: () {
+        print('点击第一个按钮');
+      },
+      btnTap2: () {
+        print('${jhDebug.getPrintLogAll}');
+      },
+      customTabTitle: '自定义tab专栏',
+      customTabWidget: Container(
+        child: Text('data'),
+      ),
+      // customBottomWidge: Container(
+      //   child: Text('自定义按钮区域'),
+      // ),
+    );
+  }
 
   showDebugBtn() {
     //创建一个OverlayEntry对象
@@ -72,7 +97,7 @@ class _TestPageState extends State<TestPage> {
                 streamPrint = streamPrint.take(200);
                 await for (int i in streamPrint) {
                   print(
-                      'test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
+                      'test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
                 }
               },
             ),
@@ -132,15 +157,14 @@ class _TestPageState extends State<TestPage> {
               },
             ),
           ),
-          // Center(
-          //   child: RaisedButton(
-          //     child: Text('清空缓存'),
-          //     onPressed: () {
-          //       jhDebug.clearDebugLog();
-          //       jhDebug.clearPrintLog();
-          //     },
-          //   ),
-          // ),
+          Center(
+            child: RaisedButton(
+              child: Text('请求'),
+              onPressed: () {
+                getNewVersion();
+              },
+            ),
+          ),
         ],
       ),
     );

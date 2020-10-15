@@ -54,6 +54,7 @@ class JhDebug {
     int debugRecord = JhConstants.DEBUG_RECORD,
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
     bool debugModeFull = JhConstants.DEBUG_MODEFULL,
+    bool scrollFlag = JhConstants.SCROLL_FLAG,
   }) async {
     assert(context != null);
     assert(hideCustomTab != null);
@@ -78,7 +79,7 @@ class JhDebug {
     jhConfig.debugRecord = debugRecord;
     jhConfig.debugModeFull = debugModeFull;
     jhConfig.context = context;
-    _initFlag = true;
+    jhConfig.scrollFlag = _initFlag = true;
     _context = context;
   }
 
@@ -209,7 +210,7 @@ class JhDebug {
       _overlayCode = _overlayEntry.hashCode;
     } catch (e) {
       throw Exception(
-          '${JhConstants.ERROR_TIPS_PREFIX}只能在调用init方法页面中，调用showDebugBtn方法');
+          '${JhConstants.ERROR_TIPS_PREFIX}showDebugBtn方法，只能在调用jhDebug.init方法页面中使用');
     }
   }
 

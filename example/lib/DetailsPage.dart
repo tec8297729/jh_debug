@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
 
@@ -10,23 +12,6 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    jhDebug.init(
-      context: context,
-      hideCustomTab: false,
-      btnTap1: () {
-        print('点击第一个按钮');
-      },
-      btnTap2: () {
-        print('${jhDebug.getPrintLogAll}');
-      },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
-    );
   }
 
   @override

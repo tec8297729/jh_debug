@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/page/components/DebugTab/DebugTab.dart';
 import 'package:jh_debug/page/components/PrintTab/PrintTab.dart';
 import 'package:jh_debug/page/types/index.dart';
@@ -140,6 +141,8 @@ class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
               flex: 1,
               child: TabBarView(
                 controller: _tabController,
+                physics:
+                    jhConfig.scrollFlag ? null : NeverScrollableScrollPhysics(),
                 children: tabViewChild,
               ),
             ),
