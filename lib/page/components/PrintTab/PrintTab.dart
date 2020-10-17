@@ -10,8 +10,11 @@ class PrintTab extends StatefulWidget {
   _PrintTabState createState() => _PrintTabState();
 }
 
-class _PrintTabState extends State<PrintTab> {
+class _PrintTabState extends State<PrintTab>
+    with AutomaticKeepAliveClientMixin {
   int currentIdx = 0;
+  @override
+  bool get wantKeepAlive => true;
 
   // item点击事件
   onTapLog(int index) {
@@ -29,7 +32,9 @@ class _PrintTabState extends State<PrintTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     List<String> dataList = jhDebug.getPrintLogAll;
+
     return BaseLogContext(
       headerChild: LogHeader(),
       child: [

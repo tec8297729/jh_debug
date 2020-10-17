@@ -19,9 +19,12 @@ class LogItem extends StatefulWidget {
   _LogItemState createState() => _LogItemState();
 }
 
-class _LogItemState extends State<LogItem> {
+class _LogItemState extends State<LogItem> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: _logTableItem(
         index: widget.index,

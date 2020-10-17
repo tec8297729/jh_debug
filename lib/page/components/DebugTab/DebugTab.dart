@@ -10,9 +10,11 @@ class DebugTab extends StatefulWidget {
   _DebugTabState createState() => _DebugTabState();
 }
 
-class _DebugTabState extends State<DebugTab> {
+class _DebugTabState extends State<DebugTab>
+    with AutomaticKeepAliveClientMixin {
   int currentIdx = 0;
-
+  @override
+  bool get wantKeepAlive => true;
   // item点击事件
   void onTapLog(int index) {
     List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
@@ -29,6 +31,7 @@ class _DebugTabState extends State<DebugTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     List<Map<String, String>> dataList = jhDebug.getDebugLogAll;
     List<Widget> allWidget = [];
 

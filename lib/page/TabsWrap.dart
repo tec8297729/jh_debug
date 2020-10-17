@@ -63,7 +63,8 @@ class TabsWrap extends StatefulWidget {
   _TabsWrapState createState() => _TabsWrapState();
 }
 
-class _TabsWrapState extends State<TabsWrap> with TickerProviderStateMixin {
+class _TabsWrapState extends State<TabsWrap>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
   List<Widget> tabViewChild = [];
   int tabsIndex = 0;

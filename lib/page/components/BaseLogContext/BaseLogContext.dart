@@ -14,8 +14,12 @@ class BaseLogContext extends StatefulWidget {
   _BaseLogContextState createState() => _BaseLogContextState();
 }
 
-class _BaseLogContextState extends State<BaseLogContext> {
+class _BaseLogContextState extends State<BaseLogContext>
+    with AutomaticKeepAliveClientMixin {
   ScrollController scrollController;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -25,6 +29,7 @@ class _BaseLogContextState extends State<BaseLogContext> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: Container(
         color: Colors.white,

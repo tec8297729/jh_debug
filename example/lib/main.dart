@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
     print('main');
     return MaterialApp(
       // home: TestPage(),
+      showPerformanceOverlay: true, //显示性能标签
       theme: ThemeData.dark(),
       navigatorKey: jhDebug.getNavigatorKey,
       routes: {
