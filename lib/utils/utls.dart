@@ -6,22 +6,22 @@ import '../components/JhToast/JhToast.dart';
 
 class JhUtils {
   /// tosat提示
-  static Future<void> toastTips(String text, {BuildContext context}) async {
-    // await JhToast.showToast(context, msg: text);
-    Fluttertoast.showToast(
-      msg: text,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+  static void toastTips(String text, {BuildContext context}) {
+    JhToast.showToast(jhConfig.context, msg: text);
+    // Fluttertoast.showToast(
+    //   msg: text,
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1,
+    //   backgroundColor: Colors.red,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
   }
 
   /// 复制到系统剪切板
-  static Future<void> copyText(String textData, {BuildContext context}) async {
-    await Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
+  static void copyText(String textData, {BuildContext context}) {
+    Clipboard.setData(ClipboardData(text: textData)).catchError((e) {
       JhUtils.toastTips('复制失败', context: context);
     });
     JhUtils.toastTips('已复制', context: context);

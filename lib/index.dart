@@ -37,6 +37,7 @@ class JhDebug {
   /// [debugRecord] 调试日志最多记录多少条,默认30条
   ///
   /// [debugModeFull] 调试日志中-是否显示详细日志, 默认flase精简日志, true详细日志
+  /// [scrollFlag] 是否开启内容区域左右滑动tab功能，默认开启
   void init({
     @required BuildContext context,
     bool hideCustomTab = true,
@@ -78,8 +79,9 @@ class JhDebug {
     jhConfig.printRecord = printRecord;
     jhConfig.debugRecord = debugRecord;
     jhConfig.debugModeFull = debugModeFull;
-    jhConfig.context = context;
-    jhConfig.scrollFlag = _initFlag = true;
+    // jhConfig.context = context;
+    jhConfig.scrollFlag = scrollFlag;
+    _initFlag = true;
     _context = context;
   }
 
@@ -141,6 +143,7 @@ class JhDebug {
       barrierColor: Colors.black54, // 遮罩层背景色
       transitionDuration: Duration(milliseconds: 150), // 弹出的过渡时长
       pageBuilder: (context, animation, secondaryAnimation) {
+        jhConfig.context = context;
         return Dialog(child: _layerWidget);
       },
       transitionBuilder: (

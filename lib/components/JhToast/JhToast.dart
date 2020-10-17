@@ -102,7 +102,7 @@ class JhToast {
 
       // 插入到整个布局的最上层
       overlayState.insert(_overlayEntry);
-    } else {
+    } else if (_overlayEntry.markNeedsBuild != null) {
       // 重新绘制UI，类似setState
       _overlayEntry.markNeedsBuild();
     }
@@ -110,7 +110,8 @@ class JhToast {
     /// 等待时间
     await Future.delayed(Duration(milliseconds: _showTime));
     // 2秒后消失
-    if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime) {
+    if (DateTime.now().difference(_startedTime).inMilliseconds >= _showTime &&
+        _overlayEntry.markNeedsBuild != null) {
       _showing = false;
       _overlayEntry.markNeedsBuild();
       await Future.delayed(Duration(milliseconds: 400));

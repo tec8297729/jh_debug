@@ -68,9 +68,10 @@ jhDebugMain({
       /// 错误信息
       FlutterErrorDetails details = (Object obj, StackTrace stack) {
         jhDebug.setDebugLog(
-          debugLog: obj.toString(),
-          debugStack: stack.toString(),
+          debugLog: obj?.toString() ?? '',
+          debugStack: stack?.toString() ?? '',
         );
+
         return FlutterErrorDetails(
           exception: obj,
           stack: stack,

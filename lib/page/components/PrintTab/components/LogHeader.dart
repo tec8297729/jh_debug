@@ -25,7 +25,7 @@ class _LogHeaderState extends State<LogHeader> {
             children: <Widget>[
               Container(
                 child: Text(
-                  '点击行: ${''}',
+                  '',
                   style: TextStyle(color: _textColor),
                 ),
               ),
