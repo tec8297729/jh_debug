@@ -17,8 +17,6 @@ class LogDataUtls {
     _printStream = _printCtr.stream.asBroadcastStream();
     _debugStream = _debugCtr.stream.asBroadcastStream();
     _printStream.listen((data) {
-      // Future.delayed(Duration(seconds: 1));
-      // sqlUtil.insertDbPrint(data);
       return _printLogAll;
     });
   }

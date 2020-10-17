@@ -11,27 +11,18 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
   Stream<int> streamPrint;
+  int index = 0;
 
   @override
   void initState() {
     super.initState();
-    jhDebug.init(
-      context: context,
-      hideCustomTab: false,
-      btnTap1: () {
-        print('点击第一个按钮');
-      },
-      btnTap2: () {
-        print('${jhDebug.getPrintLogAll}');
-      },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
-    );
+  }
+
+  onBtn1() {
+    setState(() {
+      ++index;
+      print('点击第一个按钮$index');
+    });
   }
 
   showDebugBtn() {
@@ -51,11 +42,25 @@ class _TestPageState extends State<TestPage> {
       );
     });
     Overlay.of(context).insert(overlayEntry);
-    print('${Overlay.of(context).toString()}');
   }
 
   @override
   Widget build(BuildContext context) {
+    jhDebug.init(
+      context: context,
+      hideCustomTab: false,
+      btnTap1: onBtn1,
+      btnTap2: () {
+        print('${jhDebug.getPrintLogAll}');
+      },
+      customTabTitle: '自定义tab专栏',
+      customTabWidget: Container(
+        child: Text('data'),
+      ),
+      // customBottomWidge: Container(
+      //   child: Text('自定义按钮区域'),
+      // ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('jhDebug Plugin'),
@@ -64,7 +69,7 @@ class _TestPageState extends State<TestPage> {
         children: <Widget>[
           Center(
             child: RaisedButton(
-              child: Text('全局btn'),
+              child: Text('全局btn$index'),
               onPressed: () {
                 jhDebug.showDebugBtn();
                 // showDebugBtn();

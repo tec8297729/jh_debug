@@ -10,7 +10,6 @@ class BottomWrap extends StatelessWidget {
     @required this.btnTitle1,
     @required this.btnTitle2,
     @required this.btnTitle3,
-    @required this.initTabsWidget,
   });
   final Widget customBottomWidge;
   final VoidCallback btnTap1;
@@ -19,7 +18,6 @@ class BottomWrap extends StatelessWidget {
   final String btnTitle1;
   final String btnTitle2;
   final String btnTitle3;
-  final Function initTabsWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,6 @@ class BottomWrap extends StatelessWidget {
           } else {
             JhUtils.toastTips('请自定义你的按钮事件');
           }
-          initTabsWidget();
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

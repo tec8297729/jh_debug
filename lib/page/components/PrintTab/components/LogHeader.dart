@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/jh_debug.dart';
+import 'package:jh_debug/page/components/BaseBtn/BaseBtn.dart';
 import 'package:jh_debug/utils/utls.dart';
 
 /// 日志内容区头部组件
@@ -9,25 +10,30 @@ class LogHeader extends StatefulWidget {
 }
 
 class _LogHeaderState extends State<LogHeader> {
-  Color _textColor = Colors.black;
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 8, 10, 3),
-      height: 36,
-      color: Colors.white,
+      alignment: Alignment.center,
+      height: 42,
+      padding: EdgeInsets.only(right: 6),
+      decoration: BoxDecoration(
+        // 分割线
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: Colors.black12,
+          ),
+        ),
+        // color: Colors.red,
+      ),
       child: IndexedStack(
         index: 0,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                child: Text(
-                  '',
-                  style: TextStyle(color: _textColor),
-                ),
+              Expanded(
+                flex: 1,
+                child: Text(''),
               ),
               clearBtnWidget(),
             ],
@@ -39,7 +45,7 @@ class _LogHeaderState extends State<LogHeader> {
 
   // 暂定
   Widget searchBtnWidget() {
-    return baseBtnWrap(
+    return BaseBtn(
       text: '搜索',
       onPressed: () {
         setState(() {});
@@ -49,7 +55,7 @@ class _LogHeaderState extends State<LogHeader> {
 
   /// 清空日志按钮组件
   Widget clearBtnWidget() {
-    return baseBtnWrap(
+    return BaseBtn(
       text: '清空',
       onPressed: () {
         setState(() {
@@ -57,23 +63,6 @@ class _LogHeaderState extends State<LogHeader> {
           JhUtils.toastTips('清空成功');
         });
       },
-    );
-  }
-
-  /// 按钮基础层
-  Widget baseBtnWrap(
-      {@required String text, @required VoidCallback onPressed}) {
-    return Container(
-      // width: 90,
-      child: RaisedButton(
-        onPressed: onPressed,
-        textColor: Colors.white,
-        color: Color(0xFF1C88E5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(text, style: TextStyle(fontSize: 14)),
-      ),
     );
   }
 }

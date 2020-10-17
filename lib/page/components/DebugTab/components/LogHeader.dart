@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/jh_debug.dart';
+import 'package:jh_debug/page/components/BaseBtn/BaseBtn.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'package:jh_debug/utils/utls.dart';
 
@@ -23,7 +24,7 @@ class _LogHeaderState extends State<LogHeader> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              baseBtnWrap(
+              BaseBtn(
                 text: jhConfig.debugModeFull ? '详细' : '精简',
                 onPressed: () {
                   setState(() {
@@ -43,7 +44,7 @@ class _LogHeaderState extends State<LogHeader> {
 
   // 暂定
   Widget searchBtnWidget() {
-    return baseBtnWrap(
+    return BaseBtn(
       text: '搜索',
       onPressed: () {
         setState(() {});
@@ -53,7 +54,7 @@ class _LogHeaderState extends State<LogHeader> {
 
   /// 清空日志按钮组件
   Widget clearBtnWidget() {
-    return baseBtnWrap(
+    return BaseBtn(
       text: '清空',
       onPressed: () {
         setState(() {
@@ -61,23 +62,6 @@ class _LogHeaderState extends State<LogHeader> {
           JhUtils.toastTips('清空成功');
         });
       },
-    );
-  }
-
-  /// 按钮基础层
-  Widget baseBtnWrap(
-      {@required String text, @required VoidCallback onPressed}) {
-    return Container(
-      // width: 90,
-      child: RaisedButton(
-        onPressed: onPressed,
-        textColor: Colors.white,
-        color: Color(0xFF1C88E5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(text, style: TextStyle(fontSize: 14)),
-      ),
     );
   }
 }

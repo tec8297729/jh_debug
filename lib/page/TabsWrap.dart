@@ -157,7 +157,6 @@ class _TabsWrapState extends State<TabsWrap>
                 btnTitle1: widget.btnTitle1,
                 btnTitle2: widget.btnTitle2,
                 btnTitle3: widget.btnTitle3,
-                initTabsWidget: _initTabsWidget,
                 customBottomWidge: widget.customBottomWidge,
               ),
           ],

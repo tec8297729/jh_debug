@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../config/jh_config.dart' show jhConfig;
 import '../components/JhToast/JhToast.dart';
 
