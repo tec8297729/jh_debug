@@ -37,7 +37,10 @@ class JhDebug {
   /// [debugRecord] 调试日志最多记录多少条,默认30条
   ///
   /// [debugModeFull] 调试日志中-是否显示详细日志, 默认flase精简日志, true详细日志
+  ///
   /// [scrollFlag] 是否开启内容区域左右滑动tab功能，默认开启
+  ///
+  /// [recordEnabled] 是否开启记录log模式，生产环境可以关闭提高APP性能
   void init({
     @required BuildContext context,
     bool hideCustomTab = true,
@@ -56,6 +59,7 @@ class JhDebug {
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
     bool debugModeFull = JhConstants.DEBUG_MODEFULL,
     bool scrollFlag = JhConstants.SCROLL_FLAG,
+    bool recordEnabled = JhConstants.RECORD_ENABLED,
   }) async {
     assert(context != null);
     assert(hideCustomTab != null);
@@ -81,9 +85,13 @@ class JhDebug {
     jhConfig.debugModeFull = debugModeFull;
 
     jhConfig.scrollFlag = scrollFlag;
+    jhConfig.recordEnabled = recordEnabled;
+
     _initFlag = true;
     _context = context;
   }
+
+  // --------------- 全局key及绑定方法 ----------------
 
   /// 获取全局key
   GlobalKey<NavigatorState> get getNavigatorKey => _navigatorKey;
@@ -96,11 +104,16 @@ class JhDebug {
   BuildContext get getGlobalContext =>
       _navigatorKey?.currentState?.overlay?.context;
 
+  // --------------- 日志方法 ----------------
+
   /// 获取调试栏所有log日志信息
   List<Map<String, String>> get getDebugLogAll => logDataUtls.getDebugLogAll;
 
-  /// 设置调试log日志内容, 输出flutter错误日志,构建错误等
-  setDebugLog({@required String debugLog, @required String debugStack}) {
+  /// 设置debug日志内容, 输出flutter错误日志,构建错误等
+  void setDebugLog({
+    @required String debugLog,
+    @required String debugStack,
+  }) {
     logDataUtls.addDebugLog(debugLog, debugStack);
   }
 
@@ -114,7 +127,9 @@ class JhDebug {
   List<String> get getPrintLogAll => logDataUtls.getPrintLogAll;
 
   /// 设置print栏日志内容
-  void setPrintLog(String text) => logDataUtls.addPringLog(text);
+  void setPrintLog(String text) {
+    logDataUtls.addPringLog(text);
+  }
 
   /// 清空print所有日志
   void clearPrintLog() => logDataUtls.clearPrint();
@@ -125,7 +140,9 @@ class JhDebug {
     clearPrintLog();
   }
 
-  // 初始化init方法判断
+  // --------------- 按钮弹窗 ----------------
+
+  // 判断是否初始化init
   bool _judegInit() {
     if (_initFlag) return true;
     throw Exception('${JhConstants.ERROR_TIPS_PREFIX}未初始化jeDebug.init方法');
@@ -164,7 +181,7 @@ class JhDebug {
   }
 
   /// 隐藏jhDebug弹层窗口
-  hideLog() {
+  void hideLog() {
     if (!_judegInit()) return;
     try {
       Navigator.pop(getGlobalContext);
@@ -218,10 +235,18 @@ class JhDebug {
   }
 
   /// 隐藏全局调试按钮
-  removeDebugBtn() {
+  void removeDebugBtn() {
     if (_overlayCode != null) {
       _overlayEntry.remove();
       _overlayCode = null;
     }
+  }
+
+  // --------------- 设置参数方法 ----------------
+
+  /// 设置是否开启记录log模式
+  void setRecordEnabled(bool isEnabled) {
+    jhConfig.recordEnabled = isEnabled;
+    print('内容参数${jhConfig.recordEnabled}');
   }
 }

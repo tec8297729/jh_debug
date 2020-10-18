@@ -73,19 +73,20 @@ jhDebug.init(
 jhDebug.init参数介绍
 <br>
 
-|              参数               |   类型   | 默认值 |                               说明                                |
-| :-----------------------------: | :------: | :----: | :---------------------------------------------------------------: |
-|    btnTap1, btnTap2, btnTap3    | Function |        |                       弹层底部按钮点击事件                        |
-| btnTitle1, btnTitle2, btnTitle3 |  String  |        |                         弹层底部按钮标题                          |
-|          tabsInitIndex          |   int    |   0    |      弹出窗口时,指定显示tabs页面, 默认每次弹出显示第0个tabs       |
-|          hideCustomTab          |   bool   |  true  |                 是否隐藏自定义tabs栏,默认true隐藏                 |
-|         customTabTitle          |  String  |        |                       自定义区域tabs的标题                        |
-|         customTabWidget         |  Widget  |        |                     自定义区域tabs显示的组件                      |
-|           hideBottom            |   bool   | false  | 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效 |
-|        customBottomWidge        |  Widget  |        |        底部区域组件,如果定义此参数默认定义的底部组件不显示        |
-|           printRecord           |   int    |   50   |                 print日志最多记录多少条,默认50条                  |
-|           debugRecord           |   int    |   30   |                  调试日志最多记录多少条,默认30条                  |
-|           scrollFlag            |   bool   | false  |               是否开始弹窗口内容区域左右滑动tab功能               |
+|              参数               |   类型   | 默认值 |                                                        说明                                                        |
+| :-----------------------------: | :------: | :----: | :----------------------------------------------------------------------------------------------------------------: |
+|    btnTap1, btnTap2, btnTap3    | Function |        |                                                弹层底部按钮点击事件                                                |
+| btnTitle1, btnTitle2, btnTitle3 |  String  |        |                                                  弹层底部按钮标题                                                  |
+|          tabsInitIndex          |   int    |   0    |                               弹出窗口时,指定显示tabs页面, 默认每次弹出显示第0个tabs                               |
+|          hideCustomTab          |   bool   |  true  |                                         是否隐藏自定义tabs栏,默认true隐藏                                          |
+|         customTabTitle          |  String  |        |                                                自定义区域tabs的标题                                                |
+|         customTabWidget         |  Widget  |        |                                              自定义区域tabs显示的组件                                              |
+|           hideBottom            |   bool   | false  |                         是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效                          |
+|        customBottomWidge        |  Widget  |        |                                底部区域组件,如果定义此参数默认定义的底部组件不显示                                 |
+|           printRecord           |   int    |   50   |                                          print日志最多记录多少条,默认50条                                          |
+|           debugRecord           |   int    |   30   |                                          调试日志最多记录多少条,默认30条                                           |
+|           scrollFlag            |   bool   | false  |                                       是否开始弹窗口内容区域左右滑动tab功能                                        |
+|          recordEnabled          |   bool   |  true  | 是否开启记录log模式(默认开启)，生产环境可以关闭提高APP性能，在需要调试时调用jhDebug.setRecordEnabled(true)方法开启 |
 
 <br>
 
@@ -122,6 +123,9 @@ jhDebug.setGlobalKey = GlobalKey<NavigatorState>();
 
 // 获取全局context
 jhDebug.getGlobalContext;
+
+// 设置是否开启记录log模式，生产环境可以关闭，需要调试时在开启
+jhDebug.setRecordEnabled(false); 
 ```
 
 个人博客 www.jonhuu.com

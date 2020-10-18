@@ -22,4 +22,7 @@ class JhConstants {
 
   /// 是否错误输出在控制台
   static const DebugMode ISIN_DEBUGMODE = DebugMode.inConsole;
+
+  /// 是否记用记录log
+  static const RECORD_ENABLED = true;
 }

@@ -12,10 +12,27 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   Stream<int> streamPrint;
   int index = 0;
+  bool isEnabledFlag = true;
 
   @override
   void initState() {
     super.initState();
+    jhDebug.init(
+      context: context,
+      hideCustomTab: false,
+      btnTap1: onBtn1,
+      btnTap2: () {
+        print('${jhDebug.getPrintLogAll}');
+      },
+      customTabTitle: '自定义tab专栏',
+      customTabWidget: Container(
+        child: Text('data'),
+      ),
+      // customBottomWidge: Container(
+      //   child: Text('自定义按钮区域'),
+      // ),
+      recordEnabled: true,
+    );
   }
 
   onBtn1() {
@@ -46,91 +63,87 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    jhDebug.init(
-      context: context,
-      hideCustomTab: false,
-      btnTap1: onBtn1,
-      btnTap2: () {
-        print('${jhDebug.getPrintLogAll}');
-      },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
-    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('jhDebug Plugin'),
       ),
-      body: Column(
+      body: Wrap(
+        alignment: WrapAlignment.center, //沿主轴方向居中
+        spacing: 18.0, // 每个组件之间的间隔
+        runSpacing: 4.0, // 纵轴Y的间隔距离，每个组件底部间隔
         children: <Widget>[
-          Center(
-            child: RaisedButton(
-              child: Text('全局btn$index'),
-              onPressed: () {
-                jhDebug.showDebugBtn();
-                // showDebugBtn();
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('remove全局btn'),
-              onPressed: () {
-                jhDebug.removeDebugBtn();
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('调试窗口'),
-              onPressed: () {
-                print('点击一次');
-                jhDebug.showLog();
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('打印几次'),
-              onPressed: () async {
-                Duration interval = Duration(milliseconds: 30);
-                streamPrint = Stream.periodic(interval, (data) => data);
-                streamPrint = streamPrint.take(200);
-                await for (int i in streamPrint) {
-                  print(
-                      'test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
-                }
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('添加常规error错误'),
-              onPressed: () {
-                // _tabController = TabController(length: 1, vsync: this);
-                throw "Sample for exception";
-                // Future.error("error自定义错误");
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('手动添加error错误'),
-              onPressed: () async {
-                Duration interval = Duration(seconds: 1);
-                streamPrint = Stream.periodic(interval, (data) => data);
-                streamPrint = streamPrint.take(10);
-                await for (int i in streamPrint) {
-                  // print('测试打印${i}');
-                  jhDebug.setDebugLog(
-                    debugLog:
-                        'RangeError (index$i): Invalid value: Not in range 0..3, inclusive: 4, D_',
-                    debugStack:
-                        '''List.[] (dart:core-patch/growable_array.dart:149:60)
+          ...listBtns(),
+        ],
+      ),
+    );
+  }
+
+  Widget baseBtn({String text, VoidCallback onPressed}) {
+    return Container(
+      child: RaisedButton(
+        child: Text(text),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
+  testW() {
+    return;
+  }
+
+  List<Widget> listBtns() {
+    return [
+      baseBtn(
+        text: '全局btn$index',
+        onPressed: () {
+          jhDebug.showDebugBtn();
+        },
+      ),
+      baseBtn(
+        text: 'remove全局btn',
+        onPressed: () {
+          jhDebug.removeDebugBtn();
+        },
+      ),
+      baseBtn(
+        text: '调试窗口',
+        onPressed: () {
+          print('点击一次');
+          jhDebug.showLog();
+        },
+      ),
+      baseBtn(
+        text: '打印几次',
+        onPressed: () async {
+          Duration interval = Duration(milliseconds: 30);
+          streamPrint = Stream.periodic(interval, (data) => data);
+          streamPrint = streamPrint.take(200);
+          await for (int i in streamPrint) {
+            print('test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
+          }
+        },
+      ),
+      baseBtn(
+        text: '常规error错误',
+        onPressed: () {
+          // _tabController = TabController(length: 1, vsync: this);
+          throw "Sample for exception";
+          // Future.error("error自定义错误");
+        },
+      ),
+      baseBtn(
+        text: '手动error错误',
+        onPressed: () async {
+          Duration interval = Duration(seconds: 1);
+          streamPrint = Stream.periodic(interval, (data) => data);
+          streamPrint = streamPrint.take(10);
+          await for (int i in streamPrint) {
+            // print('测试打印${i}');
+            jhDebug.setDebugLog(
+              debugLog:
+                  'RangeError (index$i): Invalid value: Not in range 0..3, inclusive: 4, D_',
+              debugStack:
+                  '''List.[] (dart:core-patch/growable_array.dart:149:60)
 #1      _TabsWrapState.copyClickItemData (package:jh_debug/components/TabsWrap.dart:170:28)
 #2      _TabsWrapState._logContext.<anonymous closure> (package:jh_debug/components/TabsWrap.dart:356:17)
 #3      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:182:24)
@@ -149,29 +162,32 @@ class _TestPageState extends State<TestPage> {
 #16     _invoke1 (dart:ui/hooks.dart:273:10)
 #17     _dispatchPointerDataPacket (dart:ui/hooks.dart:182:5)
 ''',
-                  );
-                }
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('下一页'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/detailsPage');
-              },
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              child: Text('请求'),
-              onPressed: () {
-                getNewVersion();
-              },
-            ),
-          ),
-        ],
+            );
+          }
+        },
       ),
-    );
+      baseBtn(
+        text: '下一页',
+        onPressed: () {
+          Navigator.pushNamed(context, '/detailsPage');
+        },
+      ),
+      baseBtn(
+        text: '${isEnabledFlag ? '禁用' : '启用'}log记录',
+        onPressed: () {
+          setState(() {
+            jhDebug.setRecordEnabled(!isEnabledFlag);
+            print(!isEnabledFlag);
+            isEnabledFlag = !isEnabledFlag;
+          });
+        },
+      ),
+      baseBtn(
+        text: '请求',
+        onPressed: () {
+          getNewVersion();
+        },
+      ),
+    ];
   }
 }

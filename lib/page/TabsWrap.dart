@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/page/components/DebugTab/DebugTab.dart';
 import 'package:jh_debug/page/components/PrintTab/PrintTab.dart';
-import 'package:jh_debug/page/types/index.dart';
+import 'package:jh_debug/page/types/index.dart' show LogType;
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'components/BottomWrap/BottomWrap.dart';
 

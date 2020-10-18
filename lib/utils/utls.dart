@@ -7,15 +7,6 @@ class JhUtils {
   /// tosat提示
   static void toastTips(String text, {BuildContext context}) {
     JhToast.showToast(jhConfig.context, msg: text);
-    // Fluttertoast.showToast(
-    //   msg: text,
-    //   toastLength: Toast.LENGTH_SHORT,
-    //   gravity: ToastGravity.CENTER,
-    //   timeInSecForIosWeb: 1,
-    //   backgroundColor: Colors.red,
-    //   textColor: Colors.white,
-    //   fontSize: 16.0,
-    // );
   }
 
   /// 复制到系统剪切板

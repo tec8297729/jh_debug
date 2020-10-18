@@ -31,21 +31,19 @@ class _BaseLogContextState extends State<BaseLogContext>
   Widget build(BuildContext context) {
     super.build(context);
     return Container(
-      child: Container(
-        color: Colors.white,
-        child: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
-              controller: scrollController,
-              child: Container(
-                padding: EdgeInsets.only(top: 43),
-                child: Column(children: widget.child),
-              ),
+      color: Colors.white,
+      child: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            controller: scrollController,
+            child: Container(
+              padding: EdgeInsets.only(top: 43),
+              child: Column(children: widget.child),
             ),
-            // 头部组件
-            if (widget.headerChild != null) widget.headerChild,
-          ],
-        ),
+          ),
+          // 头部组件
+          if (widget.headerChild != null) widget.headerChild,
+        ],
       ),
     );
   }

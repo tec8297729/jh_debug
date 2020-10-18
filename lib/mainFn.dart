@@ -94,7 +94,7 @@ jhDebugMain({
     },
     zoneSpecification: new ZoneSpecification(
       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-        jhDebug.setPrintLog(line);
+        jhDebug.setPrintLog("$line");
         parent.print(self, "$line");
       },
     ),

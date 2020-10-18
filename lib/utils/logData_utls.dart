@@ -32,7 +32,9 @@ class LogDataUtls {
 
   /// 添加一条print日志
   void addPringLog(String data) {
-    if (_printLogAll.length >= jhConfig.printRecord) {
+    if (!jhConfig.recordEnabled) return;
+    if (_printLogAll.length >= jhConfig.printRecord &&
+        _printLogAll.length != 0) {
       // 清除多余日志
       _printLogAll.removeRange(
           0, _printLogAll.length - jhConfig.printRecord + 1);
@@ -67,7 +69,9 @@ class LogDataUtls {
 
   /// debug 添加一条日志
   void addDebugLog(String debugLog, String debugStack) {
-    if (_debugLogAll.length >= jhConfig.debugRecord) {
+    if (!jhConfig.recordEnabled) return;
+    if (_debugLogAll.length >= jhConfig.debugRecord &&
+        _debugLogAll.length != 0) {
       // 清除多余日志
       _debugLogAll.removeRange(
           0, _debugLogAll.length - jhConfig.debugRecord + 1);

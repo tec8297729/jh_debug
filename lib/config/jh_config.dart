@@ -12,12 +12,14 @@ class JhConfig {
   /// debug日志上限
   int debugRecord = JhConstants.DEBUG_RECORD;
 
+  /// 是否左右滑动tab
   bool scrollFlag = JhConstants.SCROLL_FLAG;
 
-  /// 测试输出
-  bool trace = true;
-
+  /// 局部上下文
   BuildContext context;
+
+  /// 是否启用记录log，生产环境不常用时可默认设置关闭，手动调整开启
+  bool recordEnabled = JhConstants.RECORD_ENABLED;
 }
 
 JhConfig jhConfig = JhConfig();
