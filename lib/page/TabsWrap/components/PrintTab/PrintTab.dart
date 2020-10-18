@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
 import 'package:jh_debug/components/logItem/logItem.dart';
 import 'package:jh_debug/jh_debug.dart';
+import 'package:jh_debug/types/index.dart';
 import 'package:jh_debug/utils/utls.dart';
-import 'components/LogHeader.dart';
+import '../../../../components/LogHeader/LogHeader.dart';
 
 class PrintTab extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _PrintTabState extends State<PrintTab>
     List<String> dataList = jhDebug.getPrintLogAll;
 
     return BaseLogContext(
-      headerChild: LogHeader(),
+      headerChild: LogHeader(logType: LogType.print),
       child: [
         for (var i = dataList.length; i > 0; i--)
           LogItem(

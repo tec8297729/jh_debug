@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
+import 'package:jh_debug/components/LogHeader/LogHeader.dart';
 import 'package:jh_debug/components/logItem/logItem.dart';
+import 'package:jh_debug/types/index.dart';
 import 'package:jh_debug/utils/utls.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'components/LogHeader.dart';
 
 class DebugTab extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class _DebugTabState extends State<DebugTab>
       ));
     }
     return BaseLogContext(
-      headerChild: LogHeader(),
+      headerChild: LogHeader(logType: LogType.debug),
       child: allWidget,
     );
   }

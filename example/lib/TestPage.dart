@@ -15,22 +15,6 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     super.initState();
-    jhDebug.init(
-      context: context,
-      hideCustomTab: false,
-      btnTap1: onBtn1,
-      btnTap2: () {
-        print('${jhDebug.getPrintLogAll}');
-      },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
-      recordEnabled: true,
-    );
   }
 
   onBtn1() {
@@ -61,6 +45,22 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+    jhDebug.init(
+      context: context,
+      hideCustomTab: false,
+      btnTap1: onBtn1,
+      btnTap2: () {
+        print('${jhDebug.getPrintLogAll}');
+      },
+      customTabTitle: '自定义tab专栏',
+      customTabWidget: Container(
+        child: Text('data'),
+      ),
+      // customBottomWidge: Container(
+      //   child: Text('自定义按钮区域'),
+      // ),
+      recordEnabled: true,
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('jhDebug Plugin'),
