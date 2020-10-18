@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jh_debug/page/components/logItem/logItem.dart';
+import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
+import 'package:jh_debug/components/logItem/logItem.dart';
 import 'package:jh_debug/utils/utls.dart';
 import 'package:jh_debug/jh_debug.dart';
-import '../BaseLogContext/BaseLogContext.dart';
 import 'components/LogHeader.dart';
 
 class DebugTab extends StatefulWidget {

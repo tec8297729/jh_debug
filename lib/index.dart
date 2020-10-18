@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
-import 'components/StackPosBtn.dart';
-import 'page/TabsWrap.dart';
+import 'page/StackPosBtn/StackPosBtn.dart';
+import 'page/TabsWrap/TabsWrap.dart';
 import 'constants/jh_constants.dart';
 import 'config/jh_config.dart' show jhConfig;
 

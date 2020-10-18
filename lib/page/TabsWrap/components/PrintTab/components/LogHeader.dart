@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jh_debug/components/BaseBtn/BaseBtn.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'package:jh_debug/page/components/BaseBtn/BaseBtn.dart';
 import 'package:jh_debug/utils/utls.dart';
 
 /// 日志内容区头部组件
