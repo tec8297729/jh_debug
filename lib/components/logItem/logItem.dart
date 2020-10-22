@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jh_debug/constants/index.dart' show textDefalutStyle;
 
 /// 日志单个item组件
 class LogItem extends StatefulWidget {
@@ -8,12 +9,14 @@ class LogItem extends StatefulWidget {
     @required this.currentIdx,
     @required this.logData,
     @required this.onTap,
+    this.customRChild,
   }) : super(key: key);
 
   final int index;
   final int currentIdx;
   final String logData;
-  final Function(int idx) onTap;
+  final void Function(int idx) onTap;
+  final Widget customRChild;
 
   @override
   _LogItemState createState() => _LogItemState();
@@ -35,7 +38,6 @@ class _LogItemState extends State<LogItem> with AutomaticKeepAliveClientMixin {
 
   /// 日志输出布局item
   Widget _logTableItem({@required int index, @required String logData}) {
-    TextStyle _textStyle = TextStyle(color: Colors.black, fontSize: 14);
     bool isCurrentIndex = widget.currentIdx == index;
 
     return InkWell(
@@ -65,12 +67,13 @@ class _LogItemState extends State<LogItem> with AutomaticKeepAliveClientMixin {
             // 左侧
             ConstrainedBox(
               constraints: BoxConstraints(minWidth: 20, maxWidth: 54),
-              child: Text('$index：', style: _textStyle),
+              child: Text('$index：', style: textDefalutStyle),
             ),
             // 右侧 错误日志内容区
             Expanded(
               flex: 1,
-              child: Text(logData.toString(), style: _textStyle),
+              child: widget.customRChild ??
+                  Text(logData.toString(), style: textDefalutStyle),
             )
           ],
         ),

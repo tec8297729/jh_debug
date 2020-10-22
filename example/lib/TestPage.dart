@@ -117,7 +117,8 @@ class _TestPageState extends State<TestPage> {
           streamPrint = Stream.periodic(interval, (data) => data);
           streamPrint = streamPrint.take(200);
           await for (int i in streamPrint) {
-            print('test log$i >>> ${DateTime.now().microsecondsSinceEpoch}');
+            print(
+                'Test Log$i >>> ${DateTime.now().microsecondsSinceEpoch}dadfABCadfabckdyyablwefbcladAbcBcabcABCower');
           }
         },
       ),

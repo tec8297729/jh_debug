@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
 import 'package:jh_debug/components/LogHeader/LogHeader.dart';
+import 'package:jh_debug/components/SearchItem/SearchItem.dart';
 import 'package:jh_debug/components/logItem/logItem.dart';
 import 'package:jh_debug/types/index.dart';
+import 'package:jh_debug/utils/logData_utls.dart';
 import 'package:jh_debug/utils/utls.dart';
 import 'package:jh_debug/jh_debug.dart';
 
@@ -16,6 +18,7 @@ class _DebugTabState extends State<DebugTab>
   int currentIdx = 0;
   @override
   bool get wantKeepAlive => true;
+  final LogType _logType = LogType.debug;
   // item点击事件
   void onTapLog(int index) {
     List<Map<String, String>> debugLogList = jhDebug.getDebugLogAll;
@@ -44,10 +47,13 @@ class _DebugTabState extends State<DebugTab>
         currentIdx: currentIdx,
         logData: logData,
         onTap: onTapLog,
+        customRChild: logDataUtls.getSearchKey(_logType).isNotEmpty
+            ? SearchItem(text: logData, type: _logType)
+            : null,
       ));
     }
     return BaseLogContext(
-      headerChild: LogHeader(logType: LogType.debug),
+      headerChild: LogHeader(logType: _logType),
       child: allWidget,
     );
   }

@@ -17,10 +17,10 @@ class LogHeader extends StatefulWidget {
 
 class _LogHeaderState extends State<LogHeader> {
   TextEditingController _textController = TextEditingController();
-  final FocusNode _focusNode = FocusNode(); // 光标
   SearchStatus searchStatus = SearchStatus.hide; // 是否显示搜索
-  final double inputHeight = 42.0;
   bool isShowClearIcon = false;
+  final FocusNode _focusNode = FocusNode(); // 光标
+  final double inputHeight = 42.0;
 
   @override
   void initState() {
@@ -41,17 +41,28 @@ class _LogHeaderState extends State<LogHeader> {
   @override
   void dispose() {
     noFocusInput();
+    _textController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
   void noFocusInput() {
-    _focusNode.requestFocus(FocusNode());
+    _focusNode.requestFocus();
     _focusNode.unfocus(); // 取消焦点
   }
 
   // 搜索按钮事件
   void onSearchBtn(String text) {
-    // TODO: 完善搜索事件
+    logDataUtls.setSearch(sKey: text, type: widget.logType);
+  }
+
+  // 回退按钮
+  void goBackHeader() {
+    setState(() {
+      noFocusInput();
+      logDataUtls.setSearch(sKey: '', type: widget.logType);
+      searchStatus = SearchStatus.hide;
+    });
   }
 
   @override
@@ -65,6 +76,7 @@ class _LogHeaderState extends State<LogHeader> {
         border: Border(
           bottom: BorderSide(width: 1, color: Colors.black12),
         ),
+        color: Colors.white,
       ),
       child: IndexedStack(
         index: searchStatus == SearchStatus.show ? 1 : 0, // 层级
@@ -153,25 +165,21 @@ class _LogHeaderState extends State<LogHeader> {
             icon: Icon(Icons.arrow_back_ios_outlined),
             iconSize: 15,
             color: Colors.black87,
-            onPressed: () {
-              setState(() {
-                noFocusInput();
-                searchStatus = SearchStatus.hide;
-              });
-            },
+            onPressed: goBackHeader,
             tooltip: '回退',
           ),
           Expanded(
             flex: 1,
             child: searchInput(),
           ),
-          // 右侧关闭icon
+          // 右侧清空icon
           if (isShowClearIcon)
             iconBtn(
               icons: Icons.close,
               color: Colors.black45,
               onPressed: () {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
+                  logDataUtls.setSearch(sKey: '', type: widget.logType);
                   _textController.clear();
                 });
               },

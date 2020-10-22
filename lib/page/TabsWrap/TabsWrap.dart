@@ -109,6 +109,7 @@ class _TabsWrapState extends State<TabsWrap>
   /// 监听滑动事件
   tabListener() {
     tabsIndex = _tabController.index;
+    FocusScope.of(context).unfocus();
   }
 
   /// 获取tab索引
@@ -131,7 +132,7 @@ class _TabsWrapState extends State<TabsWrap>
                 indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
                 tabs: <Widget>[
                   _tabTitle('print'),
-                  _tabTitle('debug'),
+                  _tabTitle('调试日志'),
                   if (!widget.hideCustomTab)
                     _tabTitle(widget.customTabTitle ?? '自定义'),
                 ],

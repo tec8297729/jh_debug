@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:jh_debug/config/jh_config.dart';
+import 'package:jh_debug/types/index.dart';
 
 List<String> _printLogAll = []; // 所有print日志
 List<Map<String, String>> _debugLogAll = []; // 所有的debug调试日志
@@ -11,9 +12,14 @@ class LogDataUtls {
   Stream<List<String>> _printStream; // print数据流
   StreamController<List<Map<String, String>>> _debugCtr = StreamController();
   Stream<List<Map<String, String>>> _debugStream; // debug数据流
+  // 搜索关键字
+  Map<LogType, String> _searchKey = {
+    LogType.debug: '',
+    LogType.print: '',
+  };
 
   /// 初始化实例
-  init() {
+  void init() {
     _printStream = _printCtr.stream.asBroadcastStream();
     _debugStream = _debugCtr.stream.asBroadcastStream();
     _printStream.listen((data) {
@@ -28,7 +34,7 @@ class LogDataUtls {
   void unSubPrint() => _printCtr.close();
 
   /// 刷新print流数据
-  flushPrint() => _printCtr.sink.add(_printLogAll);
+  void flushPrint() => _printCtr.sink.add(_printLogAll);
 
   /// 添加一条print日志
   void addPringLog(String data) {
@@ -52,7 +58,7 @@ class LogDataUtls {
   }
 
   /// 清空print日志数据
-  clearPrint() {
+  void clearPrint() {
     _printLogAll = [];
     flushPrint();
   }
@@ -65,7 +71,7 @@ class LogDataUtls {
   void unSubDebug() => _debugCtr.close();
 
   /// debug 刷新流数据
-  flushDebug() => _debugCtr.sink.add(_debugLogAll);
+  void flushDebug() => _debugCtr.sink.add(_debugLogAll);
 
   /// debug 添加一条日志
   void addDebugLog(String debugLog, String debugStack) {
@@ -93,5 +99,39 @@ class LogDataUtls {
   void clearDebug() {
     _debugLogAll = [];
     flushDebug();
+  }
+
+  // ---------------------  搜索相关 ------------------
+  /// 设置搜索内容
+  void setSearch({String sKey, LogType type}) {
+    _searchKey[type] = sKey;
+    dyFlush(type);
+  }
+
+  /// 获取搜索关键
+  String getSearchKey(LogType type) {
+    dyFlush(type);
+    return _searchKey[type];
+  }
+
+  /// 清空所有搜索关键字
+  void clearSearch() {
+    _searchKey[LogType.debug] = '';
+    _searchKey[LogType.print] = '';
+  }
+
+  /// 动态更新流
+  void dyFlush(LogType type) {
+    switch (type) {
+      case LogType.print:
+        flushPrint();
+        break;
+      case LogType.debug:
+        flushDebug();
+        break;
+      default:
+        flushPrint();
+        flushDebug();
+    }
   }
 }

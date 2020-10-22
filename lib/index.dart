@@ -177,6 +177,7 @@ class JhDebug {
       },
     ).then((v) {
       _layerFlag = false;
+      logDataUtls.clearSearch(); // 清余关键字
     });
   }
 
