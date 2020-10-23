@@ -111,7 +111,7 @@ class _TestPageState extends State<TestPage> {
         },
       ),
       baseBtn(
-        text: '打印几次',
+        text: '打印N次',
         onPressed: () async {
           Duration interval = Duration(milliseconds: 30);
           streamPrint = Stream.periodic(interval, (data) => data);
@@ -181,12 +181,12 @@ class _TestPageState extends State<TestPage> {
           });
         },
       ),
-      baseBtn(
-        text: '请求',
-        onPressed: () {
-          getNewVersion();
-        },
-      ),
+      // baseBtn(
+      //   text: 'test',
+      //   onPressed: () {
+      //     getNewVersion();
+      //   },
+      // ),
     ];
   }
 }
