@@ -36,8 +36,22 @@ class _DebugTabState extends State<DebugTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    return BaseLogContext(
+      headerChild: LogHeader(logType: _logType),
+      child: handleLogItem(),
+    );
+  }
+
+  List<Widget> handleLogItem() {
     List<Map<String, String>> dataList = jhDebug.getDebugLogAll;
     List<Widget> allWidget = [];
+
+    final sKey = logDataUtls.getSearchKey(_logType);
+
+    if (sKey.isNotEmpty) {
+      return handleSearchItem(dataList, sKey);
+    }
 
     for (var i = dataList.length; i > 0; i--) {
       String logData = JhUtils.getItemDebugLogStr(dataList[i - 1]);
@@ -47,14 +61,35 @@ class _DebugTabState extends State<DebugTab>
         currentIdx: currentIdx,
         logData: logData,
         onTap: onTapLog,
-        customRChild: logDataUtls.getSearchKey(_logType).isNotEmpty
-            ? SearchItem(text: logData, type: _logType)
-            : null,
       ));
     }
-    return BaseLogContext(
-      headerChild: LogHeader(logType: _logType),
-      child: allWidget,
+    return allWidget;
+  }
+
+  // 生成搜索高亮组件
+  List<Widget> handleSearchItem(
+    List<Map<String, String>> dataList,
+    String sKey,
+  ) {
+    List<Widget> tabList = [];
+    RegExp reg = new RegExp(
+      r"(" + sKey + ")",
+      multiLine: true,
+      caseSensitive: false,
     );
+
+    for (var i = dataList.length; i > 0; i--) {
+      String logData = JhUtils.getItemDebugLogStr(dataList[i - 1]);
+      if (reg.hasMatch(logData)) {
+        tabList.add(LogItem(
+          index: i, // 倒序索引
+          currentIdx: currentIdx,
+          logData: logData,
+          onTap: onTapLog,
+          customRChild: SearchItem(text: logData, type: _logType),
+        ));
+      }
+    }
+    return tabList;
   }
 }

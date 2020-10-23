@@ -106,7 +106,7 @@ class _LogHeaderState extends State<LogHeader> {
       children: <Widget>[
         searchBtnW(),
         BaseBtn(
-          text: jhConfig.debugModeFull ? '详细' : '精简',
+          text: jhConfig.debugModeFull ? '精简' : '详细',
           onPressed: () {
             setState(() {
               jhConfig.debugModeFull = !jhConfig.debugModeFull;

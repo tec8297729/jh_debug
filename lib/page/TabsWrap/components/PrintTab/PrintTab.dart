@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
 import 'package:jh_debug/components/SearchItem/SearchItem.dart';
 import 'package:jh_debug/components/logItem/logItem.dart';
-import 'package:jh_debug/constants/index.dart';
 import 'package:jh_debug/jh_debug.dart';
 import 'package:jh_debug/types/index.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
@@ -48,16 +47,43 @@ class _PrintTabState extends State<PrintTab>
   List<Widget> handleLogItem() {
     List<String> dataList = jhDebug.getPrintLogAll;
     List<Widget> tabList = [];
+    final sKey = logDataUtls.getSearchKey(_logType);
+
+    if (sKey.isNotEmpty) {
+      return handleSearchItem(dataList, sKey);
+    }
+
     for (var i = dataList.length; i > 0; i--) {
       tabList.add(LogItem(
         index: i, // 倒序索引
         currentIdx: currentIdx,
-        logData: '${dataList[i - 1]}',
+        logData: dataList[i - 1],
         onTap: onTapLog,
-        customRChild: logDataUtls.getSearchKey(_logType).isNotEmpty
-            ? SearchItem(text: dataList[i - 1], type: _logType)
-            : null,
       ));
+    }
+    return tabList;
+  }
+
+  // 生成搜索高亮组件
+  List<Widget> handleSearchItem(List<String> dataList, String sKey) {
+    List<Widget> tabList = [];
+    RegExp reg = new RegExp(
+      r"(" + sKey + ")",
+      multiLine: true,
+      caseSensitive: false,
+    );
+    String currStr = '';
+    for (var i = dataList.length; i > 0; i--) {
+      currStr = dataList[i - 1];
+      if (reg.hasMatch(currStr)) {
+        tabList.add(LogItem(
+          index: i, // 倒序索引
+          currentIdx: currentIdx,
+          logData: currStr,
+          onTap: onTapLog,
+          customRChild: SearchItem(text: currStr, type: _logType),
+        ));
+      }
     }
     return tabList;
   }
