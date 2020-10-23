@@ -21,7 +21,7 @@ initGit.bat
 # is commented out by default.
 .vscode/
 # example/
-demo/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

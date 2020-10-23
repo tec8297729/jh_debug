@@ -9,8 +9,8 @@ debug调试器工具，让你的开发更便捷处理bug！简单易用快速上
 > * 内置全局浮动按钮组件
 
 <div style="display:flex; justify-content: space-evenly;">
-<img src="https://github.com/tec8297729/jh_debug/blob/master/demo/demo_1.png?raw=true" width="45%">
-<img src="https://github.com/tec8297729/jh_debug/blob/master/demo/demo_2.png?raw=true" width="45%">
+<img src="http://img.jonhuu.com/plugin/jh_debug/demo1.png" width="45%">
+<img src="http://img.jonhuu.com/plugin/jh_debug/demo2.png" width="45%">
 </div>
 <br><br>
 
