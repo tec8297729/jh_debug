@@ -29,10 +29,10 @@ class _PrintTabState extends State<PrintTab>
     });
   }
 
-  void didUpdateWidget(oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    currentIdx = 0;
-  }
+  // void didUpdateWidget(oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   currentIdx = 0;
+  // }
 
   @override
   Widget build(BuildContext context) {

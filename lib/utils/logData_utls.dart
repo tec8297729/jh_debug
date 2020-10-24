@@ -110,7 +110,6 @@ class LogDataUtls {
 
   /// 获取搜索关键
   String getSearchKey(LogType type) {
-    dyFlush(type);
     return _searchKey[type];
   }
 
@@ -130,8 +129,6 @@ class LogDataUtls {
         flushDebug();
         break;
       default:
-        flushPrint();
-        flushDebug();
     }
   }
 }

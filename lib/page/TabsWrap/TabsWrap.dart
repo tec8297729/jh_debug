@@ -64,10 +64,12 @@ class TabsWrap extends StatefulWidget {
 }
 
 class _TabsWrapState extends State<TabsWrap>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   List<Widget> tabViewChild = [];
   int tabsIndex = 0;
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -84,26 +86,23 @@ class _TabsWrapState extends State<TabsWrap>
 
   /// 更新tabs组件页面
   _initTabsWidget({int initialIndex}) {
-    setState(() {
-      _tabController?.removeListener(tabListener);
-      tabViewChild = [
-        _logListStream(LogType.print), // print日志
-        _logListStream(LogType.debug), // debug日志
-        if (!widget.hideCustomTab) _customTabList(),
-      ];
+    tabViewChild = [
+      _logListStream(LogType.print), // print日志
+      _logListStream(LogType.debug), // debug日志
+      if (!widget.hideCustomTab) _customTabList(),
+    ];
 
-      int tabsLen = tabViewChild.length; // tabs总长度
-      if (initialIndex != null && initialIndex >= tabsLen) {
-        initialIndex = tabsLen - 1;
-      }
-      _tabController = TabController(
-        length: tabsLen,
-        initialIndex: initialIndex ?? tabsIndex,
-        vsync: this,
-      );
+    int tabsLen = tabViewChild.length; // tabs总长度
+    if (initialIndex != null && initialIndex >= tabsLen) {
+      initialIndex = tabsLen - 1;
+    }
+    _tabController = TabController(
+      length: tabsLen,
+      initialIndex: initialIndex ?? tabsIndex,
+      vsync: this,
+    );
 
-      _tabController.addListener(tabListener);
-    });
+    _tabController.addListener(tabListener);
   }
 
   /// 监听滑动事件
@@ -117,6 +116,7 @@ class _TabsWrapState extends State<TabsWrap>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Semantics(
       label: 'jhdebug_TabsWrap',
       child: Container(
