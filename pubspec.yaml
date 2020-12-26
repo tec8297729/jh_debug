@@ -1,10 +1,10 @@
 name: jh_debug
 description: jh_debug The debugging plug-in above the APP. Easy-to-use console plugin, More feature details....
-version: 0.4.1
+version: 0.5.0
 homepage: https://github.com/tec8297729/jh_debug
 
 environment:
-  sdk: '>=2.2.2 <3.0.0'
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:

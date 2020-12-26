@@ -64,20 +64,18 @@ jhDebugMain({
     // 调用原生错误输出模式
     if (debugMode == DebugMode.self) return null;
 
-    return (Object obj, StackTrace stack) {
-      /// 错误信息
-      FlutterErrorDetails details = (Object obj, StackTrace stack) {
-        jhDebug.setDebugLog(
-          debugLog: obj?.toString() ?? '',
-          debugStack: stack?.toString() ?? '',
-        );
+    return (Object error, StackTrace stack) async {
+      jhDebug.setDebugLog(
+        debugLog: error?.toString() ?? '',
+        debugStack: stack?.toString() ?? '',
+      );
 
-        return FlutterErrorDetails(
-          exception: obj,
-          stack: stack,
-          library: 'Flutter JH_DEBUG',
-        );
-      }(obj, stack);
+      /// 错误信息
+      FlutterErrorDetails details = FlutterErrorDetails(
+        exception: error,
+        stack: stack,
+        library: 'Flutter JH_DEBUG',
+      );
       if (debugMode == DebugMode.inConsole) {
         FlutterError.dumpErrorToConsole(details);
       }
@@ -87,17 +85,17 @@ jhDebugMain({
     };
   }
 
-  return runZoned(
-    () {
-      if (beforeAppChildFn != null) beforeAppChildFn();
-      return runApp(appChild);
+  return runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      runApp(appChild);
     },
+    zoneErrorFlagFn(debugMode, errorCallback),
     zoneSpecification: new ZoneSpecification(
       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
         jhDebug.setPrintLog("$line");
         parent.print(self, "$line");
       },
     ),
-    onError: zoneErrorFlagFn(debugMode, errorCallback),
   );
 }

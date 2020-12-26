@@ -120,7 +120,11 @@ class _TabsWrapState extends State<TabsWrap>
     return Semantics(
       label: 'jhdebug_TabsWrap',
       child: Container(
-        height: 400,
+        height: 420,
+        constraints: BoxConstraints(
+          minWidth: 350,
+          maxWidth: 600,
+        ),
         child: Column(
           children: <Widget>[
             // tab选项卡
