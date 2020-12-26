@@ -125,7 +125,6 @@ class _TestPageState extends State<TestPage> {
       baseBtn(
         text: '常规error错误',
         onPressed: () {
-          // _tabController = TabController(length: 1, vsync: this);
           throw "Sample for exception";
           // Future.error("error自定义错误");
         },
@@ -181,12 +180,12 @@ class _TestPageState extends State<TestPage> {
           });
         },
       ),
-      // baseBtn(
-      //   text: 'test',
-      //   onPressed: () {
-      //     getNewVersion();
-      //   },
-      // ),
+      baseBtn(
+        text: 'get请求',
+        onPressed: () {
+          getNewVersion();
+        },
+      ),
     ];
   }
 }
