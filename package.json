@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "pub": "flutter packages pub publish",
+    "tags": "git tag v0.5.0 && git push origin --tags"
+  }
+}
