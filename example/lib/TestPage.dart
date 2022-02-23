@@ -8,7 +8,7 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  Stream<int> streamPrint;
+  late Stream<int> streamPrint;
   int index = 0;
   bool isEnabledFlag = true;
 
@@ -40,7 +40,7 @@ class _TestPageState extends State<TestPage> {
         ),
       );
     });
-    Overlay.of(context).insert(overlayEntry);
+    Overlay.of(context)?.insert(overlayEntry);
   }
 
   @override
@@ -76,10 +76,10 @@ class _TestPageState extends State<TestPage> {
     );
   }
 
-  Widget baseBtn({String text, VoidCallback onPressed}) {
+  Widget baseBtn({String? text, VoidCallback? onPressed}) {
     return Container(
-      child: RaisedButton(
-        child: Text(text),
+      child: ElevatedButton(
+        child: Text(text!),
         onPressed: onPressed,
       ),
     );

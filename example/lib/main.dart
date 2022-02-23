@@ -8,6 +8,7 @@ void main() {
   jhDebugMain(
     appChild: MyApp(),
     debugMode: DebugMode.inConsole,
+    errorCallback: (FlutterErrorDetails) {},
   );
 }
 
