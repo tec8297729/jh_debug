@@ -6,9 +6,9 @@ import 'package:jh_debug/utils/logData_utls.dart';
 // 搜索高亮log列表组件
 class SearchItem extends StatelessWidget {
   const SearchItem({
-    Key key,
-    @required this.text,
-    @required this.type,
+    Key? key,
+    required this.text,
+    required this.type,
   }) : super(key: key);
   final String text;
   final LogType type;
@@ -19,7 +19,7 @@ class SearchItem extends StatelessWidget {
     List<TextSpan> textSpanList = [];
 
     RegExp reg = new RegExp(
-      r"(" + sKey + ")",
+      r"(" + sKey! + ")",
       multiLine: true,
       caseSensitive: false,
     );
@@ -29,7 +29,7 @@ class SearchItem extends StatelessWidget {
         text: m.group(0),
         style: textHighlightedStyle,
       ));
-      return m.group(0);
+      return m.group(0)!;
     }, onNonMatch: (n) {
       textSpanList.add(TextSpan(text: n));
       return n;

@@ -1,6 +1,6 @@
 class DebugLogType {
-  String debugLog;
-  String debugStack;
+  late String debugLog;
+  late String debugStack;
 }
 
 enum DebugMode {

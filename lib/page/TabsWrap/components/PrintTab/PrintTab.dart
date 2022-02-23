@@ -49,7 +49,7 @@ class _PrintTabState extends State<PrintTab>
     List<Widget> tabList = [];
     final sKey = logDataUtls.getSearchKey(_logType);
 
-    if (sKey.isNotEmpty) {
+    if (sKey != null) {
       return handleSearchItem(dataList, sKey);
     }
 

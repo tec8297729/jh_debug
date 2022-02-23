@@ -20,19 +20,21 @@ JhDebug jhDebug = JhDebug();
 /// [beforeAppChildFn] 构建appChild之前钩子函数
 /// ```
 jhDebugMain({
-  @required Widget appChild,
-  Function(FlutterErrorDetails) errorCallback,
-  VoidCallback beforeAppChildFn,
+  required Widget appChild,
+  required Function(FlutterErrorDetails)? errorCallback,
+  VoidCallback? beforeAppChildFn,
   DebugMode debugMode = JhConstants.ISIN_DEBUGMODE,
-  Function<Widget>(String message, Object error) errorWidgetFn,
+  Function<Widget>(String message, Object error)? errorWidgetFn,
 }) {
   if (debugMode != DebugMode.self) {
     FlutterError.onError = (FlutterErrorDetails details) {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
+      Zone.current
+          .handleUncaughtError(details.exception, details.stack as StackTrace);
     };
 
     ErrorWidget.builder = (FlutterErrorDetails details) {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
+      Zone.current
+          .handleUncaughtError(details.exception, details.stack as StackTrace);
       String message = '';
       assert(() {
         String _stringify(Object exception) {
@@ -56,18 +58,17 @@ jhDebugMain({
     };
   }
 
-  /// zone错误回调函数
-  zoneErrorFlagFn(
-    DebugMode debugMode,
-    Function(FlutterErrorDetails) errorCallback,
-  ) {
-    // 调用原生错误输出模式
-    if (debugMode == DebugMode.self) return null;
+  return runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      runApp(appChild);
+    },
 
-    return (Object error, StackTrace stack) async {
+    /// zone错误回调函数
+    ((error, stack) {
       jhDebug.setDebugLog(
-        debugLog: error?.toString() ?? '',
-        debugStack: stack?.toString() ?? '',
+        debugLog: error.toString(),
+        debugStack: stack.toString(),
       );
 
       /// 错误信息
@@ -82,15 +83,7 @@ jhDebugMain({
 
       // 自定义上报错误
       if (errorCallback != null) errorCallback(details);
-    };
-  }
-
-  return runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
-      runApp(appChild);
-    },
-    zoneErrorFlagFn(debugMode, errorCallback),
+    }),
     zoneSpecification: new ZoneSpecification(
       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
         jhDebug.setPrintLog("$line");

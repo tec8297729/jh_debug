@@ -8,7 +8,7 @@ import 'package:jh_debug/utils/utls.dart';
 
 /// 日志内容区头部组件
 class LogHeader extends StatefulWidget {
-  LogHeader({Key key, @required this.logType}) : super(key: key);
+  LogHeader({Key? key, required this.logType}) : super(key: key);
   final LogType logType;
 
   @override
@@ -178,7 +178,7 @@ class _LogHeaderState extends State<LogHeader> {
               icons: Icons.close,
               color: Colors.black45,
               onPressed: () {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
+                WidgetsBinding.instance?.addPostFrameCallback((_) {
                   logDataUtls.setSearch(sKey: '', type: widget.logType);
                   _textController.clear();
                 });
@@ -199,9 +199,9 @@ class _LogHeaderState extends State<LogHeader> {
 
   // 搜索右侧icon基础组件按钮
   Widget iconBtn({
-    IconData icons,
-    VoidCallback onPressed,
-    Color color,
+    required IconData icons,
+    required VoidCallback onPressed,
+    Color? color,
   }) {
     return Container(
       width: 30,

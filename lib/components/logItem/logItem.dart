@@ -4,11 +4,11 @@ import 'package:jh_debug/constants/index.dart' show textDefalutStyle;
 /// 日志单个item组件
 class LogItem extends StatefulWidget {
   const LogItem({
-    Key key,
-    @required this.index,
-    @required this.currentIdx,
-    @required this.logData,
-    @required this.onTap,
+    Key? key,
+    required this.index,
+    required this.currentIdx,
+    required this.logData,
+    required this.onTap,
     this.customRChild,
   }) : super(key: key);
 
@@ -16,7 +16,7 @@ class LogItem extends StatefulWidget {
   final int currentIdx;
   final String logData;
   final void Function(int idx) onTap;
-  final Widget customRChild;
+  final Widget? customRChild;
 
   @override
   _LogItemState createState() => _LogItemState();
@@ -37,7 +37,7 @@ class _LogItemState extends State<LogItem> with AutomaticKeepAliveClientMixin {
   }
 
   /// 日志输出布局item
-  Widget _logTableItem({@required int index, @required String logData}) {
+  Widget _logTableItem({required int index, required String logData}) {
     bool isCurrentIndex = widget.currentIdx == index;
 
     return InkWell(

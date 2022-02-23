@@ -5,24 +5,24 @@ import '../../jh_debug.dart';
 class StackPosBtn extends StatefulWidget {
   StackPosBtn(
       {this.left, this.rigth, this.top, this.bottom, this.height, this.width});
-  final double width;
-  final double height;
-  final double left;
-  final double rigth;
-  final double top;
-  final double bottom;
+  final double? width;
+  final double? height;
+  final double? left;
+  final double? rigth;
+  final double? top;
+  final double? bottom;
   @override
   _StackPosBtnState createState() => _StackPosBtnState();
 }
 
 class _StackPosBtnState extends State<StackPosBtn> {
-  Offset moveOffset;
+  Offset? moveOffset;
 
   @override
   Widget build(BuildContext context) {
     double handleTop = MediaQuery.of(context).size.height * 0.7;
     if (widget.bottom != null || widget.top != null) {
-      handleTop = widget.top ?? null;
+      handleTop = (widget.top ?? null)!;
     }
     return Positioned(
       top: moveOffset?.dy ?? handleTop,

@@ -17,47 +17,47 @@ class TabsWrap extends StatefulWidget {
     this.btnTap3,
     this.btnTitle3,
     this.hideBottom,
-    this.hideCustomTab,
+    this.hideCustomTab = true,
     this.customTabWidget,
     this.customTabTitle,
     this.tabsInitIndex,
   });
 
   /// 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效
-  final bool hideBottom;
+  final bool? hideBottom;
 
   /// 自定义底部区域组件,如果定义此参数默认定义的底部组件不显示
-  final Widget customBottomWidge;
+  final Widget? customBottomWidge;
 
   /// 是否隐藏自定义tabs栏,默认true隐藏
-  final bool hideCustomTab;
+  final bool? hideCustomTab;
 
   /// 自定义tabs显示的组件
-  final Widget customTabWidget;
+  final Widget? customTabWidget;
 
   /// 自定义tabs的标题
-  final String customTabTitle;
+  final String? customTabTitle;
 
   /// 底部按钮1(开发) 点击事件
-  final VoidCallback btnTap1;
+  final VoidCallback? btnTap1;
 
   /// 底部按钮1 标题,
-  final String btnTitle1;
+  final String? btnTitle1;
 
   /// 底部按钮2(调试) 点击事件
-  final VoidCallback btnTap2;
+  final VoidCallback? btnTap2;
 
   /// 底部按钮2 标题,
-  final String btnTitle2;
+  final String? btnTitle2;
 
   /// 底部按钮3(生产) 点击事件
-  final VoidCallback btnTap3;
+  final VoidCallback? btnTap3;
 
   /// 底部按钮3 标题,
-  final String btnTitle3;
+  final String? btnTitle3;
 
   /// 每次弹窗口显示tabs页面
-  final int tabsInitIndex;
+  final int? tabsInitIndex;
 
   @override
   _TabsWrapState createState() => _TabsWrapState();
@@ -65,7 +65,7 @@ class TabsWrap extends StatefulWidget {
 
 class _TabsWrapState extends State<TabsWrap>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  TabController _tabController;
+  late TabController _tabController;
   List<Widget> tabViewChild = [];
   int tabsIndex = 0;
   @override
@@ -79,17 +79,17 @@ class _TabsWrapState extends State<TabsWrap>
 
   @override
   void dispose() {
-    _tabController?.removeListener(tabListener);
-    _tabController?.dispose();
+    _tabController.removeListener(tabListener);
+    _tabController.dispose();
     super.dispose();
   }
 
   /// 更新tabs组件页面
-  _initTabsWidget({int initialIndex}) {
+  _initTabsWidget({int? initialIndex}) {
     tabViewChild = [
       _logListStream(LogType.print), // print日志
       _logListStream(LogType.debug), // debug日志
-      if (!widget.hideCustomTab) _customTabList(),
+      if (widget.hideCustomTab == false) _customTabList(),
     ];
 
     int tabsLen = tabViewChild.length; // tabs总长度
@@ -137,7 +137,7 @@ class _TabsWrapState extends State<TabsWrap>
                 tabs: <Widget>[
                   _tabTitle('print'),
                   _tabTitle('调试日志'),
-                  if (!widget.hideCustomTab)
+                  if (widget.hideCustomTab == false)
                     _tabTitle(widget.customTabTitle ?? '自定义'),
                 ],
               ),
@@ -154,7 +154,7 @@ class _TabsWrapState extends State<TabsWrap>
             ),
 
             // 底部区域
-            if (!widget.hideBottom)
+            if (widget.hideBottom != true)
               BottomWrap(
                 btnTap1: widget.btnTap1,
                 btnTap2: widget.btnTap2,
@@ -185,7 +185,7 @@ class _TabsWrapState extends State<TabsWrap>
       return Center(
         child: Text('自定义你显示的内容'),
       );
-    return widget.customTabWidget;
+    return widget.customTabWidget as Widget;
   }
 
   /// 日志组件

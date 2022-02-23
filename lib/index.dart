@@ -9,10 +9,10 @@ class JhDebug {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   bool _layerFlag = false;
   Widget _layerWidget = TabsWrap(); // log弹层组件
-  OverlayEntry _overlayEntry; // 叠加层组件
-  int _overlayCode; // overlay_id
+  late OverlayEntry _overlayEntry; // 叠加层组件
+  int? _overlayCode; // overlay_id
   bool _initFlag = false; // 初始化
-  BuildContext _context;
+  late BuildContext _context;
 
   /// 初始化组件参数
   ///
@@ -42,18 +42,18 @@ class JhDebug {
   ///
   /// [recordEnabled] 是否开启记录log模式，生产环境可以关闭提高APP性能
   void init({
-    @required BuildContext context,
+    required BuildContext context,
     bool hideCustomTab = true,
-    Widget customTabWidget,
-    String customTabTitle,
+    Widget? customTabWidget,
+    String? customTabTitle,
     bool hideBottom = false,
-    Widget customBottomWidge,
-    VoidCallback btnTap1,
-    VoidCallback btnTap2,
-    VoidCallback btnTap3,
-    String btnTitle1,
-    String btnTitle2,
-    String btnTitle3,
+    Widget? customBottomWidge,
+    VoidCallback? btnTap1,
+    VoidCallback? btnTap2,
+    VoidCallback? btnTap3,
+    String? btnTitle1,
+    String? btnTitle2,
+    String? btnTitle3,
     int printRecord = JhConstants.PRINT_RECORD,
     int debugRecord = JhConstants.DEBUG_RECORD,
     int tabsInitIndex = JhConstants.TABS_INIT_INDEX,
@@ -61,9 +61,6 @@ class JhDebug {
     bool scrollFlag = JhConstants.SCROLL_FLAG,
     bool recordEnabled = JhConstants.RECORD_ENABLED,
   }) async {
-    assert(context != null);
-    assert(hideCustomTab != null);
-    assert(hideBottom != null);
     // 初始化弹层日志组件
     _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
@@ -101,8 +98,8 @@ class JhDebug {
       _navigatorKey = _globalKey;
 
   /// 获取全局context
-  BuildContext get getGlobalContext =>
-      _navigatorKey?.currentState?.overlay?.context;
+  BuildContext? get getGlobalContext =>
+      _navigatorKey.currentState?.overlay?.context;
 
   // --------------- 日志方法 ----------------
 
@@ -111,8 +108,8 @@ class JhDebug {
 
   /// 设置debug日志内容, 输出flutter错误日志,构建错误等
   void setDebugLog({
-    @required String debugLog,
-    @required String debugStack,
+    required String debugLog,
+    required String debugStack,
   }) {
     logDataUtls.addDebugLog(debugLog, debugStack);
   }
@@ -152,40 +149,43 @@ class JhDebug {
   /// 显示JhDebug弹层窗口
   void showLog() {
     if (!_judegInit() || _layerFlag) return;
+
     _layerFlag = true;
-    showGeneralDialog(
-      context: getGlobalContext,
-      barrierLabel: "jhDialog",
-      barrierDismissible: true, // 是否点击其他区域消失
-      barrierColor: Colors.black54, // 遮罩层背景色
-      transitionDuration: Duration(milliseconds: 150), // 弹出的过渡时长
-      pageBuilder: (context, animation, secondaryAnimation) {
-        jhConfig.context = context;
-        return Dialog(child: _layerWidget);
-      },
-      transitionBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-      ) {
-        // 显示的动画组件
-        return ScaleTransition(
-          scale: Tween<double>(begin: 0, end: 1).animate(animation),
-          child: child,
-        );
-      },
-    ).then((v) {
-      _layerFlag = false;
-      logDataUtls.clearSearch(); // 清余关键字
-    });
+    if (getGlobalContext != null) {
+      showGeneralDialog(
+        context: getGlobalContext!,
+        barrierLabel: "jhDialog",
+        barrierDismissible: true, // 是否点击其他区域消失
+        barrierColor: Colors.black54, // 遮罩层背景色
+        transitionDuration: Duration(milliseconds: 150), // 弹出的过渡时长
+        pageBuilder: (context, animation, secondaryAnimation) {
+          jhConfig.context = context;
+          return Dialog(child: _layerWidget);
+        },
+        transitionBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child,
+        ) {
+          // 显示的动画组件
+          return ScaleTransition(
+            scale: Tween<double>(begin: 0, end: 1).animate(animation),
+            child: child,
+          );
+        },
+      ).then((v) {
+        _layerFlag = false;
+        logDataUtls.clearSearch(); // 清余关键字
+      });
+    }
   }
 
   /// 隐藏jhDebug弹层窗口
   void hideLog() {
     if (!_judegInit()) return;
     try {
-      Navigator.pop(getGlobalContext);
+      Navigator.pop(getGlobalContext!);
     } catch (e) {
       _layerFlag = false;
     }
@@ -199,12 +199,12 @@ class JhDebug {
   ///
   /// [height] 定义按钮的宽度
   void showDebugBtn({
-    double top,
-    double bottom,
-    double left,
-    double rigth,
-    double width,
-    double height,
+    double? top,
+    double? bottom,
+    double? left,
+    double? rigth,
+    double? width,
+    double? height,
   }) {
     try {
       if (!_judegInit()) return;
@@ -227,7 +227,7 @@ class JhDebug {
         },
       );
 
-      Overlay.of(_context).insert(_overlayEntry);
+      Overlay.of(_context)?.insert(_overlayEntry);
       _overlayCode = _overlayEntry.hashCode;
     } catch (e) {
       throw Exception(

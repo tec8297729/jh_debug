@@ -9,9 +9,9 @@ LogDataUtls logDataUtls = LogDataUtls()..init();
 /// 数据源方法
 class LogDataUtls {
   StreamController<List<String>> _printCtr = StreamController();
-  Stream<List<String>> _printStream; // print数据流
+  late Stream<List<String>> _printStream; // print数据流
   StreamController<List<Map<String, String>>> _debugCtr = StreamController();
-  Stream<List<Map<String, String>>> _debugStream; // debug数据流
+  late Stream<List<Map<String, String>>> _debugStream; // debug数据流
   // 搜索关键字
   Map<LogType, String> _searchKey = {
     LogType.debug: '',
@@ -22,9 +22,9 @@ class LogDataUtls {
   void init() {
     _printStream = _printCtr.stream.asBroadcastStream();
     _debugStream = _debugCtr.stream.asBroadcastStream();
-    _printStream.listen((data) {
-      return _printLogAll;
-    });
+    // _printStream.listen((data) {
+    //   return _printLogAll;
+    // });
   }
 
   /// 订阅print日志
@@ -103,13 +103,13 @@ class LogDataUtls {
 
   // ---------------------  搜索相关 ------------------
   /// 设置搜索内容
-  void setSearch({String sKey, LogType type}) {
+  void setSearch({required String sKey, required LogType type}) {
     _searchKey[type] = sKey;
     dyFlush(type);
   }
 
   /// 获取搜索关键
-  String getSearchKey(LogType type) {
+  String? getSearchKey(LogType type) {
     return _searchKey[type];
   }
 

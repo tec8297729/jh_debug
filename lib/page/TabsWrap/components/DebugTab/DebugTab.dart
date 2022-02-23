@@ -49,7 +49,7 @@ class _DebugTabState extends State<DebugTab>
 
     final sKey = logDataUtls.getSearchKey(_logType);
 
-    if (sKey.isNotEmpty) {
+    if (sKey != null) {
       return handleSearchItem(dataList, sKey);
     }
 

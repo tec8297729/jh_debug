@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 /// 基础层
 class BaseLogContext extends StatefulWidget {
-  const BaseLogContext({Key key, @required this.child, this.headerChild})
+  const BaseLogContext({Key? key, required this.child, this.headerChild})
       : super(key: key);
 
   /// 子组件
   final List<Widget> child;
 
-  final Widget headerChild;
+  final Widget? headerChild;
 
   @override
   _BaseLogContextState createState() => _BaseLogContextState();
@@ -16,7 +16,7 @@ class BaseLogContext extends StatefulWidget {
 
 class _BaseLogContextState extends State<BaseLogContext>
     with AutomaticKeepAliveClientMixin {
-  ScrollController scrollController;
+  late ScrollController scrollController;
 
   @override
   bool get wantKeepAlive => true;
@@ -42,7 +42,7 @@ class _BaseLogContextState extends State<BaseLogContext>
             ),
           ),
           // 头部组件
-          if (widget.headerChild != null) widget.headerChild,
+          if (widget.headerChild != null) widget.headerChild!,
         ],
       ),
     );
