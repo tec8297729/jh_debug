@@ -21,7 +21,7 @@ JhDebug jhDebug = JhDebug();
 /// ```
 jhDebugMain({
   required Widget appChild,
-  required Function(FlutterErrorDetails)? errorCallback,
+  required Function(FlutterErrorDetails details)? errorCallback,
   VoidCallback? beforeAppChildFn,
   DebugMode debugMode = JhConstants.ISIN_DEBUGMODE,
   Function<Widget>(String message, Object error)? errorWidgetFn,
