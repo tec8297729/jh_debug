@@ -178,7 +178,7 @@ class _LogHeaderState extends State<LogHeader> {
               icons: Icons.close,
               color: Colors.black45,
               onPressed: () {
-                WidgetsBinding.instance?.addPostFrameCallback((_) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
                   logDataUtls.setSearch(sKey: '', type: widget.logType);
                   _textController.clear();
                 });
