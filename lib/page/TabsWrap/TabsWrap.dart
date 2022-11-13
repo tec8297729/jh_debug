@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BottomWrap/BottomWrap.dart';
 import 'package:jh_debug/config/jh_config.dart';
-import 'package:jh_debug/types/index.dart' show LogType;
+import 'package:jh_debug/types/index.dart' show CustomTabItem, LogType;
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'components/DebugTab/DebugTab.dart';
 import 'components/PrintTab/PrintTab.dart';
 
 /// 弹层组件
 class TabsWrap extends StatefulWidget {
-  TabsWrap({
-    this.customBottomWidge,
-    this.btnTap1,
-    this.btnTitle1,
-    this.btnTap2,
-    this.btnTitle2,
-    this.btnTap3,
-    this.btnTitle3,
-    this.hideBottom,
-    this.hideCustomTab = true,
-    this.customTabWidget,
-    this.customTabTitle,
-    this.tabsInitIndex,
-  });
+  TabsWrap(
+      {this.customBottomWidge,
+      this.btnTap1,
+      this.btnTitle1,
+      this.btnTap2,
+      this.btnTitle2,
+      this.btnTap3,
+      this.btnTitle3,
+      this.hideBottom,
+      this.hideCustomTab = true,
+      this.tabsInitIndex,
+      this.customTabs});
 
   /// 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效
   final bool? hideBottom;
@@ -32,11 +30,8 @@ class TabsWrap extends StatefulWidget {
   /// 是否隐藏自定义tabs栏,默认true隐藏
   final bool? hideCustomTab;
 
-  /// 自定义tabs显示的组件
-  final Widget? customTabWidget;
-
-  /// 自定义tabs的标题
-  final String? customTabTitle;
+  /// 自定义扩展tabs显示的组件
+  final List<CustomTabItem>? customTabs;
 
   /// 底部按钮1(开发) 点击事件
   final VoidCallback? btnTap1;
@@ -66,7 +61,7 @@ class TabsWrap extends StatefulWidget {
 class _TabsWrapState extends State<TabsWrap>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
-  List<Widget> tabViewChild = [];
+  List<CustomTabItem> tabsData = [];
   int tabsIndex = 0;
   @override
   bool get wantKeepAlive => true;
@@ -86,13 +81,18 @@ class _TabsWrapState extends State<TabsWrap>
 
   /// 更新tabs组件页面
   _initTabsWidget({int? initialIndex}) {
-    tabViewChild = [
-      _logListStream(LogType.print), // print日志
-      _logListStream(LogType.debug), // debug日志
-      if (widget.hideCustomTab == false) _customTabList(),
+    tabsData = [
+      // print日志
+      CustomTabItem(title: 'print', widget: _logListStream(LogType.print)),
+      // debug日志
+      CustomTabItem(title: '调试日志', widget: _logListStream(LogType.debug))
     ];
 
-    int tabsLen = tabViewChild.length; // tabs总长度
+    widget.customTabs?.forEach((customTabItem) {
+      tabsData.add(customTabItem);
+    });
+
+    int tabsLen = tabsData.length; // tabs总长度
     if (initialIndex != null && initialIndex >= tabsLen) {
       initialIndex = tabsLen - 1;
     }
@@ -133,13 +133,10 @@ class _TabsWrapState extends State<TabsWrap>
               color: Colors.white,
               child: TabBar(
                 controller: _tabController,
+                // 每个label的padding值
                 indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
-                tabs: <Widget>[
-                  _tabTitle('print'),
-                  _tabTitle('调试日志'),
-                  if (widget.hideCustomTab == false)
-                    _tabTitle(widget.customTabTitle ?? '自定义'),
-                ],
+                isScrollable: tabsData.length > 3 ? true : false,
+                tabs: <Widget>[...tabsData.map((e) => _tabTitle(e.title))],
               ),
             ),
             // tab显示内容区域
@@ -149,7 +146,7 @@ class _TabsWrapState extends State<TabsWrap>
                 controller: _tabController,
                 physics:
                     jhConfig.scrollFlag ? null : NeverScrollableScrollPhysics(),
-                children: tabViewChild,
+                children: [...tabsData.map((e) => _customTabList(e.widget))],
               ),
             ),
 
@@ -171,21 +168,22 @@ class _TabsWrapState extends State<TabsWrap>
   }
 
   /// tab切换标题
-  _tabTitle(String title) {
+  _tabTitle(String? title) {
     return Text(
-      title,
+      title ?? '',
       style: TextStyle(color: Colors.black, fontSize: 15),
       overflow: TextOverflow.ellipsis,
     );
   }
 
   /// 自定义tab内容组件
-  Widget _customTabList() {
-    if (widget.customTabWidget == null)
+  Widget _customTabList(Widget userWidget) {
+    // ignore: unnecessary_null_comparison
+    if (userWidget == null)
       return Center(
         child: Text('自定义你显示的内容'),
       );
-    return widget.customTabWidget as Widget;
+    return userWidget;
   }
 
   /// 日志组件

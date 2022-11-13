@@ -26,17 +26,17 @@ class _TestPageState extends State<TestPage> {
 
   showDebugBtn() {
     //创建一个OverlayEntry对象
-    OverlayEntry overlayEntry = new OverlayEntry(builder: (context) {
+    OverlayEntry overlayEntry = OverlayEntry(builder: (context) {
       //外层使用Positioned进行定位，控制在Overlay中的位置
       return Positioned(
         top: MediaQuery.of(context).size.height * 0.7,
         child: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.bug_report), // 设置按钮icon图标
+          onPressed: () {}, // 设置按钮icon图标
           backgroundColor: Colors.pink, // 按钮的背景颜色
           mini: false, // 是否是小图标
           elevation: 10, // 未点击时的阴影值
-          highlightElevation: 20, // 点击状态时的阴影值
+          highlightElevation: 20,
+          child: const Icon(Icons.bug_report), // 点击状态时的阴影值
         ),
       );
     });
@@ -52,10 +52,14 @@ class _TestPageState extends State<TestPage> {
       btnTap2: () {
         print('${jhDebug.getPrintLogAll}');
       },
-      customTabTitle: '自定义tab专栏',
-      customTabWidget: Container(
-        child: Text('data'),
-      ),
+      customTabs: [
+        CustomTabItem(
+          title: '自定义tab专栏',
+          widget: Container(
+            child: Text('data'),
+          ),
+        )
+      ],
       // customBottomWidge: Container(
       //   child: Text('自定义按钮区域'),
       // ),

@@ -63,9 +63,15 @@ jhDebug.init(
   // 指定默认调试窗口内的一些参数配置
   btnTitle1: '按钮1', // 定义按钮名称
   btnTap1: () {}, // 定义按钮触发事件
-  // 自定义独立的tab页面
-  customTabTitle: 'tab标题',
-  customTabWidget: Container(), // 自定义tab页面的内容
+  customTabs: [
+    CustomTabItem(
+      title: '自定义tab专栏',
+      // 自定义tab页面的内容
+      widget: Container(
+        child: Text('data'),
+      ),
+    )
+  ],
 );
 ```
 <br>

@@ -4,6 +4,7 @@ import 'page/StackPosBtn/StackPosBtn.dart';
 import 'page/TabsWrap/TabsWrap.dart';
 import 'constants/jh_constants.dart';
 import 'config/jh_config.dart' show jhConfig;
+import 'types/index.dart';
 
 class JhDebug {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -24,9 +25,7 @@ class JhDebug {
   ///
   /// [hideCustomTab] 是否隐藏自定义tabs栏,默认true隐藏
   ///
-  /// [customTabTitle] 自定义区域tabs的标题
-  ///
-  /// [customTabWidget] 自定义区域tabs显示的组件
+  /// [customTabs] 自定义tabs显示的组件
   ///
   /// [hideBottom] 是否隐藏底部区域块,当为ture隐藏时,bottomWidge自定义底部区域将无效
   ///
@@ -44,8 +43,7 @@ class JhDebug {
   void init({
     required BuildContext context,
     bool hideCustomTab = true,
-    Widget? customTabWidget,
-    String? customTabTitle,
+    List<CustomTabItem>? customTabs,
     bool hideBottom = false,
     Widget? customBottomWidge,
     VoidCallback? btnTap1,
@@ -64,8 +62,7 @@ class JhDebug {
     // 初始化弹层日志组件
     _layerWidget = TabsWrap(
       hideCustomTab: hideCustomTab,
-      customTabWidget: customTabWidget,
-      customTabTitle: customTabTitle,
+      customTabs: customTabs,
       tabsInitIndex: tabsInitIndex,
       hideBottom: hideBottom,
       customBottomWidge: customBottomWidge,
