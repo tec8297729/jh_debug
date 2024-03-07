@@ -1,6 +1,6 @@
 {
   "scripts": {
     "pub": "flutter packages pub publish --server=https://pub.dev",
-    "tags": "git tag v1.0.2 && git push origin --tags"
+    "tags": "git tag v2.0.0 && git push origin --tags"
   }
 }

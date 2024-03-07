@@ -1,5 +1,26 @@
 # 历史更新日志
 
+## 2.0.0
+
+> 调整jhDebug.init自定义tab组件参数及扩展能力，废弃参数：customTabTitle、customTabWidget，替换成customTabs参数
+
+```dart
+jhDebug.init(
+  customTabs: [
+    CustomTabItem(
+      title: '自定义tab专栏',
+      widget: Container(color: Colors.white, child: const Text('内容区1')),
+    ),
+    CustomTabItem(
+      title: '自定义tab专栏2',
+      widget: Container(color: Colors.white, child: const Text('内容区2')),
+    ),
+  ],
+);
+```
+
+> jhDebugMain新增 beforeAppChildFn参数
+
 ## 1.0.2
 
 > 修复flutter3空安全警告

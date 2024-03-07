@@ -40,7 +40,7 @@ class _TestPageState extends State<TestPage> {
         ),
       );
     });
-    Overlay.of(context)?.insert(overlayEntry);
+    Overlay.of(context).insert(overlayEntry);
   }
 
   @override
@@ -55,14 +55,17 @@ class _TestPageState extends State<TestPage> {
       customTabs: [
         CustomTabItem(
           title: '自定义tab专栏',
-          widget: Container(
-            child: Text('data'),
-          ),
-        )
+          widget: Container(color: Colors.white, child: const Text('内容区1')),
+        ),
+        CustomTabItem(
+          title: '自定义tab专栏2',
+          widget: Container(color: Colors.white, child: const Text('内容区2')),
+        ),
+        CustomTabItem(
+          title: '自定义tab专栏3',
+          widget: Container(color: Colors.white, child: const Text('内容区3')),
+        ),
       ],
-      // customBottomWidge: Container(
-      //   child: Text('自定义按钮区域'),
-      // ),
       recordEnabled: true,
     );
     return Scaffold(
@@ -117,7 +120,7 @@ class _TestPageState extends State<TestPage> {
       baseBtn(
         text: '打印N次',
         onPressed: () async {
-          Duration interval = Duration(milliseconds: 30);
+          Duration interval = const Duration(milliseconds: 30);
           streamPrint = Stream.periodic(interval, (data) => data);
           streamPrint = streamPrint.take(200);
           await for (int i in streamPrint) {
@@ -136,7 +139,7 @@ class _TestPageState extends State<TestPage> {
       baseBtn(
         text: '手动error错误',
         onPressed: () async {
-          Duration interval = Duration(seconds: 1);
+          Duration interval = const Duration(seconds: 1);
           streamPrint = Stream.periodic(interval, (data) => data);
           streamPrint = streamPrint.take(10);
           await for (int i in streamPrint) {

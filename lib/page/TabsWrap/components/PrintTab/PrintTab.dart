@@ -3,7 +3,6 @@ import 'package:jh_debug/components/BaseLogContext/BaseLogContext.dart';
 import 'package:jh_debug/components/SearchItem/SearchItem.dart';
 import 'package:jh_debug/components/logItem/logItem.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'package:jh_debug/types/index.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'package:jh_debug/utils/utls.dart';
 import '../../../../components/LogHeader/LogHeader.dart';

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BottomWrap/BottomWrap.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/types/index.dart' show CustomTabItem, LogType;
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'components/DebugTab/DebugTab.dart';
+import 'components/NetworkTab/index.dart';
 import 'components/PrintTab/PrintTab.dart';
 
 /// 弹层组件
@@ -85,7 +88,9 @@ class _TabsWrapState extends State<TabsWrap>
       // print日志
       CustomTabItem(title: 'print', widget: _logListStream(LogType.print)),
       // debug日志
-      CustomTabItem(title: '调试日志', widget: _logListStream(LogType.debug))
+      CustomTabItem(title: '调试日志', widget: _logListStream(LogType.debug)),
+      // 网络监听
+      CustomTabItem(title: 'Network', widget: NetwrorkTab())
     ];
 
     widget.customTabs?.forEach((customTabItem) {
@@ -120,10 +125,10 @@ class _TabsWrapState extends State<TabsWrap>
     return Semantics(
       label: 'jhdebug_TabsWrap',
       child: Container(
-        height: 420,
+        height: 460,
         constraints: BoxConstraints(
           minWidth: 350,
-          maxWidth: 600,
+          maxWidth: 800,
         ),
         child: Column(
           children: <Widget>[
@@ -133,8 +138,8 @@ class _TabsWrapState extends State<TabsWrap>
               color: Colors.white,
               child: TabBar(
                 controller: _tabController,
-                // 每个label的padding值
-                indicatorPadding: EdgeInsets.only(left: 20.0, right: 20.0),
+                indicatorPadding: EdgeInsets.zero,
+                tabAlignment: TabAlignment.start, // tab文字布局方式，默认居中开始
                 isScrollable: tabsData.length > 3 ? true : false,
                 tabs: <Widget>[...tabsData.map((e) => _tabTitle(e.title))],
               ),
@@ -146,7 +151,8 @@ class _TabsWrapState extends State<TabsWrap>
                 controller: _tabController,
                 physics:
                     jhConfig.scrollFlag ? null : NeverScrollableScrollPhysics(),
-                children: [...tabsData.map((e) => _customTabList(e.widget))],
+                children:
+                    tabsData.map((e) => _customTabList(e.widget)).toList(),
               ),
             ),
 

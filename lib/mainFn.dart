@@ -15,14 +15,14 @@ JhDebug jhDebug = JhDebug();
 ///
 /// [errorCallback] 错误回调函数,返回错误相关信息,自定义上报错误等信息
 ///
-/// [errorWidgetFn] 自定义错误显示页面，默认使用flutter内置错误页面。
+/// [errorWidgetFn] 自定义错误显示页面，默认使用flutter内置错误页面
 ///
-/// [beforeAppChildFn] 构建appChild之前钩子函数
+/// [beforeAppChildFn] 构建appChild之前钩子函数（会阻塞页面渲染），不要放过重逻辑在此函数中
 /// ```
 jhDebugMain({
   required Widget appChild,
   required Function(FlutterErrorDetails details)? errorCallback,
-  VoidCallback? beforeAppChildFn,
+  Function? beforeAppChildFn,
   DebugMode debugMode = JhConstants.ISIN_DEBUGMODE,
   Function<Widget>(String message, Object error)? errorWidgetFn,
 }) {
@@ -61,6 +61,13 @@ jhDebugMain({
   return runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      if (beforeAppChildFn != null) {
+        try {
+          await beforeAppChildFn();
+        } catch (e) {}
+        runApp(appChild);
+        return;
+      }
       runApp(appChild);
     },
 
