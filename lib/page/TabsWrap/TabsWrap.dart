@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BottomWrap/BottomWrap.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/types/index.dart' show CustomTabItem, LogType;
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'components/DebugTab/DebugTab.dart';
-import 'components/NetworkTab/index.dart';
 import 'components/PrintTab/PrintTab.dart';
 
 /// 弹层组件
@@ -90,7 +87,7 @@ class _TabsWrapState extends State<TabsWrap>
       // debug日志
       CustomTabItem(title: '调试日志', widget: _logListStream(LogType.debug)),
       // 网络监听
-      CustomTabItem(title: 'Network', widget: NetwrorkTab())
+      // CustomTabItem(title: 'Network', widget: NetwrorkTab())
     ];
 
     widget.customTabs?.forEach((customTabItem) {

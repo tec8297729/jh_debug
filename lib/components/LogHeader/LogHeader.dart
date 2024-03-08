@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jh_debug/components/BaseBtn/BaseBtn.dart';
 import 'package:jh_debug/config/jh_config.dart';
 import 'package:jh_debug/jh_debug.dart';
-import 'package:jh_debug/types/index.dart';
 import 'package:jh_debug/utils/logData_utls.dart';
 import 'package:jh_debug/utils/utls.dart';
 
@@ -70,7 +69,8 @@ class _LogHeaderState extends State<LogHeader> {
     return Container(
       alignment: Alignment.center,
       height: inputHeight,
-      padding: EdgeInsets.only(right: 6),
+      // margin: EdgeInsets.only(top: 6),
+      padding: EdgeInsets.only(right: 6, bottom: 6, top: 6),
       decoration: BoxDecoration(
         // 分割线
         border: Border(
@@ -82,7 +82,7 @@ class _LogHeaderState extends State<LogHeader> {
         index: searchStatus == SearchStatus.show ? 1 : 0, // 层级
         children: <Widget>[
           widget.logType == LogType.print ? _printBtnBase() : _debugBtnBase(),
-          searchBoxW(), // 搜索条1
+          searchBoxW(), // 搜索条
         ],
       ),
     );
@@ -91,6 +91,8 @@ class _LogHeaderState extends State<LogHeader> {
   // print头基础按钮
   Widget _printBtnBase() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(flex: 1, child: Text('')),
         searchBtnW(),
@@ -103,6 +105,7 @@ class _LogHeaderState extends State<LogHeader> {
   Widget _debugBtnBase() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         searchBtnW(),
         BaseBtn(
@@ -123,7 +126,9 @@ class _LogHeaderState extends State<LogHeader> {
   // 组合搜索icon按钮
   Widget searchBtnW() {
     return Container(
-      margin: EdgeInsets.only(right: 3),
+      padding: EdgeInsets.only(right: 3, bottom: 0),
+      height: inputHeight,
+      alignment: Alignment.topCenter,
       child: IconButton(
         icon: Icon(Icons.search),
         iconSize: 22,
@@ -160,6 +165,8 @@ class _LogHeaderState extends State<LogHeader> {
     return Container(
       height: inputHeight,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             icon: Icon(Icons.arrow_back_ios_outlined),
@@ -168,8 +175,8 @@ class _LogHeaderState extends State<LogHeader> {
             onPressed: goBackHeader,
             tooltip: '回退',
           ),
-          Expanded(
-            flex: 1,
+          Flexible(
+            // flex: 1,
             child: searchInput(),
           ),
           // 右侧清空icon
@@ -231,6 +238,7 @@ class _LogHeaderState extends State<LogHeader> {
           hintText: '输入搜索关键字',
           hintStyle: TextStyle(color: Colors.black38),
           border: InputBorder.none,
+          contentPadding: EdgeInsets.only(bottom: 10), // 设置内边距为零
         ),
       ),
     );

@@ -9,4 +9,4 @@
 .history
 .svn/
 /example/
-.vscode/
+.vscode/**/*

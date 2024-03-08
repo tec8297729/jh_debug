@@ -18,7 +18,7 @@ class BaseBtn extends StatelessWidget {
       height: 26,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(text, style: TextStyle(fontSize: 14)),
+        child: Text(text, style: TextStyle(fontSize: 14, color: Colors.white)),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
             const Color(0xFF1C88E5),

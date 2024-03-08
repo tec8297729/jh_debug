@@ -205,6 +205,7 @@ class JhDebug {
   }) {
     try {
       if (!_judegInit()) return;
+      // ignore: unnecessary_null_comparison
       if (Overlay.of(_context) == null) {
         throw Exception(
             '${JhConstants.ERROR_TIPS_PREFIX}init方法中的context参数非法，请不要在MaterialApp组件中init初始化');
@@ -224,7 +225,7 @@ class JhDebug {
         },
       );
 
-      Overlay.of(_context)?.insert(_overlayEntry);
+      Overlay.of(_context).insert(_overlayEntry);
       _overlayCode = _overlayEntry.hashCode;
     } catch (e) {
       throw Exception(
