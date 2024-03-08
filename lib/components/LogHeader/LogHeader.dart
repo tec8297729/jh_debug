@@ -92,9 +92,9 @@ class _LogHeaderState extends State<LogHeader> {
   Widget _printBtnBase() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Expanded(flex: 1, child: Text('')),
+        // Expanded(flex: 1, child: Text('')),
         searchBtnW(),
         clearBtnW(),
       ],
@@ -125,21 +125,17 @@ class _LogHeaderState extends State<LogHeader> {
 
   // 组合搜索icon按钮
   Widget searchBtnW() {
-    return Container(
-      padding: EdgeInsets.only(right: 3, bottom: 0),
-      height: inputHeight,
-      alignment: Alignment.topCenter,
-      child: IconButton(
-        icon: Icon(Icons.search),
-        iconSize: 22,
-        color: Color(0xFF1C88E5), // 图标颜色
-        onPressed: () {
-          setState(() {
-            searchStatus = SearchStatus.show;
-          });
-        },
-        tooltip: '搜索',
-      ),
+    return IconButton(
+      alignment: Alignment.center,
+      icon: Icon(Icons.search),
+      iconSize: 18,
+      color: Color(0xFF1C88E5), // 图标颜色
+      onPressed: () {
+        setState(() {
+          searchStatus = SearchStatus.show;
+        });
+      },
+      tooltip: '搜索',
     );
   }
 

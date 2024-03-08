@@ -84,11 +84,9 @@ class _TestPageState extends State<TestPage> {
   }
 
   Widget baseBtn({String? text, VoidCallback? onPressed}) {
-    return Container(
-      child: ElevatedButton(
-        child: Text(text!),
-        onPressed: onPressed,
-      ),
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(text!),
     );
   }
 
