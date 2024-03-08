@@ -136,7 +136,8 @@ class _TabsWrapState extends State<TabsWrap>
               child: TabBar(
                 controller: _tabController,
                 indicatorPadding: EdgeInsets.zero,
-                tabAlignment: TabAlignment.start, // tab文字布局方式，默认居中开始
+                // tab文字布局方式，默认居中开始
+                tabAlignment: tabsData.length > 3 ? TabAlignment.start : null,
                 isScrollable: tabsData.length > 3 ? true : false,
                 tabs: <Widget>[...tabsData.map((e) => _tabTitle(e.title))],
               ),

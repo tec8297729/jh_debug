@@ -1,5 +1,9 @@
 # 历史更新日志
 
+## 2.0.1
+
+> 修复顶部栏报错问题
+
 ## 2.0.0
 
 > 调整jhDebug.init自定义tab组件参数及扩展能力，废弃参数：customTabTitle、customTabWidget，替换成customTabs参数
